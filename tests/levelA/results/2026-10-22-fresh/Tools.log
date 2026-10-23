@@ -1,0 +1,196 @@
+[Warning] Running tests on source directory instead of built paclet
+
+TestReport: Tools.wlt | Collecting tests...Evaluating tests (0)Elapsed time 6s
+
+TestReport: Tools.wlt | Collecting tests...Evaluating tests (0)Elapsed time 7s
+[Warning] Paclet MX file was not loaded
+
+TestReport: Tools.wlt | 2 SuccessEvaluating tests (2)Elapsed time 7s
+
+TestReport: Tools.wlt | 2 SuccessEvaluating tests (2)Elapsed time 7s
+
+TestReport: Tools.wlt | 2 SuccessEvaluating tests (2)Elapsed time 8s
+
+TestReport: Tools.wlt | 7 SuccessEvaluating tests (7)Elapsed time 8s
+
+TestReport: Tools.wlt | 7 SuccessEvaluating tests (7)Elapsed time 8s
+
+TestReport: Tools.wlt | 7 SuccessEvaluating tests (7)Elapsed time 9s
+	Skipping test: ReadNotebook-URL-NotANotebook@@Tests/Tools.wlt:137,22-142,2
+PacletTools (fresh): 69/71 passed, 9.5 s
+
+TestReport: Tools.wlt | 12 Success,2 FailureEvaluating tests (14)Elapsed time 9s
+	Skipping test: WriteNotebook-Cloud-BasicWrite@@Tests/Tools.wlt:290,22-299,2
+	Skipping test: WriteNotebook-Cloud-ObjectExists@@Tests/Tools.wlt:301,22-306,2
+	Skipping test: WriteNotebook-Cloud-DefaultPrivate@@Tests/Tools.wlt:332,22-337,2
+	Skipping test: ReadNotebook-Cloud-URL@@Tests/Tools.wlt:340,22-345,2
+	Skipping test: WriteNotebook-Cloud-NoOverwriteExisting@@Tests/Tools.wlt:347,22-352,2
+	Skipping test: WriteNotebook-Cloud-OverwriteExisting@@Tests/Tools.wlt:354,22-364,2
+	Skipping test: WriteNotebook-Cloud-PublicPermissions@@Tests/Tools.wlt:366,22-371,2
+	Skipping test: WriteNotebook-Cloud-AnonymousObject@@Tests/Tools.wlt:375,22-380,2
+	Skipping test: ReadNotebook-Cloud-AnonymousURL@@Tests/Tools.wlt:382,22-387,2
+	Skipping test: WriteNotebook-Cloud-Cleanup@@Tests/Tools.wlt:389,22-395,2
+
+TestReport: Tools.wlt | 18 Success,8 FailureEvaluating tests (26)Elapsed time 10s
+
+TestReport: Tools.wlt | 18 Success,8 FailureEvaluating tests (26)Elapsed time 10s
+
+TestReport: Tools.wlt | 21 Success,8 FailureEvaluating tests (29)Elapsed time 10s
+
+TestReport: Tools.wlt | 36 Success,8 FailureEvaluating tests (44)Elapsed time 11s
+
+TestReport: Tools.wlt | 38 Success,8 FailureEvaluating tests (46)Elapsed time 11s
+
+TestReport: Tools.wlt | 38 Success,8 FailureEvaluating tests (46)Elapsed time 12s
+
+TestReport: Tools.wlt | 38 Success,8 FailureEvaluating tests (46)Elapsed time 12s
+
+TestReport: Tools.wlt | 38 Success,8 FailureEvaluating tests (46)Elapsed time 12s
+
+TestReport: Tools.wlt | 38 Success,8 FailureEvaluating tests (46)Elapsed time 13s
+
+TestReport: Tools.wlt | 38 Success,8 FailureEvaluating tests (46)Elapsed time 13s
+
+TestReport: Tools.wlt | 38 Success,8 FailureEvaluating tests (46)Elapsed time 14s
+
+TestReport: Tools.wlt | 38 Success,8 FailureEvaluating tests (46)Elapsed time 14s
+
+TestReport: Tools.wlt | 38 Success,8 FailureEvaluating tests (46)Elapsed time 14s
+
+TestReport: Tools.wlt | 38 Success,8 FailureEvaluating tests (46)Elapsed time 15s
+
+TestReport: Tools.wlt | 38 Success,8 FailureEvaluating tests (46)Elapsed time 15s
+
+TestReport: Tools.wlt | 38 Success,8 FailureEvaluating tests (46)Elapsed time 16s
+
+TestReport: Tools.wlt | 41 Success,8 FailureEvaluating tests (49)Elapsed time 16s
+
+TestReport: Tools.wlt | 42 Success,9 FailureEvaluating tests (51)Elapsed time 16s
+
+TestReport: Tools.wlt | 42 Success,9 FailureEvaluating tests (51)Elapsed time 17s
+
+TestReport: Tools.wlt | 42 Success,9 FailureEvaluating tests (51)Elapsed time 17s
+
+TestReport: Tools.wlt | 42 Success,9 FailureEvaluating tests (51)Elapsed time 18s
+
+TestReport: Tools.wlt | 42 Success,9 FailureEvaluating tests (51)Elapsed time 18s
+
+TestReport: Tools.wlt | 42 Success,9 FailureEvaluating tests (51)Elapsed time 18s
+
+TestReport: Tools.wlt | 42 Success,9 FailureEvaluating tests (51)Elapsed time 19s
+
+TestReport: Tools.wlt | 42 Success,9 FailureEvaluating tests (51)Elapsed time 19s
+
+TestReport: Tools.wlt | 42 Success,9 FailureEvaluating tests (51)Elapsed time 20s
+
+TestReport: Tools.wlt | 43 Success,12 FailureEvaluating tests (55)Elapsed time 20s
+
+TestReport: Tools.wlt | 43 Success,12 FailureEvaluating tests (55)Elapsed time 20s
+
+TestReport: Tools.wlt | 43 Success,12 FailureEvaluating tests (55)Elapsed time 21s
+
+TestReport: Tools.wlt | 43 Success,12 FailureEvaluating tests (55)Elapsed time 21s
+
+TestReport: Tools.wlt | 43 Success,12 FailureEvaluating tests (55)Elapsed time 22s
+
+TestReport: Tools.wlt | 43 Success,12 FailureEvaluating tests (55)Elapsed time 22s
+
+TestReport: Tools.wlt | 43 Success,12 FailureEvaluating tests (55)Elapsed time 22s
+
+TestReport: Tools.wlt | 43 Success,12 FailureEvaluating tests (55)Elapsed time 23s
+
+TestReport: Tools.wlt | 72 Success,17 FailureEvaluating tests (89)Elapsed time 23s
+
+TestReport: Tools.wlt | 72 Success,17 FailureEvaluating tests (89)Elapsed time 24s
+
+TestReport: Tools.wlt | 72 Success,17 FailureEvaluating tests (89)Elapsed time 24s
+
+TestReport: Tools.wlt | 72 Success,17 FailureEvaluating tests (89)Elapsed time 24s
+
+TestReport: Tools.wlt | 72 Success,17 FailureEvaluating tests (89)Elapsed time 25s
+
+TestReport: Tools.wlt | 72 Success,17 FailureEvaluating tests (89)Elapsed time 25s
+
+TestReport: Tools.wlt | 72 Success,17 FailureEvaluating tests (89)Elapsed time 26s
+
+TestReport: Tools.wlt | 72 Success,17 FailureEvaluating tests (89)Elapsed time 26s
+
+TestReport: Tools.wlt | 72 Success,17 FailureEvaluating tests (89)Elapsed time 26s
+
+TestReport: Tools.wlt | 72 Success,17 FailureEvaluating tests (89)Elapsed time 27s
+
+TestReport: Tools.wlt | 72 Success,17 FailureEvaluating tests (89)Elapsed time 27s
+
+TestReport: Tools.wlt | 72 Success,17 FailureEvaluating tests (89)Elapsed time 28s
+
+TestReport: Tools.wlt | 72 Success,17 FailureEvaluating tests (89)Elapsed time 28s
+
+TestReport: Tools.wlt | 73 Success,17 FailureEvaluating tests (90)Elapsed time 29s
+
+TestReport: Tools.wlt | 73 Success,17 FailureEvaluating tests (90)Elapsed time 29s
+
+TestReport: Tools.wlt | 73 Success,17 FailureEvaluating tests (90)Elapsed time 29s
+
+TestReport: Tools.wlt | 73 Success,17 FailureEvaluating tests (90)Elapsed time 30s
+
+TestReport: Tools.wlt | 73 Success,17 FailureEvaluating tests (90)Elapsed time 30s
+
+TestReport: Tools.wlt | 73 Success,17 FailureEvaluating tests (90)Elapsed time 31s
+
+TestReport: Tools.wlt | 73 Success,17 FailureEvaluating tests (90)Elapsed time 31s
+
+TestReport: Tools.wlt | 73 Success,17 FailureEvaluating tests (90)Elapsed time 31s
+
+TestReport: Tools.wlt | 73 Success,17 FailureEvaluating tests (90)Elapsed time 32s
+
+TestReport: Tools.wlt | 73 Success,17 FailureEvaluating tests (90)Elapsed time 32s
+
+TestReport: Tools.wlt | 73 Success,17 FailureEvaluating tests (90)Elapsed time 32s
+
+TestReport: Tools.wlt | 73 Success,17 FailureEvaluating tests (90)Elapsed time 33s
+
+TestReport: Tools.wlt | 74 Success,17 FailureEvaluating tests (91)Elapsed time 33s
+
+TestReport: Tools.wlt | 74 Success,17 FailureEvaluating tests (91)Elapsed time 34s
+
+TestReport: Tools.wlt | 74 Success,17 FailureEvaluating tests (91)Elapsed time 34s
+
+TestReport: Tools.wlt | 74 Success,17 FailureEvaluating tests (91)Elapsed time 35s
+
+TestReport: Tools.wlt | 74 Success,17 FailureEvaluating tests (91)Elapsed time 35s
+
+TestReport: Tools.wlt | 74 Success,17 FailureEvaluating tests (91)Elapsed time 35s
+
+TestReport: Tools.wlt | 74 Success,17 FailureEvaluating tests (91)Elapsed time 36s
+
+TestReport: Tools.wlt | 74 Success,17 FailureEvaluating tests (91)Elapsed time 36s
+
+TestReport: Tools.wlt | 74 Success,17 FailureEvaluating tests (91)Elapsed time 37s
+
+TestReport: Tools.wlt | 74 Success,17 FailureEvaluating tests (91)Elapsed time 37s
+
+TestReport: Tools.wlt | 74 Success,17 FailureEvaluating tests (91)Elapsed time 37s
+
+TestReport: Tools.wlt | 74 Success,17 FailureEvaluating tests (91)Elapsed time 38s
+
+TestReport: Tools.wlt | 75 Success,17 FailureEvaluating tests (92)Elapsed time 38s
+
+TestReport: Tools.wlt | 75 Success,17 FailureEvaluating tests (92)Elapsed time 39s
+
+TestReport: Tools.wlt | 75 Success,17 FailureEvaluating tests (92)Elapsed time 39s
+
+TestReport: Tools.wlt | 75 Success,17 FailureEvaluating tests (92)Elapsed time 39s
+
+TestReport: Tools.wlt | 75 Success,17 FailureEvaluating tests (92)Elapsed time 40s
+
+TestReport: Tools.wlt | 75 Success,17 FailureEvaluating tests (92)Elapsed time 40s
+
+TestReport: Tools.wlt | 75 Success,17 FailureEvaluating tests (92)Elapsed time 41s
+
+TestReport: Tools.wlt | 75 Success,17 FailureEvaluating tests (92)Elapsed time 41s
+
+TestReport: Tools.wlt | 75 Success,17 FailureEvaluating tests (92)Elapsed time 41s
+
+TestReport: Tools.wlt | 75 Success,17 FailureEvaluating tests (92)Elapsed time 42s
+
+TestReport: Tools.wlt | 75 Success,17 FailureEvaluating tests (92)Elapsed time 42s

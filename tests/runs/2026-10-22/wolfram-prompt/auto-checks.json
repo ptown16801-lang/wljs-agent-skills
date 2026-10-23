@@ -1,0 +1,21 @@
+{
+ "skill": "wolfram-prompt",
+ "tool_calls": 18,
+ "check1_triggered": {
+  "pass": true,
+  "skills_loaded": [
+   "wolfram-prompt"
+  ]
+ },
+ "check3_rules_auto": {
+  "pass": true,
+  "hits": {}
+ },
+ "check4_notebooks_found": [
+  "work/Prompt/AdaLovelace-build-summary.wln"
+ ],
+ "engines_seen": [
+  "wolframscript"
+ ],
+ "run_log": true
+}

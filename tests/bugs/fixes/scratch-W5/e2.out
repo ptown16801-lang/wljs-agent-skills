@@ -1,0 +1,14 @@
+opts: {}
+sysopts containing Block: {}
+Attributes Assert: {HoldAllComplete} Options {}
+$AssertFunction: $AssertFunction
+twice in handler: 11
+after passing plain call: 0
+redefined: 1
+after plain: 0
+DownValues reassigned: 0
+copy via Uncompress/Compress: 1
+after On/Off: 1
+after plain: 0
+with $AssertFunction blocked: 1
+inside handler, with plain Block, Off: 1

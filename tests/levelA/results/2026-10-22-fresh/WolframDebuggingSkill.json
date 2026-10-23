@@ -1,0 +1,16 @@
+{
+	"suite":"WolframDebuggingSkill",
+	"kernel":"fresh",
+	"ok":true,
+	"tests":123,
+	"passed":123,
+	"failed":[],
+	"seconds":2.85e1,
+	"messages":[
+		"                                  1\nPower::infy : Infinite expression - encountered.\n                                  0",
+		"General::stop : Further output of Power::infy will be suppressed during this calculation.",
+		"First::nofirst : {} has zero length and no first element.",
+		"Last::nolast : {} has zero length and no last element.",
+		"wdtTask::boom : Boom."
+	]
+}

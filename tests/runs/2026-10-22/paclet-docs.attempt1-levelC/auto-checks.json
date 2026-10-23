@@ -1,0 +1,24 @@
+{
+ "skill": "paclet-docs",
+ "tool_calls": 41,
+ "check1_triggered": {
+  "pass": true,
+  "skills_loaded": [
+   "paclet-docs",
+   "wolfram-symbol-page"
+  ]
+ },
+ "check3_rules_auto": {
+  "pass": true,
+  "hits": {}
+ },
+ "check4_notebooks_found": [
+  "work/paclet-docs-review.wln",
+  "work/paclet-docs-review_2.wln"
+ ],
+ "engines_seen": [
+  "wolfram-direct",
+  "wolframscript"
+ ],
+ "run_log": true
+}

@@ -1,0 +1,21 @@
+$AllowInternet = False;
+cnt[e_] := Module[{n = 0}, Internal`HandlerBlock[{"Assertions", (n++) &}, e]; n];
+SetAttributes[cnt, HoldFirst];
+cntU[e_] := (Update[Assert]; cnt[e]); SetAttributes[cntU, HoldFirst];
+Print["top-level Off Assert[False] evaluates to: ", ToString[InputForm[Assert[False]]], "  Off[Assert] state: ", Assert[False] === Unevaluated[Assert[False]]];
+$z = 1;
+g3[x_] := (Assert[$z > 5]; x);
+Print["g3 (no Block, Assert free of x): ", cnt[g3[1]], " after plain: ", (g3[1]; cnt[g3[1]])];
+$z = 2; Print["g3 after $z = 2 (timestamp of $z bumped): ", cnt[g3[1]]];
+g3[1]; $z = 2; Print["g3 after reassigning same value $z = 2: ", cnt[g3[1]]];
+g3[1]; Print["g3 stale again: ", cnt[g3[1]], ", with Update[Assert]: ", cntU[g3[1]], ", repeated: ", cntU[g3[1]]];
+bm[x_] := Block[{y}, y = x^2; Assert[y > 5]; y];
+v3 = Function[x, Block[{y}, y = x; Assert[y > 5]; y]];
+v4[x_] := Block[{y = x}, Assert[y > 5]; y];
+v5[x_] := Block[{y}, y = x; If[True, Assert[y > 5]]; y];
+v7[x_] := Block[{y}, y = x; w[{Assert[y > 5], Assert[y > 6]}]; y];
+v8[x_] := Block[{y}, y = x; Assert[y > 5]; Assert[y > 6]; Assert[y > 0]; y];
+Do[With[{f = f}, Print[Short[f, 1], ": fresh ", cnt[f[1]], ", stale ", (f[1]; cnt[f[1]]), ", with Update[Assert] ", (f[1]; cntU[f[1]]), ", again ", (f[1]; cntU[f[1]])]], {f, {bm, v3, v4, v5, v7, v8}}];
+(* is the stored expression object the carrier? DownValues share it; Compress copy does not *)
+bm[1]; Print["stale after DownValues[bm]=DownValues[bm]: ", (DownValues[bm] = DownValues[bm]; cnt[bm[1]])];
+Print["Assert still Off afterwards (no message, unevaluated): ", ToString[InputForm[Assert[False]]], " ; $AssertFunction ", $AssertFunction];

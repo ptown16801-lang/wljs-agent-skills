@@ -1,0 +1,26 @@
+{
+	"suite":"PacletTools",
+	"kernel":"fresh",
+	"ok":true,
+	"tests":71,
+	"passed":69,
+	"failed":[
+		{
+			"id":"ValidatePacletPath-MissingPath@@Tests\/PacletTools.wlt:69,1-75,2",
+			"outcome":"Failure"
+		},
+		{
+			"id":"FormatCheckResult-JSONWithoutHints@@Tests\/PacletTools.wlt:245,1-251,2",
+			"outcome":"Failure"
+		}
+	],
+	"seconds":9.5,
+	"messages":[
+		"URLFetch::offline : The Wolfram Language is currently configured not to use the Internet. To allow Internet use set $AllowInternet = True or check the \"Allow th",
+		"ResourceFunction::ffail : Failed to find resource function $Failed.",
+		"ResourceObject::notfname : The ResourceObject MessageFailure could not be found.",
+		"ResourceObject::noas : The argument $Failed should be the name or id of an existing resource or an Association defining a new resource.",
+		"General::stop : Further output of ResourceObject::noas will be suppressed during this calculation.",
+		"$IterationLimit::itlim : Iteration limit of 4096 exceeded."
+	]
+}

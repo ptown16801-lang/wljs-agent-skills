@@ -1,0 +1,19 @@
+{
+ "skill": "annotate-modelica-graphics",
+ "tool_calls": 11,
+ "check1_triggered": {
+  "pass": true,
+  "skills_loaded": [
+   "annotate-modelica-graphics"
+  ]
+ },
+ "check3_rules_auto": {
+  "pass": true,
+  "hits": {}
+ },
+ "check4_notebooks_found": [],
+ "engines_seen": [
+  "wsm-toolkit"
+ ],
+ "run_log": true
+}

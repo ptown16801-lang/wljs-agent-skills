@@ -1,0 +1,24 @@
+{
+ "skill": "create-wolfram-documentation",
+ "tool_calls": 65,
+ "check1_triggered": {
+  "pass": true,
+  "skills_loaded": [
+   "create-wolfram-documentation",
+   "wolfram-symbol-page"
+  ]
+ },
+ "check3_rules_auto": {
+  "pass": true,
+  "hits": {}
+ },
+ "check4_notebooks_found": [
+  "work/docs-setup-summary-2.wln",
+  "work/docs-setup-summary.wln"
+ ],
+ "engines_seen": [
+  "wolfram-direct",
+  "wolframscript"
+ ],
+ "run_log": true
+}

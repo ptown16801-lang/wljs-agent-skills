@@ -1,0 +1,27 @@
+{
+ "skill": "wljs-wlx",
+ "tool_calls": 17,
+ "check1_triggered": {
+  "pass": true,
+  "skills_loaded": [
+   "wljs-wlx"
+  ]
+ },
+ "check3_rules_auto": {
+  "pass": true,
+  "hits": {}
+ },
+ "check4_notebooks_found": [
+  "work/PrimeCards.wln"
+ ],
+ "engines_seen": [
+  "mcp__wljs__add_cells_batch",
+  "mcp__wljs__evaluate_cell",
+  "mcp__wljs__get_cell_lines",
+  "mcp__wljs__kernel_evaluate",
+  "mcp__wljs__new_notebook",
+  "mcp__wljs__read_content",
+  "mcp__wljs__set_cell_lines"
+ ],
+ "run_log": true
+}

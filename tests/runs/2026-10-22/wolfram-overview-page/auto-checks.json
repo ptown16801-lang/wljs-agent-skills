@@ -1,0 +1,21 @@
+{
+ "skill": "wolfram-overview-page",
+ "tool_calls": 25,
+ "check1_triggered": {
+  "pass": true,
+  "skills_loaded": [
+   "wolfram-overview-page"
+  ]
+ },
+ "check3_rules_auto": {
+  "pass": true,
+  "hits": {}
+ },
+ "check4_notebooks_found": [
+  "work/OverviewBuildSummary.wln"
+ ],
+ "engines_seen": [
+  "wolframscript"
+ ],
+ "run_log": true
+}

@@ -1,0 +1,22 @@
+Off[Assert]; Assert[False] -> InputForm[Assert[False]]
+test evals in handler call: 1
+test evals in plain call (k should stay 1 if skipped): 1
+test evals in handler call after plain: 1
+Block[{$AssertFunction}]: 1 after exit: 1
+Block[{$AssertFunction=$AssertFunction}]: 1 after exit: 1
+InheritedBlock[{$AssertFunction}] no assign: 0
+InheritedBlock + reassign: 1 after exit: 1
+Block[{$AssertFunction=f}]: 1
+plain call inside $AssertFunction block, then handler call in same block: 1
+Off[Assert] alone again: 1
+On[Assert] inside: 1
+ClearSystemCache: 0
+Update[]: 1
+Update[bm]: 0
+Update[Assert]: 1
+v1: {1, 1}
+v2: {1, 1}
+Function[x, Block[{y}, y = x; Assert[y > 5]; y]]: {1, 0}
+v4: {1, 0}
+v5: {1, 0}
+v6: {1, 1}

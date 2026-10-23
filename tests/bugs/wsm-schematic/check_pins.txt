@@ -1,0 +1,18 @@
+connect(buoyancyDynamics.y, position.s_ref)      buoyancyDynamics.y     drawn=(-14,20)       expected=-              n/a   no MSL table entry (in-file class)
+connect(buoyancyDynamics.y, position.s_ref)      position.s_ref         drawn=(-86,0)        expected=(-88,0)        WRONG Translational/Sources/Position.mo:20-22 centre (-120,0) -> origin (-76,0) + (-120*0.1, 0*0.1)
+connect(position.flange, prismatic.axis)         position.flange        drawn=(-86,0)        expected=(-66,0)        WRONG Translational/Interfaces/PartialElementaryOneFlangeAndSupport2.mo:12-13 centre (100,0) -> origin (-76,0) + (100*0.1, 0*0.1)
+connect(position.flange, prismatic.axis)         prismatic.axis         drawn=(-34,-20)      expected=(-16,-14)      WRONG MultiBody/Joints/Prismatic.mo:6-8 centre (80,60) -> origin (-24,-20) + (80*0.1, 60*0.1)
+connect(prismatic.frame_b, subBody.frame_a)      prismatic.frame_b      drawn=(-34,-20)      expected=(-14,-20)      WRONG MultiBody/Interfaces/PartialElementaryJoint.mo:6 centre (100,0) -> origin (-24,-20) + (100*0.1, 0*0.1)
+connect(prismatic.frame_b, subBody.frame_a)      subBody.frame_a        drawn=(14,-20)       expected=(14,-20)       OK    MultiBody/Parts/Body.mo:9-11 centre (-100,0) -> origin (24,-20) + (-100*0.1, 0*0.1)
+connect(world.frame_b, prismatic.frame_a)        world.frame_b          drawn=(14,20)        expected=(34,20)        WRONG MultiBody/package.mo:15-17 centre (100,0) -> origin (24,20) + (100*0.1, 0*0.1)
+connect(world.frame_b, prismatic.frame_a)        prismatic.frame_a      drawn=(-34,-20)      expected=(-34,-20)      OK    MultiBody/Interfaces/PartialElementaryJoint.mo:5 centre (-100,0) -> origin (-24,-20) + (-100*0.1, 0*0.1)
+connect(f, buoyancyDynamics.f)                   f                      drawn=(-126,-16)     expected=(-126,-16)     OK    diagram Placement of class connector
+connect(f, buoyancyDynamics.f)                   buoyancyDynamics.f     drawn=(-34,22)       expected=-              n/a   no MSL table entry (in-file class)
+connect(deltarho, buoyancyDynamics.deltarho)     deltarho               drawn=(-126,16)      expected=(-126,16)      OK    diagram Placement of class connector
+connect(deltarho, buoyancyDynamics.deltarho)     buoyancyDynamics.deltarho drawn=(-34,18)       expected=-              n/a   no MSL table entry (in-file class)
+connect(buoyancyDynamics.y, y)                   buoyancyDynamics.y     drawn=(-14,20)       expected=-              n/a   no MSL table entry (in-file class)
+connect(buoyancyDynamics.y, y)                   y                      drawn=(126,0)        expected=(126,0)        OK    diagram Placement of class connector
+connect(subShape.frame_a, subBody.frame_a)       subShape.frame_a       drawn=(66,-20)       expected=(66,-20)       OK    MultiBody/Interfaces/PartialVisualizer.mo:5 centre (-100,0) -> origin (76,-20) + (-100*0.1, 0*0.1)
+connect(subShape.frame_a, subBody.frame_a)       subBody.frame_a        drawn=(14,-20)       expected=(14,-20)       OK    MultiBody/Parts/Body.mo:9-11 centre (-100,0) -> origin (24,-20) + (-100*0.1, 0*0.1)
+connect(fluidSurface.frame_a, world.frame_b)     fluidSurface.frame_a   drawn=(66,20)        expected=(66,20)        OK    MultiBody/Interfaces/PartialVisualizer.mo:5 centre (-100,0) -> origin (76,20) + (-100*0.1, 0*0.1)
+connect(fluidSurface.frame_a, world.frame_b)     world.frame_b          drawn=(14,20)        expected=(34,20)        WRONG MultiBody/package.mo:15-17 centre (100,0) -> origin (24,20) + (100*0.1, 0*0.1)

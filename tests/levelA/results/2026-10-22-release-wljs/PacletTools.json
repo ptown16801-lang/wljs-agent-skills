@@ -1,0 +1,12 @@
+{
+	"suite":"PacletTools",
+	"kernel":"WLJS",
+	"ok":true,
+	"tests":60,
+	"passed":60,
+	"failed":[],
+	"seconds":0.1,
+	"messages":[
+		"AgentTools::PacletToolsInvalidPath : The path \"\/nonexistent\/path\/to\/paclet\" does not exist. Provide an absolute path to either the paclet root directory or the "
+	]
+}

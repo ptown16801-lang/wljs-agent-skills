@@ -1,0 +1,14 @@
+--- a/MarkdownToNotebook.wl
++++ b/MarkdownToNotebook.wl
+@@ -4319,6 +4319,11 @@
+            the XXXX placeholder the template ships inside the TechNotesSection group *)
+         If[ rt =!= {} && paclet =!= "", nb = fillDocCells[nb, "Tutorials", techNoteContent[#, paclet] & /@ rt] ]
+     ];
++    (* Keywords: one Keywords cell per frontmatter entry, filling the template's
++       XXXX placeholder in the closed Keywords group - as the guide, tutorial and
++       overview builders do. Before the XXXX strip below, which would otherwise
++       drop the placeholder and leave the page with no search keywords. *)
++    nb = fillDocList[nb, "Keywords", asList @ Lookup[meta, "Keywords", {}]];
+     (* drop unfilled placeholders, including dangling FunctionPlaceholder links *)
+     nb = nb /. {
+         Cell["XXXX", _, ___] :> Nothing,

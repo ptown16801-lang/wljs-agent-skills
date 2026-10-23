@@ -1,0 +1,27 @@
+{
+ "skill": "modelica-model-architecture",
+ "tool_calls": 67,
+ "check1_triggered": {
+  "pass": true,
+  "skills_loaded": [
+   "modelica-model-architecture",
+   "search-modelica-docs",
+   "validate-modelica",
+   "annotate-modelica-graphics",
+   "annotate-modelica-plots",
+   "simulate-modelica"
+  ]
+ },
+ "check3_rules_auto": {
+  "pass": true,
+  "hits": {}
+ },
+ "check4_notebooks_found": [
+  "work/SimpleCircuits-summary.wln"
+ ],
+ "engines_seen": [
+  "mcp__wljs__kernel_evaluate",
+  "wsm-toolkit"
+ ],
+ "run_log": true
+}

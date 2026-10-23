@@ -1,0 +1,133 @@
+[Warning] Running tests on source directory instead of built paclet
+
+TestReport: CodeInspectorTool.wlt | Collecting tests...Evaluating tests (0)Elapsed time 4s
+
+TestReport: CodeInspectorTool.wlt | Collecting tests...Evaluating tests (0)Elapsed time 8s
+
+TestReport: CodeInspectorTool.wlt | Collecting tests...Evaluating tests (0)Elapsed time 8s
+[Warning] Paclet MX file was not loaded
+
+TestReport: CodeInspectorTool.wlt | 4 SuccessEvaluating tests (4)Elapsed time 8s
+
+TestReport: CodeInspectorTool.wlt | 4 SuccessEvaluating tests (4)Elapsed time 9s
+
+TestReport: CodeInspectorTool.wlt | 4 SuccessEvaluating tests (4)Elapsed time 9s
+PacletTools (fresh): 69/71 passed, 9.5 s
+
+TestReport: CodeInspectorTool.wlt | 19 SuccessEvaluating tests (19)Elapsed time 10s
+
+TestReport: CodeInspectorTool.wlt | 29 Success,1 MessagesFailure,4 FailureEvaluating tests (34)Elapsed time 10s
+
+TestReport: CodeInspectorTool.wlt | 129 Success,1 MessagesFailure,9 FailureEvaluating tests (139)Elapsed time 10s
+
+TestReport: CodeInspectorTool.wlt | 156 Success,1 MessagesFailure,21 FailureEvaluating tests (178)Elapsed time 11s
+
+TestReport: CodeInspectorTool.wlt | 156 Success,1 MessagesFailure,21 FailureEvaluating tests (178)Elapsed time 11s
+
+TestReport: CodeInspectorTool.wlt | 156 Success,1 MessagesFailure,21 FailureEvaluating tests (178)Elapsed time 12s
+
+TestReport: CodeInspectorTool.wlt | 156 Success,1 MessagesFailure,21 FailureEvaluating tests (178)Elapsed time 12s
+
+TestReport: CodeInspectorTool.wlt | 156 Success,1 MessagesFailure,21 FailureEvaluating tests (178)Elapsed time 12s
+
+TestReport: CodeInspectorTool.wlt | 156 Success,1 MessagesFailure,21 FailureEvaluating tests (178)Elapsed time 13s
+
+TestReport: CodeInspectorTool.wlt | 156 Success,1 MessagesFailure,21 FailureEvaluating tests (178)Elapsed time 13s
+
+TestReport: CodeInspectorTool.wlt | 156 Success,1 MessagesFailure,21 FailureEvaluating tests (178)Elapsed time 14s
+
+TestReport: CodeInspectorTool.wlt | 156 Success,1 MessagesFailure,21 FailureEvaluating tests (178)Elapsed time 14s
+
+TestReport: CodeInspectorTool.wlt | 156 Success,1 MessagesFailure,21 FailureEvaluating tests (178)Elapsed time 14s
+
+TestReport: CodeInspectorTool.wlt | 156 Success,1 MessagesFailure,21 FailureEvaluating tests (178)Elapsed time 15s
+
+TestReport: CodeInspectorTool.wlt | 156 Success,1 MessagesFailure,21 FailureEvaluating tests (178)Elapsed time 15s
+
+TestReport: CodeInspectorTool.wlt | 156 Success,1 MessagesFailure,21 FailureEvaluating tests (178)Elapsed time 16s
+
+TestReport: CodeInspectorTool.wlt | 156 Success,1 MessagesFailure,21 FailureEvaluating tests (178)Elapsed time 16s
+
+TestReport: CodeInspectorTool.wlt | 156 Success,1 MessagesFailure,21 FailureEvaluating tests (178)Elapsed time 16s
+
+TestReport: CodeInspectorTool.wlt | 156 Success,1 MessagesFailure,21 FailureEvaluating tests (178)Elapsed time 17s
+
+TestReport: CodeInspectorTool.wlt | 156 Success,1 MessagesFailure,21 FailureEvaluating tests (178)Elapsed time 17s
+
+TestReport: CodeInspectorTool.wlt | 156 Success,1 MessagesFailure,21 FailureEvaluating tests (178)Elapsed time 18s
+
+TestReport: CodeInspectorTool.wlt | 156 Success,1 MessagesFailure,21 FailureEvaluating tests (178)Elapsed time 18s
+
+TestReport: CodeInspectorTool.wlt | 156 Success,1 MessagesFailure,21 FailureEvaluating tests (178)Elapsed time 18s
+
+TestReport: CodeInspectorTool.wlt | 156 Success,1 MessagesFailure,21 FailureEvaluating tests (178)Elapsed time 19s
+
+TestReport: CodeInspectorTool.wlt | 156 Success,1 MessagesFailure,21 FailureEvaluating tests (178)Elapsed time 19s
+
+TestReport: CodeInspectorTool.wlt | 156 Success,1 MessagesFailure,21 FailureEvaluating tests (178)Elapsed time 20s
+
+TestReport: CodeInspectorTool.wlt | 156 Success,1 MessagesFailure,21 FailureEvaluating tests (178)Elapsed time 20s
+
+TestReport: CodeInspectorTool.wlt | 156 Success,1 MessagesFailure,21 FailureEvaluating tests (178)Elapsed time 20s
+
+TestReport: CodeInspectorTool.wlt | 156 Success,1 MessagesFailure,21 FailureEvaluating tests (178)Elapsed time 21s
+
+TestReport: CodeInspectorTool.wlt | 156 Success,1 MessagesFailure,21 FailureEvaluating tests (178)Elapsed time 21s
+
+TestReport: CodeInspectorTool.wlt | 156 Success,1 MessagesFailure,21 FailureEvaluating tests (178)Elapsed time 22s
+
+TestReport: CodeInspectorTool.wlt | 156 Success,1 MessagesFailure,21 FailureEvaluating tests (178)Elapsed time 22s
+
+TestReport: CodeInspectorTool.wlt | 156 Success,1 MessagesFailure,21 FailureEvaluating tests (178)Elapsed time 22s
+
+TestReport: CodeInspectorTool.wlt | 156 Success,1 MessagesFailure,21 FailureEvaluating tests (178)Elapsed time 23s
+
+TestReport: CodeInspectorTool.wlt | 156 Success,1 MessagesFailure,21 FailureEvaluating tests (178)Elapsed time 23s
+
+TestReport: CodeInspectorTool.wlt | 156 Success,1 MessagesFailure,21 FailureEvaluating tests (178)Elapsed time 24s
+
+TestReport: CodeInspectorTool.wlt | 156 Success,1 MessagesFailure,21 FailureEvaluating tests (178)Elapsed time 24s
+
+TestReport: CodeInspectorTool.wlt | 156 Success,1 MessagesFailure,21 FailureEvaluating tests (178)Elapsed time 24s
+
+TestReport: CodeInspectorTool.wlt | 156 Success,1 MessagesFailure,21 FailureEvaluating tests (178)Elapsed time 25s
+
+TestReport: CodeInspectorTool.wlt | 156 Success,1 MessagesFailure,21 FailureEvaluating tests (178)Elapsed time 25s
+
+TestReport: CodeInspectorTool.wlt | 156 Success,1 MessagesFailure,21 FailureEvaluating tests (178)Elapsed time 26s
+
+TestReport: CodeInspectorTool.wlt | 156 Success,1 MessagesFailure,21 FailureEvaluating tests (178)Elapsed time 26s
+
+TestReport: CodeInspectorTool.wlt | 156 Success,1 MessagesFailure,21 FailureEvaluating tests (178)Elapsed time 26s
+
+TestReport: CodeInspectorTool.wlt | 156 Success,1 MessagesFailure,21 FailureEvaluating tests (178)Elapsed time 27s
+
+TestReport: CodeInspectorTool.wlt | 156 Success,1 MessagesFailure,21 FailureEvaluating tests (178)Elapsed time 27s
+
+TestReport: CodeInspectorTool.wlt | 156 Success,1 MessagesFailure,21 FailureEvaluating tests (178)Elapsed time 28s
+
+TestReport: CodeInspectorTool.wlt | 156 Success,1 MessagesFailure,21 FailureEvaluating tests (178)Elapsed time 28s
+
+TestReport: CodeInspectorTool.wlt | 156 Success,1 MessagesFailure,21 FailureEvaluating tests (178)Elapsed time 28s
+
+TestReport: CodeInspectorTool.wlt | 156 Success,1 MessagesFailure,21 FailureEvaluating tests (178)Elapsed time 29s
+
+TestReport: CodeInspectorTool.wlt | 156 Success,1 MessagesFailure,21 FailureEvaluating tests (178)Elapsed time 29s
+
+TestReport: CodeInspectorTool.wlt | 156 Success,1 MessagesFailure,21 FailureEvaluating tests (178)Elapsed time 30s
+
+TestReport: CodeInspectorTool.wlt | 156 Success,1 MessagesFailure,21 FailureEvaluating tests (178)Elapsed time 30s
+
+TestReport: CodeInspectorTool.wlt | 156 Success,1 MessagesFailure,21 FailureEvaluating tests (178)Elapsed time 30s
+
+TestReport: CodeInspectorTool.wlt | 156 Success,1 MessagesFailure,21 FailureEvaluating tests (178)Elapsed time 31s
+
+TestReport: CodeInspectorTool.wlt | 156 Success,1 MessagesFailure,21 FailureEvaluating tests (178)Elapsed time 31s
+
+TestReport: CodeInspectorTool.wlt | 156 Success,1 MessagesFailure,21 FailureEvaluating tests (178)Elapsed time 32s
+
+TestReport: CodeInspectorTool.wlt | 156 Success,1 MessagesFailure,21 FailureEvaluating tests (178)Elapsed time 32s
+
+TestReport: CodeInspectorTool.wlt | 156 Success,1 MessagesFailure,21 FailureEvaluating tests (178)Elapsed time 32s
+
+TestReport: CodeInspectorTool.wlt | 175 Success,1 MessagesFailure,26 FailureEvaluating tests (202)Elapsed time 33s

@@ -1,0 +1,3 @@
+mass.s
+mass.v
+springDamper.f

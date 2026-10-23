@@ -1,0 +1,14 @@
+$AllowInternet = False;
+Get["~/.local/share/wolfram-agent-skills/agenttools/744d2d154871adcd2cec2ebfcf30a5eb8f65b8dd/wolfram-debugging/scripts/WolframDebugging.wl"];
+Get["<repo>/tests/runs/2026-10-22/wolfram-debugging/work/FunctionWithAssert.wl"];
+a = WolframDebugging`FailedAssertions[Compute[1]]["Count"];
+Compute[1];
+b = WolframDebugging`FailedAssertions[Compute[1]]["Count"];
+Get["<repo>/tests/runs/2026-10-22/wolfram-debugging/work/FunctionWithAssert.wl"];
+c = WolframDebugging`FailedAssertions[Compute[1]]["Count"];
+bm[x_] := Block[{y}, y = x^2; Assert[y > 5]; y];
+mm[x_] := Module[{y}, y = x^2; Assert[y > 5]; y];
+d1 = WolframDebugging`FailedAssertions[bm[1]]["Count"]; bm[1]; d2 = WolframDebugging`FailedAssertions[bm[1]]["Count"];
+e1 = WolframDebugging`FailedAssertions[mm[1]]["Count"]; mm[1]; e2 = WolframDebugging`FailedAssertions[mm[1]]["Count"];
+Print[{"fresh load", a, "after plain call", b, "after reload", c}];
+Print[{"Block body", d1, d2, "Module body", e1, e2}];

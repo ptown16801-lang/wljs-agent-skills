@@ -1,0 +1,28 @@
+{
+ "skill": "wolfram-language-modelica",
+ "tool_calls": 53,
+ "check1_triggered": {
+  "pass": true,
+  "skills_loaded": [
+   "wolfram-language-modelica"
+  ]
+ },
+ "check3_rules_auto": {
+  "pass": true,
+  "hits": {}
+ },
+ "check4_notebooks_found": [
+  "work/ExampleModelSweep.wln"
+ ],
+ "engines_seen": [
+  "mcp__wljs__add_cells_batch",
+  "mcp__wljs__delete_cell",
+  "mcp__wljs__evaluate_cell",
+  "mcp__wljs__kernel_evaluate",
+  "mcp__wljs__list_cells",
+  "mcp__wljs__new_notebook",
+  "mcp__wljs__project_cell",
+  "mcp__wljs__set_cell_lines"
+ ],
+ "run_log": true
+}

@@ -1,0 +1,35 @@
+[Warning] Running tests on source directory instead of built paclet
+
+TestReport: AgentSkills.wlt | Collecting tests...Evaluating tests (0)Elapsed time 3s
+
+TestReport: AgentSkills.wlt | Collecting tests...Evaluating tests (0)Elapsed time 4s
+PacletTools (fresh): 69/71 passed, 9.5 s
+
+TestReport: AgentSkills.wlt | Collecting tests...Evaluating tests (0)Elapsed time 10s
+
+TestReport: AgentSkills.wlt | Collecting tests...Evaluating tests (0)Elapsed time 10s
+[Warning] Paclet MX file was not loaded
+
+TestReport: AgentSkills.wlt | 4 SuccessEvaluating tests (4)Elapsed time 10s
+
+TestReport: AgentSkills.wlt | 4 SuccessEvaluating tests (4)Elapsed time 11s
+
+TestReport: AgentSkills.wlt | 5 SuccessEvaluating tests (5)Elapsed time 11s
+
+TestReport: AgentSkills.wlt | 22 Success,14 FailureEvaluating tests (36)Elapsed time 11s
+
+TestReport: AgentSkills.wlt | 26 Success,16 FailureEvaluating tests (42)Elapsed time 12s
+
+TestReport: AgentSkills.wlt | 43 Success,19 FailureEvaluating tests (62)Elapsed time 12s
+
+TestReport: AgentSkills.wlt | 49 Success,23 FailureEvaluating tests (72)Elapsed time 13s
+
+TestReport: AgentSkills.wlt | 50 Success,33 FailureEvaluating tests (83)Elapsed time 13s
+
+TestReport: AgentSkills.wlt | 55 Success,1 MessagesFailure,35 FailureEvaluating tests (91)Elapsed time 13s
+
+TestReport: AgentSkills.wlt | 60 Success,2 MessagesFailure,39 FailureEvaluating tests (101)Elapsed time 14s
+
+TestReport: AgentSkills.wlt | 80 Success,2 MessagesFailure,40 FailureEvaluating tests (122)Elapsed time 14s
+
+TestReport: AgentSkills.wlt | 102 Success,2 MessagesFailure,44 FailureEvaluating tests (148)Elapsed time 15s

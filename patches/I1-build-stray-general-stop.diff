@@ -1,0 +1,46 @@
+--- a/examples/Paclet/DocPageExamples/build.wls
++++ b/examples/Paclet/DocPageExamples/build.wls
+@@ -44,12 +44,22 @@
+     FileNameJoin[Join[{srcDocDir, "English"}, dir, Most[segs], {Last[segs] <> ".nb"}]]
+ ]
+ 
+-buildDoc[srcFile_String] := Block[{info, tmpl, out},
++(* Each page is converted - and its examples evaluated - exactly ONCE: the
++   "Association" result carries the finished notebook as well as the template
++   and metadata the output path needs, and exportDeterministicNB (the writer
++   MarkdownToNotebook[src, file] itself uses) saves it with the same
++   deterministic ids. Converting a second time just to write the file ran every
++   example twice in this one kernel, so a message an example issues twice was
++   then issued a 3rd and 4th time and the 4th turned into a stray
++   "General::stop: Further output ... will be suppressed" cell on the page.
++   $MessageList is also Block-scoped per page, so General::stop counting starts
++   afresh for every page and one page's messages never suppress another's. *)
++buildDoc[srcFile_String] := Block[{info, tmpl, out, $MessageList = {}},
+     info = MarkdownToNotebook[srcFile, "Association", "EvaluateSeparator" -> None];
+     tmpl = info["Template"];
+     out = outPath[tmpl, info["Metadata"]];
+     Quiet @ CreateDirectory[DirectoryName[out], CreateIntermediateDirectories -> True];
+-    MarkdownToNotebook[srcFile, out, "EvaluateSeparator" -> None];
++    exportDeterministicNB[out, info["Notebook"]];
+     Print["  ", FileNameTake[srcFile], " (", tmpl, ") -> ", StringReplace[out, srcDocDir <> "/" -> ""]]
+ ]
+ 
+--- a/MarkdownToNotebook.wl
++++ b/MarkdownToNotebook.wl
+@@ -1064,8 +1064,14 @@
+     msgs = {};
+     (* $Messages -> {} suppresses the kernel's default text output; messages are
+        captured at the box level by the Internal`HandlerBlock below (handleMsg
+-       AppendTo's the Block-local msgs via dynamic scope). *)
+-    Block[{$Messages = {}, Print, Echo, CellPrint},
++       AppendTo's the Block-local msgs via dynamic scope).
++       $MessageList -> {}: in a notebook every input cell is its own evaluation, so
++       the "Further output of ... will be suppressed" (General::stop) count starts
++       afresh per cell. Without this, every cell of every document converted in
++       one kernel call shares one $MessageList, and a message issued once per
++       cell turns into a General::stop cell on the third such cell - or on a page
++       converted after another page that issued it. *)
++    Block[{$Messages = {}, $MessageList = {}, Print, Echo, CellPrint},
+         (* Print accumulates a real Cell built from the args, not a text
+            chunk - so Print[graphics], Print[image], Print[dataset], or
+            Print["count: ", n] each render correctly downstream. *)

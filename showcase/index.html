@@ -1,0 +1,241 @@
+<meta charset="utf-8">
+<title>Wolfram Skills on WLJS</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;700;800&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&family=JetBrains+Mono:wght@400;600&display=swap">
+<style>
+/* Layout: an engineering lab report. Narrow reading column, wide figure plates, a connector-blue rule system
+   borrowed from Modelica diagrams, one amber signal colour for results. */
+:root {
+  --paper: #f6f7f9; --ink: #16202e; --muted: #556274; --rule: #d3d9e2; --plate: #ffffff;
+  --wire: #1d3f8f; --signal: #c26a00; --ok: #2c7a4b; --warn: #a15c00; --off: #7a8494;
+  --display: "Archivo", "Helvetica Neue", Arial, sans-serif;
+  --body: "Source Serif 4", Georgia, "Times New Roman", serif;
+  --mono: "JetBrains Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
+}
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) {
+  --paper: #0f141c; --ink: #e4e9f0; --muted: #9aa6b6; --rule: #2a3442; --plate: #18202b;
+  --wire: #7ea2ff; --signal: #ffad4d; --ok: #63c58c; --warn: #f0a24a; --off: #8893a3; color-scheme: dark } }
+:root[data-theme="dark"] {
+  --paper: #0f141c; --ink: #e4e9f0; --muted: #9aa6b6; --rule: #2a3442; --plate: #18202b;
+  --wire: #7ea2ff; --signal: #ffad4d; --ok: #63c58c; --warn: #f0a24a; --off: #8893a3; color-scheme: dark }
+
+body { background: var(--paper); color: var(--ink); font: 17px/1.6 var(--body); }
+.wrap { max-width: 1080px; margin: 0 auto; padding-block: 48px 72px;
+  padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); }
+.col { max-width: 68ch; }
+h1, h2, h3 { font-family: var(--display); text-wrap: balance; line-height: 1.15; margin: 0; }
+h1 { font-size: clamp(2rem, 5vw, 3.3rem); font-weight: 800; letter-spacing: -0.01em; }
+h2 { font-size: 1.6rem; font-weight: 700; }
+h3 { font-size: 1.05rem; font-weight: 700; }
+p { margin: 0; }
+a { color: var(--wire); }
+a:focus-visible { outline: 2px solid var(--signal); outline-offset: 2px; }
+code, .mono { font-family: var(--mono); font-size: 0.86em; }
+.eyebrow { font: 600 0.75rem/1 var(--mono); letter-spacing: 0.12em; text-transform: uppercase; color: var(--wire); }
+
+header { display: grid; gap: 18px; border-bottom: 2px solid var(--wire); padding-bottom: 32px; }
+header .lede { font-size: 1.2rem; color: var(--muted); max-width: 60ch; }
+.facts { display: flex; flex-wrap: wrap; gap: 10px 28px; font-family: var(--mono); font-size: 0.85rem; color: var(--muted); }
+.facts b { color: var(--ink); font-weight: 600; }
+.links { display: flex; flex-wrap: wrap; gap: 12px; }
+.btn { font: 600 0.9rem/1 var(--display); text-decoration: none; padding: 11px 16px; border: 1.5px solid var(--wire); color: var(--wire); }
+.btn.primary { background: var(--wire); color: var(--paper); }
+
+section { display: grid; gap: 22px; padding-block: 52px 0; }
+.lead { color: var(--muted); }
+
+/* figure plates */
+.plates { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; }
+figure { margin: 0; background: var(--plate); border: 1px solid var(--rule); display: grid; grid-template-rows: auto 1fr; min-width: 0; }
+figure .img { background: #fff; display: grid; place-items: center; padding: 10px; border-bottom: 1px solid var(--rule); }
+figure img { display: block; max-height: 300px; width: auto; max-width: 100%; }
+figcaption { padding: 14px 16px 16px; display: grid; gap: 6px; font-size: 0.95rem; }
+figcaption .skill { font: 600 0.78rem/1.2 var(--mono); color: var(--wire); }
+figcaption .num { font-family: var(--mono); font-size: 0.82rem; color: var(--muted); font-variant-numeric: tabular-nums; }
+
+/* pipeline */
+.pipe { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 0; border: 1px solid var(--rule); background: var(--plate); }
+.pipe > div { padding: 16px; display: grid; gap: 6px; align-content: start; border-right: 1px solid var(--rule); position: relative; }
+.pipe > div:last-child { border-right: 0; }
+.pipe > div:not(:last-child)::after { content: ""; position: absolute; right: -6px; top: 24px; width: 10px; height: 10px; background: var(--wire); transform: rotate(45deg); }
+.pipe .step { font: 600 0.72rem/1 var(--mono); color: var(--signal); letter-spacing: 0.08em; }
+.pipe p { font-size: 0.9rem; color: var(--muted); }
+@media (max-width: 760px) {
+  .pipe { grid-template-columns: 1fr; }
+  .pipe > div { border-right: 0; border-bottom: 1px solid var(--rule); }
+  .pipe > div:last-child { border-bottom: 0; }
+  .pipe > div:not(:last-child)::after { right: 24px; top: auto; bottom: -6px; }
+}
+
+/* results */
+.bar { display: flex; height: 22px; border: 1px solid var(--rule); }
+.bar span { display: block; height: 100%; }
+.legend { display: flex; flex-wrap: wrap; gap: 8px 22px; font-family: var(--mono); font-size: 0.85rem; font-variant-numeric: tabular-nums; }
+.legend i { display: inline-block; width: 11px; height: 11px; margin-right: 7px; vertical-align: -1px; }
+.levels { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 20px; }
+.levels > div { display: grid; gap: 6px; border-top: 2px solid var(--wire); padding-top: 12px; }
+.levels p { font-size: 0.95rem; color: var(--muted); }
+
+/* defects table */
+.tablewrap { overflow-x: auto; border: 1px solid var(--rule); background: var(--plate); }
+table { border-collapse: collapse; width: 100%; min-width: 620px; font-size: 0.92rem; }
+th, td { text-align: left; padding: 9px 12px; border-bottom: 1px solid var(--rule); vertical-align: top; }
+th { font: 600 0.75rem/1.2 var(--mono); letter-spacing: 0.06em; text-transform: uppercase; color: var(--muted); }
+td.id { font-family: var(--mono); font-weight: 600; color: var(--wire); white-space: nowrap; }
+.pill { font: 600 0.72rem/1 var(--mono); padding: 4px 7px; border: 1px solid currentColor; white-space: nowrap; }
+.pill.fixed { color: var(--ok); } .pill.doc { color: var(--off); } .pill.local { color: var(--warn); }
+tr:last-child td { border-bottom: 0; }
+
+footer { margin-top: 64px; padding-top: 22px; border-top: 1px solid var(--rule); font-size: 0.9rem; color: var(--muted); display: grid; gap: 8px; }
+@media (prefers-reduced-motion: no-preference) { .btn { transition: background .15s, color .15s; } .btn:hover { background: var(--wire); color: var(--paper); } }
+</style>
+
+<div class="wrap">
+  <header>
+    <span class="eyebrow">Claude Code · Wolfram Language · Modelica</span>
+    <h1>Wolfram agent skills, running on WLJS</h1>
+    <p class="lede">Seventy of Wolfram's agent skills, including the System Modeler AI toolkit, adapted to run in the
+      open-source WLJS notebook, tested one by one, with fourteen defects found along the way.</p>
+    <div class="facts">
+      <span><b>70</b> skills</span><span><b>60</b> work (59 + 1 after a fix)</span><span><b>14</b> defects reproduced</span>
+      <span>kernels <b>offline</b> by rule</span><span>Oct 21–23, 2026</span>
+    </div>
+    <div class="links">
+      <a class="btn primary" href="https://github.com/ptown16801-lang/wljs-agent-skills">Source on GitHub</a>
+      <a class="btn" href="https://github.com/ptown16801-lang/wljs-agent-skills/blob/main/docs/SKILLS.md">Skills catalogue</a>
+      <a class="btn" href="https://github.com/ptown16801-lang/wljs-agent-skills/blob/main/docs/BUGS.md">Defects</a>
+      <a class="btn" href="notebooks/system-modeler-in-wljs.html">Open a WLJS notebook</a>
+    </div>
+  </header>
+
+  <section>
+    <span class="eyebrow">System Modeler without the System Modeler app</span>
+    <h2>Modelica models simulated, annotated and shown in WLJS</h2>
+    <p class="col lead">Each picture comes from a skill's final test run, where a fresh agent used the skill and an
+      independent reviewer re-checked the result, except the diagram, which comes from the W4 fix's own before/after
+      test.</p>
+    <div class="plates">
+      <figure>
+        <div class="img"><img src="img/stored-plot.png" alt="Two stacked plots: x decays towards 0; y grows to about 33,000 by time 10" width="423" height="500" loading="lazy"></div>
+        <figcaption><span class="skill">annotate-modelica-plots</span>
+          <span>A stored result figure written into the model and rendered back from it.</span>
+          <span class="num">x(10) = 4.539992e-5, y(10) = 33039.70, both exact</span></figcaption>
+      </figure>
+      <figure>
+        <div class="img"><img src="img/schematic-after-W4.png" alt="Automatically laid-out Modelica schematic of the submarine model; connection lines end on the components' connector pins" width="1867" height="529" loading="lazy"></div>
+        <figcaption><span class="skill">annotate-modelica-graphics · fix W4</span>
+          <span>The toolkit's automatic layout for a text-only model, after the fix: each line ends on the connector
+            position read from the Modelica library source, not a guessed icon edge. The layout itself is unchanged.</span>
+          <span class="num">Model: Wolfram's DocumentationExamples.Control.Submarine</span></figcaption>
+      </figure>
+      <figure>
+        <div class="img"><img src="img/control-panel.png" alt="Three log-scale sliders for R1, C and R2 above a sine-wave current plot" width="777" height="364" loading="lazy"></div>
+        <figcaption><span class="skill">annotate-control-panel</span>
+          <span>An Explore panel with three log-scale sliders, rebuilt as a live WLJS control; each change
+            re-simulates the circuit.</span>
+          <span class="num">steady-state |I| checked by hand against V = 1, f = 1, L = 0.1</span></figcaption>
+      </figure>
+      <figure>
+        <div class="img"><img src="img/animation-replay.png" alt="Chain pendulum drawn in blue and red with a yellow trace of its tip" width="473" height="550" loading="lazy"></div>
+        <figcaption><span class="skill">annotate-modelica-animation</span>
+          <span>A stored camera that follows the last link of a chain pendulum, replayed in WLJS with a trace of
+            the tip.</span>
+          <span class="num">tip at t = 5: (−1.89, −2.07)</span></figcaption>
+      </figure>
+      <figure>
+        <div class="img"><img src="img/parameter-corners.png" alt="Current over 10 seconds for default and corner parameter sets" width="1003" height="614" loading="lazy"></div>
+        <figcaption><span class="skill">annotate-control-panel</span>
+          <span>The same circuit at its default values and at the corner of the slider ranges.</span>
+          <span class="num">default 10 Ω, 0.01 F, 100 Ω · corner 1 Ω, 0.1 F, 10 Ω</span></figcaption>
+      </figure>
+      <figure>
+        <div class="img"><img src="img/sweep.png" alt="Three rising curves for initial values 0.5, 1 and 2" width="469" height="379" loading="lazy"></div>
+        <figcaption><span class="skill">wolfram-language-modelica</span>
+          <span>A parameter sweep pulled into Wolfram Language and compared with the exact solution.</span>
+          <span class="num">y(1) = 3.3059, 3.8935, 5.0687, error &lt; 1e-9</span></figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <section>
+    <span class="eyebrow">How it works</span>
+    <h2>One table generates every skill</h2>
+    <div class="pipe">
+      <div><span class="step">PINNED</span><h3>Upstream skills</h3><p>Six collections fetched at fixed commits and checksummed. Never edited.</p></div>
+      <div><span class="step">TABLE</span><h3>build.mjs</h3><p>Per skill: where it runs, what changes from Mathematica, what needs the user's OK.</p></div>
+      <div><span class="step">GENERATED</span><h3>70 SKILL.md files</h3><p>Plus the catalogue and the results table, from the same source.</p></div>
+      <div><span class="step">RUN</span><h3>Claude Code</h3><p>Loads the matching skill and follows ROUTES.md to the WLJS kernel.</p></div>
+      <div><span class="step">SHOW</span><h3>WLJS notebook</h3><p>Every result saved as a notebook the user can open and re-run.</p></div>
+    </div>
+  </section>
+
+  <section>
+    <span class="eyebrow">Testing</span>
+    <h2>Three levels, every skill</h2>
+    <div class="bar" role="img" aria-label="59 works, 1 works with fixes, 6 limited, 4 not tested">
+      <span style="width:84.3%;background:var(--ok)"></span><span style="width:1.4%;background:var(--wire)"></span>
+      <span style="width:8.6%;background:var(--warn)"></span><span style="width:5.7%;background:var(--off)"></span>
+    </div>
+    <div class="legend">
+      <span><i style="background:var(--ok)"></i>works 59</span><span><i style="background:var(--wire)"></i>works with fixes 1</span>
+      <span><i style="background:var(--warn)"></i>limited 6</span><span><i style="background:var(--off)"></i>not tested 4</span>
+    </div>
+    <div class="levels">
+      <div><h3>A · Official suites</h3><p>Wolfram's own AgentTools test suites, run in the WLJS kernel and in a fresh kernel, plus the notebook converter's 174 tests.</p></div>
+      <div><h3>B · Skill invocation</h3><p>A fresh agent runs each skill on Wolfram's own example material. Six checks: triggered, route, rules, notebook, correct, clean.</p></div>
+      <div><h3>C · Independent review</h3><p>Reviewer agents re-read every verdict against its evidence and can overturn it. Failed attempts stay on record.</p></div>
+    </div>
+    <p class="col lead">"Limited" and "not tested" each name their reason, usually a feature that needs Wolfram's servers,
+      which this work kept off on purpose.</p>
+  </section>
+
+  <section>
+    <span class="eyebrow">Defects</span>
+    <h2>Fourteen defects, each reproduced by hand</h2>
+    <div class="tablewrap"><table>
+      <thead><tr><th>ID</th><th>Where</th><th>What goes wrong</th><th>Status</th></tr></thead>
+      <tbody>
+        <tr><td class="id">W1</td><td>Mathematica 15.0 example data</td><td>ExampleData/Submarine.mo does not build on its own (missing noEvent)</td><td><span class="pill doc">workaround</span></td></tr>
+        <tr><td class="id">W2</td><td>Mathematica 15.0</td><td>ServiceFramework refuses even local services while internet is off</td><td><span class="pill doc">documented</span></td></tr>
+        <tr><td class="id">W3</td><td>Mathematica 15.0</td><td>Loading the documentation-build package tries a paclet download</td><td><span class="pill doc">documented</span></td></tr>
+        <tr><td class="id">W4</td><td>System Modeler AI toolkit</td><td>Diagram lines end on guessed connector positions</td><td><span class="pill fixed">patch</span></td></tr>
+        <tr><td class="id">W5</td><td>AgentTools debugging</td><td>FailedAssertions reports 0 failures after the first call</td><td><span class="pill fixed">patch</span></td></tr>
+        <tr><td class="id">J1</td><td>WLJS 3.1.4</td><td>Kernel-side save raises a false "File hash mismatch" dialog</td><td><span class="pill local">local fix</span></td></tr>
+        <tr><td class="id">J2</td><td>WLJS 3.1.4</td><td>Dialogs open on the primary monitor, away from their window</td><td><span class="pill local">local fix</span></td></tr>
+        <tr><td class="id">J3</td><td>WLJS 3.1.4</td><td>Kernel-side save drops graphics; plots show "Loading..." after restart</td><td><span class="pill local">local fix</span></td></tr>
+        <tr><td class="id">J4</td><td>WLJS 3.1.4</td><td>Notebooks made through the API get none of the extensions' listeners</td><td><span class="pill local">local fix</span></td></tr>
+        <tr><td class="id">I1</td><td>MarkdownToNotebook example</td><td>build.wls leaves stray General::stop cells on built pages</td><td><span class="pill fixed">patch</span></td></tr>
+        <tr><td class="id">I2</td><td>MarkdownToNotebook example</td><td>DocPageExamples paclet: three functional defects</td><td><span class="pill fixed">patch</span></td></tr>
+        <tr><td class="id">I3</td><td>MarkdownToNotebook example</td><td>BlochSphereGates Demonstration: four factual errors</td><td><span class="pill fixed">patch</span></td></tr>
+        <tr><td class="id">I4</td><td>MarkdownToNotebook</td><td>Converter drops a symbol page's Keywords</td><td><span class="pill fixed">patch</span></td></tr>
+        <tr><td class="id">I5</td><td>wolfram-data-repository skill</td><td>Category list says 34 but lists 35</td><td><span class="pill fixed">patch</span></td></tr>
+      </tbody>
+    </table></div>
+  </section>
+
+  <section>
+    <span class="eyebrow">WLJS cells</span>
+    <h2>The notebook side</h2>
+    <div class="plates">
+      <figure>
+        <div class="img"><img src="img/wljs-markdown.png" alt="Markdown cell with the Collatz map formula and a computed table of stopping times" width="1085" height="707" loading="lazy"></div>
+        <figcaption><span class="skill">wljs-markdown</span><span>KaTeX maths and a table whose values the kernel computed.</span></figcaption>
+      </figure>
+      <figure>
+        <div class="img"><img src="img/wljs-html.png" alt="HTML cell showing a card with the 1000th prime, 7919" width="1024" height="640" loading="lazy"></div>
+        <figcaption><span class="skill">wljs-html</span><span>An HTML card with a value filled in by Wolfram at evaluation time.</span></figcaption>
+      </figure>
+      <figure>
+        <div class="img"><img src="img/wljs-mermaid.png" alt="Flowchart of the Collatz iteration" width="320" height="292" loading="lazy"></div>
+        <figcaption><span class="skill">wljs-mermaid</span><span>A Mermaid flowchart cell.</span></figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <footer>
+    <p>Designed, directed and reviewed by the repository owner; built with Claude Code as the coding agent. All
+      kernels ran offline. Independent project, not affiliated with Wolfram Research, the Wolfram Institute or WLJS.</p>
+    <p class="mono">MIT licence · Mathematica 15.0 · System Modeler 15.0 · WLJS 3.1.4 · Ubuntu 24.04</p>
+  </footer>
+</div>

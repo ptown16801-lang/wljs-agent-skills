@@ -1,0 +1,21 @@
+{
+ "skill": "wolfram-debugging",
+ "tool_calls": 12,
+ "check1_triggered": {
+  "pass": true,
+  "skills_loaded": [
+   "wolfram-debugging"
+  ]
+ },
+ "check3_rules_auto": {
+  "pass": true,
+  "hits": {}
+ },
+ "check4_notebooks_found": [],
+ "engines_seen": [
+  "mcp__wljs__kernel_evaluate",
+  "wljs eval",
+  "wolframscript"
+ ],
+ "run_log": true
+}

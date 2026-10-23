@@ -1,0 +1,27 @@
+{
+ "skill": "validate-modelica",
+ "tool_calls": 33,
+ "check1_triggered": {
+  "pass": true,
+  "skills_loaded": [
+   "validate-modelica"
+  ]
+ },
+ "check3_rules_auto": {
+  "pass": true,
+  "hits": {}
+ },
+ "check4_notebooks_found": [
+  "work/ModelicaValidation.wln"
+ ],
+ "engines_seen": [
+  "mcp__wljs__add_cells_batch",
+  "mcp__wljs__evaluate_cell",
+  "mcp__wljs__kernel_evaluate",
+  "mcp__wljs__new_notebook",
+  "mcp__wljs__project_cell",
+  "mcp__wljs__set_cell_lines_batch",
+  "wsm-toolkit"
+ ],
+ "run_log": true
+}

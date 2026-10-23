@@ -1,0 +1,4 @@
+  Submarine              extends Modelica.Icons.Example, Diagram layout (7 comps), 3 connector Placement, 7 Placement, 9 Line
+  BuoyancyDynamics       custom Icon, 3 connector Placement
+
+Wrote annotations to <repo>/tests/bugs/wsm-schematic/Submarine.mo

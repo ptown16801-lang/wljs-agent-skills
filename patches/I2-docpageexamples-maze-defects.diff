@@ -1,0 +1,147 @@
+--- a/examples/Paclet/DocPageExamples/DocPageExamples/Kernel/DocPageExamples.wl
++++ b/examples/Paclet/DocPageExamples/DocPageExamples/Kernel/DocPageExamples.wl
+@@ -4,7 +4,8 @@
+    MarkdownToNotebook reference-subtype example pages. Loading it registers,
+    for real and fully in-kernel:
+ 
+-     - the MAZE plain-text import/export format        (docs Format page)
++     - the MAZE plain-text import/export format and its
++       .maze file extension                            (docs Format page)
+      - the "Lorem" placeholder-text service connection (docs ServiceConnection page)
+      - the RandomSignal simulated device class         (docs Device page)
+      - the WallpaperGroup entity store                 (docs Entity page)
+@@ -16,8 +17,8 @@
+ 
+ BeginPackage["WolframInstitute`DocPageExamples`"]
+ 
+-MazeGenerate::usage = "MazeGenerate[{rows, cols}] generates a random perfect maze as a matrix of characters in the MAZE format (# wall, . open, S start, G goal)."
+-MazeParse::usage = "MazeParse[lines] parses a list of MAZE-format lines into a character matrix, padding ragged lines with walls."
++MazeGenerate::usage = "MazeGenerate[{rows, cols}] generates a random perfect maze of rows x cols cells (at least two cells) as a matrix of characters in the MAZE format (# wall, . open, S start, G goal)."
++MazeParse::usage = "MazeParse[lines] parses a list of MAZE-format lines into a character matrix as wide as the first (header) line, padding shorter lines with walls and truncating longer ones."
+ MazeWalkTime::usage = "MazeWalkTime[maze, speed] gives the time to walk the shortest path from the start S to the goal G of maze at the given walking speed."
+ 
+ Begin["`Private`"]
+@@ -50,13 +51,38 @@
+ 
+ ImportExport`RegisterExport["MAZE", exportMaze, "Options" -> {"Padding"}]
+ 
+-(* === MazeParse (Message page) === *)
++(* Register the .maze file extension, so Import["file.maze"] and
++   Export["file.maze", expr] pick the MAZE format by name, as the Format page
++   says. RegisterImport / RegisterExport only register the converters: their
++   "Extensions" option does not reach FileFormat, which Import and Export use to
++   choose a format, and PacletInfo has no extension for file formats. A format
++   becomes known to FileFormat through FileFormatDump`AddFormat (undocumented
++   Import/Export internals, checked in Wolfram 15.0): a spec with FormatTest -> None
++   is matched by its file-name pattern only. Added once per kernel session, and
++   quietly, so loading the paclet never fails where these internals differ. *)
++Quiet @ Check[
++    FileFormat; (* loads the FileFormat tables *)
++    If[ ! MemberQ[FileFormatDump`$FILEFORMATS, "MAZE"],
++        FileFormatDump`AddFormat["MAZE", <|
++            "Name" -> "MAZE", "FileNamePatterns" -> {"*.maze"}, "MIMETypes" -> {"TEXT/X-MAZE"},
++            "BundleTest" -> {}, "TestOffset" -> 0, "Flags" -> {}, "FormatTest" -> None|>]
++    ],
++    Null
++]
+ 
+-MazeParse::ragged = "Line `1` is shorter than the header row; padding with walls."
++(* === MazeParse (Message page) === *)
+ 
+-MazeParse[lines : {__String}] := With[{width = StringLength[First[lines]]},
+-    If[ ! SameQ @@ StringLength /@ lines,
+-        Message[MazeParse::ragged, First @ Ordering[StringLength /@ lines, 1]]];
++(* every line is fitted to the header (first) line's width: a shorter line is
++   padded with walls, a longer one truncated. One message per call, naming the
++   first line whose length differs from the header's and what is done to it. *)
++MazeParse::ragged = "Line `1` is `2` than the header row (`3` instead of `4` characters); shorter lines are padded with walls and longer lines are truncated to the header width."
++
++MazeParse[lines : {__String}] := Module[{width = StringLength[First[lines]], lens, bad},
++    lens = StringLength /@ lines;
++    bad = FirstPosition[lens, n_ /; n != width, None, {1}, Heads -> False];
++    If[ bad =!= None,
++        With[{i = First[bad]},
++            Message[MazeParse::ragged, i, If[lens[[i]] < width, "shorter", "longer"], lens[[i]], width]]];
+     Characters[StringPadRight[#, width, "#"]] & /@ lines
+ ]
+ 
+@@ -64,9 +90,14 @@
+    Recursive-backtracker perfect maze on an r x c cell grid, rendered on the
+    (2r+1) x (2c+1) character grid: cell (i,j) at (2i, 2j), the wall between
+    two carved neighbours opened at their index sum. Uses the current random
+-   state - SeedRandom upstream makes it reproducible. *)
++   state - SeedRandom upstream makes it reproducible. The start is the top-left
++   cell and the goal the bottom-right one, so a maze needs at least two cells:
++   MazeGenerate[{1, 1}] issues MazeGenerate::small and stays unevaluated. *)
++
++MazeGenerate::small = "A 1 x 1 maze has a single cell, which cannot hold both the start S and the goal G; use at least two cells."
+ 
+-MazeGenerate[{rows_Integer?Positive, cols_Integer?Positive}] := Block[{
++MazeGenerate[{rows_Integer?Positive, cols_Integer?Positive}] /;
++        (rows cols > 1 || (Message[MazeGenerate::small]; False)) := Block[{
+     $RecursionLimit = Max[4096, 8 rows cols], visited, passage, carve, grid
+ },
+     visited = ConstantArray[False, {rows, cols}];
+--- a/examples/Paclet/DocPageExamples/docs/MazeParse-ragged.md
++++ b/examples/Paclet/DocPageExamples/docs/MazeParse-ragged.md
+@@ -12,12 +12,13 @@
+ # MazeParse::ragged
+ 
+ `MazeParse::ragged` is issued when `MazeParse` reads a `.maze` file in which some
+-line is shorter than the header row, so the character grid is not rectangular.
+-This usually indicates trailing characters stripped by an editor or a truncated
+-file; the maze still imports, but the short rows are completed with wall cells.
++line is shorter or longer than the header row, so the character grid is not rectangular.
++This usually indicates trailing characters stripped by an editor, a truncated
++file, or stray characters appended to a line; the maze still imports, but every
++row is fitted to the width of the header row.
+ 
+-- The ragged line is padded on the right with `"#"` (wall) characters up to the width of the header row, so the result is always a full rectangular matrix.
+-- The message is issued once per import, even when several lines are ragged; the reported line number is that of the shortest line.
++- A shorter line is padded on the right with `"#"` (wall) characters up to the width of the header row; a longer line is truncated to that width, dropping its extra characters. The result is always a full rectangular matrix as wide as the header row.
++- The message is issued once per import, even when several lines are ragged; it reports the first line whose length differs from the header row's, whether it is shorter or longer, and both lengths.
+ - Use [Quiet]() or `Off[MazeParse::ragged]` to suppress the message when ragged files are expected.
+ 
+ ## Examples
+@@ -54,12 +55,18 @@
+ ### Scope
+ 
+ Even when several lines are ragged, the message is issued only once, reporting the
+-shortest line:
++first ragged line:
+ 
+ ```wl
+ MazeParse[{"######", "#S", "#..#", "######"}] // Grid
+ ```
+ 
++A line longer than the header row is truncated to the header width, so its extra characters are lost:
++
++```wl
++MazeParse[{"#####", "#S..G##"}] // Grid
++```
++
+ Wrap the call in [Quiet]() with the specific message name to suppress it entirely:
+ 
+ ```wl
+--- a/examples/Paclet/DocPageExamples/docs/DocPageExamples.md
++++ b/examples/Paclet/DocPageExamples/docs/DocPageExamples.md
+@@ -26,7 +26,7 @@
+ ### Symbols
+ 
+ - MazeGenerate - generate a random perfect maze as a character matrix in the MAZE format
+-- MazeParse - parse MAZE-format lines into a character matrix, padding ragged lines with walls
++- MazeParse - parse MAZE-format lines into a character matrix, fitting ragged lines to the header row (short ones padded with walls, long ones truncated)
+ - `MazeWalkTime` - the time to walk a maze's shortest path at a given speed - a *symbol* page, its `Quantity` inputs shown typeset
+ 
+ ### Reference Pages
+--- a/examples/Paclet/DocPageExamples/ResourceDefinition.md
++++ b/examples/Paclet/DocPageExamples/ResourceDefinition.md
+@@ -49,7 +49,7 @@
+ 
+ ---
+ 
+-`MazeGenerate` builds a random perfect maze of any size:
++`MazeGenerate` builds a random perfect maze of any size from two cells up:
+ 
+ ```wl
+ SeedRandom[42];

@@ -1,0 +1,10 @@
+{
+	"suite":"NotebookViewer",
+	"kernel":"WLJS",
+	"ok":true,
+	"tests":24,
+	"passed":24,
+	"failed":[],
+	"seconds":0.1,
+	"messages":[]
+}

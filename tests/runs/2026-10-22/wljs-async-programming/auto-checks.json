@@ -1,0 +1,26 @@
+{
+ "skill": "wljs-async-programming",
+ "tool_calls": 40,
+ "check1_triggered": {
+  "pass": true,
+  "skills_loaded": [
+   "wljs-async-programming",
+   "wljs-dynamics"
+  ]
+ },
+ "check3_rules_auto": {
+  "pass": true,
+  "hits": {}
+ },
+ "check4_notebooks_found": [
+  "work/AsyncButton.wln"
+ ],
+ "engines_seen": [
+  "mcp__wljs__add_cells_batch",
+  "mcp__wljs__evaluate_cell",
+  "mcp__wljs__kernel_evaluate",
+  "mcp__wljs__new_notebook",
+  "mcp__wljs__read_content"
+ ],
+ "run_log": true
+}

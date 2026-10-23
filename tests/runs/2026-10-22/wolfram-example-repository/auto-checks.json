@@ -1,0 +1,23 @@
+{
+ "skill": "wolfram-example-repository",
+ "tool_calls": 24,
+ "check1_triggered": {
+  "pass": true,
+  "skills_loaded": [
+   "wolfram-example-repository"
+  ]
+ },
+ "check3_rules_auto": {
+  "pass": true,
+  "hits": {}
+ },
+ "check4_notebooks_found": [
+  "work/ExampleRepositoryBuild.wln"
+ ],
+ "engines_seen": [
+  "mcp__wljs__kernel_evaluate",
+  "wolfram-direct",
+  "wolframscript"
+ ],
+ "run_log": true
+}

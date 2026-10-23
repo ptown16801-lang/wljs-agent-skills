@@ -1,0 +1,12 @@
+[Warning] Running tests on source directory instead of built paclet
+
+TestReport: NotebookViewer.wlt | Collecting tests...Evaluating tests (0)Elapsed time 8s
+
+TestReport: NotebookViewer.wlt | Collecting tests...Evaluating tests (0)Elapsed time 9s
+[Warning] Paclet MX file was not loaded
+
+TestReport: NotebookViewer.wlt | 2 SuccessEvaluating tests (2)Elapsed time 9s
+
+TestReport: NotebookViewer.wlt | 2 SuccessEvaluating tests (2)Elapsed time 9s
+
+TestReport: NotebookViewer.wlt | 2 SuccessEvaluating tests (2)Elapsed time 10s

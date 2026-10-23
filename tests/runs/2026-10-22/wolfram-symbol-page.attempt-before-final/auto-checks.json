@@ -1,0 +1,19 @@
+{
+ "skill": "wolfram-symbol-page",
+ "tool_calls": 19,
+ "check1_triggered": {
+  "pass": true,
+  "skills_loaded": [
+   "wolfram-symbol-page"
+  ]
+ },
+ "check3_rules_auto": {
+  "pass": true,
+  "hits": {}
+ },
+ "check4_notebooks_found": [],
+ "engines_seen": [
+  "wolframscript"
+ ],
+ "run_log": true
+}

@@ -1,0 +1,14 @@
+class                  category      standard icon              custom  diagram 
+--------------------------------------------------------------------------------
+Submarine              composite     Modelica.Icons.Example     False   True    
+    connectors: f, deltarho, y | instances: 7 | connects: 9
+    -> runnable example -> Modelica.Icons.Example + diagram
+BuoyancyDynamics       leaf          None                       True    False   
+    connectors: deltarho, f, y
+    -> leaf component -> custom icon
+    glyph: generic block (domain unrecognized — author one from the name/description via --glyphs-file)
+
+Unrecognized classes/connectors (generic fallback icon): BuoyancyDynamics
+ACTION: for each, read its name/description and author a representative glyph from Modelica primitives,
+then pass --glyphs-file. JSON shape:
+  {"BuoyancyDynamics": {"graphics": ["Rectangle(...)", "Line(...)"], "ports": {"port_a": "L"}}}

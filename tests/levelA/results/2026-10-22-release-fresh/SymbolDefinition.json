@@ -1,0 +1,10 @@
+{
+	"suite":"SymbolDefinition",
+	"kernel":"fresh",
+	"ok":true,
+	"tests":79,
+	"passed":79,
+	"failed":[],
+	"seconds":1.6,
+	"messages":[]
+}

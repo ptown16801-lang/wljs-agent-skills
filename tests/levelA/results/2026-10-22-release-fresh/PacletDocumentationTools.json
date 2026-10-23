@@ -1,0 +1,12 @@
+{
+	"suite":"PacletDocumentationTools",
+	"kernel":"fresh",
+	"ok":true,
+	"tests":93,
+	"passed":93,
+	"failed":[],
+	"seconds":4.27e1,
+	"messages":[
+		"AgentTools::NotebookFileExists : Notebook already exists: \/tmp\/m000013341\/Documentation\/English\/ReferencePages\/Symbols\/ExistingFunc.nb."
+	]
+}

@@ -1,0 +1,19 @@
+{
+ "skill": "wiki-add-resource",
+ "tool_calls": 18,
+ "check1_triggered": {
+  "pass": true,
+  "skills_loaded": [
+   "wiki-add-resource"
+  ]
+ },
+ "check3_rules_auto": {
+  "pass": true,
+  "hits": {}
+ },
+ "check4_notebooks_found": [
+  "work/project/Research/Artifacts/WikiAddResource_261022.wln"
+ ],
+ "engines_seen": [],
+ "run_log": true
+}

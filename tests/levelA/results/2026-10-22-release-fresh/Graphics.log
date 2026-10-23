@@ -1,0 +1,29 @@
+
+TestReport: Graphics.wlt | 6 SuccessEvaluating tests (6)Elapsed time 2s
+
+TestReport: Graphics.wlt | 16 Success,1 MessagesFailureEvaluating tests (17)Elapsed time 3s
+
+TestReport: Graphics.wlt | 16 Success,1 MessagesFailureEvaluating tests (17)Elapsed time 3s
+
+TestReport: Graphics.wlt | 16 Success,1 MessagesFailureEvaluating tests (17)Elapsed time 4s
+
+TestReport: Graphics.wlt | 16 Success,1 MessagesFailureEvaluating tests (17)Elapsed time 4s
+
+TestReport: Graphics.wlt | 16 Success,1 MessagesFailureEvaluating tests (17)Elapsed time 4s
+
+TestReport: Graphics.wlt | 16 Success,1 MessagesFailureEvaluating tests (17)Elapsed time 5s
+
+TestReport: Graphics.wlt | 16 Success,1 MessagesFailureEvaluating tests (17)Elapsed time 5s
+
+TestReport: Graphics.wlt | 16 Success,1 MessagesFailureEvaluating tests (17)Elapsed time 6s
+
+TestReport: Graphics.wlt | 16 Success,1 MessagesFailureEvaluating tests (17)Elapsed time 6s
+
+TestReport: Graphics.wlt | 17 Success,1 MessagesFailureEvaluating tests (18)Elapsed time 6s
+
+TestReport: Graphics.wlt | 32 Success,1 MessagesFailureEvaluating tests (33)Elapsed time 7s
+
+TestReport: Graphics.wlt | 32 Success,1 MessagesFailureEvaluating tests (33)Elapsed time 7s
+
+TestReport: Graphics.wlt | 32 Success,1 MessagesFailureEvaluating tests (33)Elapsed time 8s
+Graphics (fresh): 33/42 passed, 8. s

@@ -1,0 +1,24 @@
+{
+ "skill": "wljs-javascript",
+ "tool_calls": 14,
+ "check1_triggered": {
+  "pass": true,
+  "skills_loaded": [
+   "wljs-javascript"
+  ]
+ },
+ "check3_rules_auto": {
+  "pass": true,
+  "hits": {}
+ },
+ "check4_notebooks_found": [
+  "work/BouncingDot.wln"
+ ],
+ "engines_seen": [
+  "mcp__wljs__add_cells_batch",
+  "mcp__wljs__evaluate_cell",
+  "mcp__wljs__new_notebook",
+  "mcp__wljs__read_content"
+ ],
+ "run_log": true
+}

@@ -1,0 +1,29 @@
+{
+ "skill": "paper-create-note",
+ "tool_calls": 49,
+ "check1_triggered": {
+  "pass": true,
+  "skills_loaded": [
+   "paper-create-note"
+  ]
+ },
+ "check3_rules_auto": {
+  "pass": true,
+  "hits": {}
+ },
+ "check4_notebooks_found": [
+  "work/project/Research/Artifacts/LargestSidonSubsetsUpToTwenty_261022.summary.wln",
+  "work/project/Research/Artifacts/LargestSidonSubsetsUpToTwenty_261022.wln"
+ ],
+ "engines_seen": [
+  "latexmk",
+  "mcp__wljs__add_cells_batch",
+  "mcp__wljs__evaluate_cell",
+  "mcp__wljs__kernel_evaluate",
+  "mcp__wljs__new_notebook",
+  "mcp__wljs__project_cell",
+  "wolfram-direct",
+  "wolframscript"
+ ],
+ "run_log": true
+}

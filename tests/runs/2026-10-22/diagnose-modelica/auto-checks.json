@@ -1,0 +1,22 @@
+{
+ "skill": "diagnose-modelica",
+ "tool_calls": 20,
+ "check1_triggered": {
+  "pass": true,
+  "skills_loaded": [
+   "diagnose-modelica"
+  ]
+ },
+ "check3_rules_auto": {
+  "pass": true,
+  "hits": {}
+ },
+ "check4_notebooks_found": [
+  "work/DrawingRobot-diagnosis.wln"
+ ],
+ "engines_seen": [
+  "mcp__wljs__kernel_evaluate",
+  "wsm-toolkit"
+ ],
+ "run_log": true
+}

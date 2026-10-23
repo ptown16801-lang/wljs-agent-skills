@@ -1,0 +1,91 @@
+[Warning] Running tests on source directory instead of built paclet
+[Warning] Paclet MX file was not loaded
+
+TestReport: WDS-orig.wlt | 2 SuccessEvaluating tests (2)Elapsed time 5s
+
+TestReport: WDS-orig.wlt | 27 SuccessEvaluating tests (27)Elapsed time 5s
+
+TestReport: WDS-orig.wlt | 33 SuccessEvaluating tests (33)Elapsed time 5s
+
+TestReport: WDS-orig.wlt | 33 SuccessEvaluating tests (33)Elapsed time 6s
+
+TestReport: WDS-orig.wlt | 64 SuccessEvaluating tests (64)Elapsed time 6s
+
+TestReport: WDS-orig.wlt | 69 SuccessEvaluating tests (69)Elapsed time 7s
+
+TestReport: WDS-orig.wlt | 71 SuccessEvaluating tests (71)Elapsed time 7s
+
+TestReport: WDS-orig.wlt | 77 SuccessEvaluating tests (77)Elapsed time 7s
+
+TestReport: WDS-orig.wlt | 99 SuccessEvaluating tests (99)Elapsed time 8s
+
+TestReport: WDS-orig.wlt | 99 SuccessEvaluating tests (99)Elapsed time 8s
+
+TestReport: WDS-orig.wlt | 99 SuccessEvaluating tests (99)Elapsed time 9s
+
+TestReport: WDS-orig.wlt | 99 SuccessEvaluating tests (99)Elapsed time 9s
+
+TestReport: WDS-orig.wlt | 100 SuccessEvaluating tests (100)Elapsed time 9s
+
+TestReport: WDS-orig.wlt | 100 SuccessEvaluating tests (100)Elapsed time 10s
+
+TestReport: WDS-orig.wlt | 100 SuccessEvaluating tests (100)Elapsed time 10s
+
+TestReport: WDS-orig.wlt | 102 SuccessEvaluating tests (102)Elapsed time 11s
+
+TestReport: WDS-orig.wlt | 102 SuccessEvaluating tests (102)Elapsed time 11s
+
+TestReport: WDS-orig.wlt | 102 SuccessEvaluating tests (102)Elapsed time 11s
+
+TestReport: WDS-orig.wlt | 102 SuccessEvaluating tests (102)Elapsed time 12s
+
+TestReport: WDS-orig.wlt | 107 SuccessEvaluating tests (107)Elapsed time 12s
+
+TestReport: WDS-orig.wlt | 107 SuccessEvaluating tests (107)Elapsed time 13s
+
+TestReport: WDS-orig.wlt | 107 SuccessEvaluating tests (107)Elapsed time 13s
+
+TestReport: WDS-orig.wlt | 112 SuccessEvaluating tests (112)Elapsed time 13s
+
+TestReport: WDS-orig.wlt | 118 SuccessEvaluating tests (118)Elapsed time 14s
+
+TestReport: WDS-orig.wlt | 118 SuccessEvaluating tests (118)Elapsed time 14s
+
+TestReport: WDS-orig.wlt | 118 SuccessEvaluating tests (118)Elapsed time 15s
+
+TestReport: WDS-orig.wlt | 118 SuccessEvaluating tests (118)Elapsed time 15s
+
+TestReport: WDS-orig.wlt | 118 SuccessEvaluating tests (118)Elapsed time 15s
+
+TestReport: WDS-orig.wlt | 118 SuccessEvaluating tests (118)Elapsed time 16s
+
+TestReport: WDS-orig.wlt | 118 SuccessEvaluating tests (118)Elapsed time 16s
+
+TestReport: WDS-orig.wlt | 118 SuccessEvaluating tests (118)Elapsed time 17s
+
+TestReport: WDS-orig.wlt | 118 SuccessEvaluating tests (118)Elapsed time 17s
+
+TestReport: WDS-orig.wlt | 118 SuccessEvaluating tests (118)Elapsed time 17s
+
+TestReport: WDS-orig.wlt | 118 SuccessEvaluating tests (118)Elapsed time 18s
+
+TestReport: WDS-orig.wlt | 118 SuccessEvaluating tests (118)Elapsed time 18s
+
+TestReport: WDS-orig.wlt | 118 SuccessEvaluating tests (118)Elapsed time 19s
+
+TestReport: WDS-orig.wlt | 118 SuccessEvaluating tests (118)Elapsed time 19s
+
+TestReport: WDS-orig.wlt | 118 SuccessEvaluating tests (118)Elapsed time 19s
+
+TestReport: WDS-orig.wlt | 118 SuccessEvaluating tests (118)Elapsed time 20s
+
+TestReport: WDS-orig.wlt | 118 SuccessEvaluating tests (118)Elapsed time 20s
+
+TestReport: WDS-orig.wlt | 118 SuccessEvaluating tests (118)Elapsed time 21s
+
+TestReport: WDS-orig.wlt | 118 SuccessEvaluating tests (118)Elapsed time 21s
+
+TestReport: WDS-orig.wlt | 118 SuccessEvaluating tests (118)Elapsed time 21s
+
+TestReport: WDS-orig.wlt | 118 SuccessEvaluating tests (118)Elapsed time 22s
+WDS-orig (fresh): 123/123 passed, 22.2 s

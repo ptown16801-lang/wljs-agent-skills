@@ -1,0 +1,22 @@
+{
+ "skill": "paclet-docs",
+ "tool_calls": 58,
+ "check1_triggered": {
+  "pass": true,
+  "skills_loaded": [
+   "paclet-docs",
+   "wolfram-symbol-page"
+  ]
+ },
+ "check3_rules_auto": {
+  "pass": true,
+  "hits": {}
+ },
+ "check4_notebooks_found": [
+  "work/DocPageExamples-reference-pages.wln"
+ ],
+ "engines_seen": [
+  "wolframscript"
+ ],
+ "run_log": true
+}

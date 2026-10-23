@@ -1,0 +1,22 @@
+{
+ "skill": "wolfram-tech-note",
+ "tool_calls": 59,
+ "check1_triggered": {
+  "pass": true,
+  "skills_loaded": [
+   "wolfram-tech-note"
+  ]
+ },
+ "check3_rules_auto": {
+  "pass": true,
+  "hits": {}
+ },
+ "check4_notebooks_found": [
+  "work/ParsingMazes.wln"
+ ],
+ "engines_seen": [
+  "wolfram-direct",
+  "wolframscript"
+ ],
+ "run_log": true
+}

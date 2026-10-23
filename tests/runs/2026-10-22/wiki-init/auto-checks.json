@@ -1,0 +1,21 @@
+{
+ "skill": "wiki-init",
+ "tool_calls": 28,
+ "check1_triggered": {
+  "pass": true,
+  "skills_loaded": [
+   "wiki-init"
+  ]
+ },
+ "check3_rules_auto": {
+  "pass": true,
+  "hits": {}
+ },
+ "check4_notebooks_found": [
+  "work/code/Artifacts/2026-10-22-KnowledgeBase.wln"
+ ],
+ "engines_seen": [
+  "wolfram-direct"
+ ],
+ "run_log": true
+}

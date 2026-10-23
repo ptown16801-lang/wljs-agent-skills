@@ -1,0 +1,21 @@
+{
+ "skill": "paper-lean",
+ "tool_calls": 13,
+ "check1_triggered": {
+  "pass": true,
+  "skills_loaded": [
+   "paper-lean"
+  ]
+ },
+ "check3_rules_auto": {
+  "pass": true,
+  "hits": {}
+ },
+ "check4_notebooks_found": [
+  "work/Summary.wln"
+ ],
+ "engines_seen": [
+  "lake"
+ ],
+ "run_log": true
+}

@@ -1,0 +1,10 @@
+{
+	"suite":"NotebookViewer",
+	"kernel":"fresh",
+	"ok":true,
+	"tests":24,
+	"passed":24,
+	"failed":[],
+	"seconds":1.0e1,
+	"messages":[]
+}

@@ -1,0 +1,52 @@
+{
+	"suite":"Graphics",
+	"kernel":"fresh",
+	"ok":true,
+	"tests":42,
+	"passed":33,
+	"failed":[
+		{
+			"id":"graphicsQ-GeoGraphics@@Tests\/Graphics.wlt:52,1-56,2",
+			"outcome":"MessagesFailure"
+		},
+		{
+			"id":"extractWolframAlphaImages-HasContentKey@@Tests\/Graphics.wlt:265,1-273,2",
+			"outcome":"MessagesFailure"
+		},
+		{
+			"id":"extractWolframAlphaImages-ContentIsList@@Tests\/Graphics.wlt:275,1-283,2",
+			"outcome":"MessagesFailure"
+		},
+		{
+			"id":"extractWolframAlphaImages-MultipleContentItems@@Tests\/Graphics.wlt:285,1-296,2",
+			"outcome":"MessagesFailure"
+		},
+		{
+			"id":"extractWolframAlphaImages-WWW6Domain@@Tests\/Graphics.wlt:303,1-312,2",
+			"outcome":"MessagesFailure"
+		},
+		{
+			"id":"extractWolframAlphaImages-JpegExtension@@Tests\/Graphics.wlt:314,1-323,2",
+			"outcome":"MessagesFailure"
+		},
+		{
+			"id":"extractWolframAlphaImages-PreservesTextBefore@@Tests\/Graphics.wlt:336,1-344,2",
+			"outcome":"MessagesFailure"
+		},
+		{
+			"id":"extractWolframAlphaImages-PreservesTextAfter@@Tests\/Graphics.wlt:346,1-354,2",
+			"outcome":"MessagesFailure"
+		},
+		{
+			"id":"extractWolframAlphaImages-PreservesURLInText@@Tests\/Graphics.wlt:356,1-365,2",
+			"outcome":"MessagesFailure"
+		}
+	],
+	"seconds":1.59e1,
+	"messages":[
+		"URLFetch::offline : The Wolfram Language is currently configured not to use the Internet. To allow Internet use set $AllowInternet = True or check the \"Allow th",
+		"GeoServer::styleres : Cannot download vector style resources.",
+		"URLSubmit::offline : The Wolfram Language is currently configured not to use the Internet. To allow Internet use set $AllowInternet = True or check the \"Allow t",
+		"TaskWait::taskid : A string or a TaskObject is expected instead of Null."
+	]
+}

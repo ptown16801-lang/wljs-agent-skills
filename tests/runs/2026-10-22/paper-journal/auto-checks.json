@@ -1,0 +1,23 @@
+{
+ "skill": "paper-journal",
+ "tool_calls": 28,
+ "check1_triggered": {
+  "pass": true,
+  "skills_loaded": [
+   "paper-journal"
+  ]
+ },
+ "check3_rules_auto": {
+  "pass": true,
+  "hits": {}
+ },
+ "check4_notebooks_found": [
+  "work/project/Journal/JournalSummary_2026-10-22.wln"
+ ],
+ "engines_seen": [
+  "latexmk",
+  "mcp__wljs__kernel_evaluate",
+  "typst"
+ ],
+ "run_log": true
+}

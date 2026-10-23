@@ -1,0 +1,16 @@
+--- a/skills/wolfram-data-repository/SKILL.md
++++ b/skills/wolfram-data-repository/SKILL.md
+@@ -87,8 +87,11 @@
+ 
+ `Categories` fills a fixed checkbox grid for Data resources, so each entry must
+ be one of the official Data Repository categories (pick the one or few that
+-fit; do not invent names). The valid set is exactly these 34 (from
+-`` ResourceSystemClient`Private`resourceSortingProperties[][DataResource]["Categories"] ``):
++fit; do not invent names). The valid set is these 35, the Categories checkbox grid of the
++definition notebook template shipped with Wolfram 15.0
++(`SystemFiles/Links/DataResource/Kernel/Templates/DataResourceDefinition.nb`). The online list
++(`` ResourceSystemClient`Private`resourceSortingProperties[][DataResource]["Categories"] ``) was not checked
++(offline); if a category is rejected on submission, check it there:
+ Agriculture, Astronomy, Chemistry, Computational Universe, Computer Systems,
+ Culture, Demographics, Earth Science, Economics, Education, Engineering,
+ Geography, Geometry Data, Government, Graphics, Health, Healthcare, History,

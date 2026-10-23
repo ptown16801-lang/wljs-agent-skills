@@ -1,0 +1,268 @@
+{
+ "wiki-init": {
+  "agree": true,
+  "checks": {
+   "triggered": "pass: Skill call wiki-init is the first tool call in the session record (auto-checks skills_loaded [wiki-init])",
+   "route": "pass: no kernel needed for the wiki; package facts checked in wolfram-direct with a stated reason (keep Collatz` out of the shared WLJS kernel)",
+   "rules": "pass: no network host contacted, no install; stopped at the domain-folder question and continued only after the scripted reply",
+   "notebook": "pass: summary .wln via md2wln (card: summary page only); parses as WLJS text format, 4 Input / 3 Output cells, no $Failed",
+   "correct": "pass: Wiki/Index.md, Status.md, Concepts/, Resources/ (empty dir present), Systems/, Experiments/, CLAUDE.md wiki section; 27 -> 111 steps, peak 9232 matches reference total27/peak27",
+   "clean": "pass: the shdw and reclim messages in its own calls are explained and the affected results discarded"
+  },
+  "rechecked": "Fresh kernel in bwrap: Collatz.wl from the run folder (cmp-identical to ExampleData/Collatz.wl): 27 -> {111, 9232}; 97, 871, 837799, 63728127 -> {118, 178, 524, 949}; Collatz[6] = {6,3,10,5,16,8,4,2,1}; Collatz[2^1030] -> TerminatedEvaluation[RecursionLimit] (it also killed my whole script, as the agent reported). Every value in Wiki/Experiments/TrajectoryLengths.md matches. Checked .gitignore anchoring and the 18 links.",
+  "overturn": "",
+  "notes": "The result depends on a scripted user reply (domain folders); stopping first was correct per the skill. Deviation from upstream .gitignore (/Resources/ anchored) is justified with a git check-ignore test."
+ },
+ "wiki-update": {
+  "agree": false,
+  "checks": {
+   "triggered": "pass: Skill wiki-update loaded first",
+   "route": "pass: WLJS kernel (kernel_evaluate) for the check, symbols in private contexts and removed",
+   "rules": "partial: WINDOW: the brief in force for this run said \"Do not open, start, stop or restart any desktop application or window\"; the agent called mcp__wljs__new_notebook (in its session record and auto-checks engines_seen), which opens a notebook window in the WLJS app (the later brief says so explicitly). No Wolfram-server contact, no install, no publish. Also the saved notebook's cell `nb = EvaluationNotebook[]` set Global`nb in the shared kernel and the agent left it set (it says so); the recipe was fixed afterwards.",
+   "notebook": "pass: WikiUpdate_261022.wln saved from a live notebook (2 Input / 2 Output, no $Failed); its second Input cell still contains `nb = EvaluationNotebook[]`",
+   "correct": "pass: Wiki/Code/NestTrajectory.md, Index (new ## Code section) and Status (Recent changes) updated; no related article to cross-link, stated",
+   "clean": "pass: own Set::shape test bug explained and redone"
+  },
+  "rechecked": "Fresh kernel in bwrap, Tools.wl from the run folder (cmp-identical to tests/cards/fixtures/Tools.wl) loaded in a private context: Collatz trajectory from 27 has 112 elements, peak 9232, starts {27,82,41,124,62}, ends {4,2,1}, === NestWhileList; NestTrajectory[#+1&,5,#<0&] = {5}; halving from 64 = {64,...,1}; 4-argument call stays unevaluated. All article claims hold. git diff of Index/Status read.",
+  "overturn": "Rules check should be partial, not pass: the agent opened a WLJS notebook window although the brief in force forbade opening any window (the orchestrator's own note excuses this as 'before the rule change', but the original rule already said 'window'), and left Global`nb in the shared kernel. The skill's output itself is correct.",
+  "notes": "First pass correctly stopped because the fixture lacked Code/Tools.wl (orchestrator's fixture bug); second pass after a scripted reply."
+ },
+ "wiki-check": {
+  "agree": true,
+  "checks": {
+   "triggered": "pass: Skill wiki-check loaded first",
+   "route": "pass: no kernel needed; none used",
+   "rules": "pass: no network; read-only use of the pinned snapshot",
+   "notebook": "pass: summary .wln via md2wln, 4 Input / 4 Output, no $Failed",
+   "correct": "pass: 3 broken links (2 to Work/Active/JournalAsPaperSink.md, 1 to gitignored Work/Runs digest) and 2 stale articles fixed; index complete",
+   "clean": "pass"
+  },
+  "rechecked": "Ran my own link checker over the pinned snapshot's Wiki/: exactly the same 3 broken links; after the run's edits, 0 broken links in the fixture's Wiki/ (resolving code links against the snapshot). Confirmed JournalAsPaperSink is in Work/Done/2026-08-21-..., upstream .gitignore has no *.nb rule (so the 'gitignored .nb' claim was stale), README Active rows say T2/T3 while item files have T3/T6 next.",
+  "overturn": "",
+  "notes": "This fixture held only Wiki/Work/Research (no skills/, scripts/), unlike the paper-cite/paper-journal/project-provenance fixtures and the current cards.py (whole plugin repo); the agent compensated with the pinned snapshot and said so."
+ },
+ "backlog-add": {
+  "agree": true,
+  "checks": {
+   "triggered": "pass: Skill backlog-add loaded first",
+   "route": "pass: no kernel needed",
+   "rules": "pass: stayed in Backlog/, nothing committed, no network",
+   "notebook": "pass: summary .wln via md2wln (4 Input / 4 Output)",
+   "correct": "pass: Work/Backlog/SidonConstructions.md has all template sections (Summary..Progress), verbatim dated Prompt history, routed tasks T1-T5 marked as a proposal; README Backlog sentence updated; waits for approval",
+   "clean": "pass"
+  },
+  "rechecked": "Compared section headings with the pinned work_item_template.md (all present); git status: only README.md modified plus the new item and Artifacts; construction moduli in the spec (Singer 7,13,21,31; Bose 3,8,15,24,48; Ruzsa 6,20,42) are correct for q^2+q+1, q^2-1, p^2-p; 'sonnet row is measured, opus a prior' is the skill's own required wording (backlog-add SKILL.md:96).",
+  "overturn": "",
+  "notes": ""
+ },
+ "backlog-info": {
+  "agree": false,
+  "checks": {
+   "triggered": "pass: Skill backlog-info loaded first",
+   "route": "pass: no kernel needed",
+   "rules": "pass: read-only; git status empty; did not open the wolframcloud.com links in an item",
+   "notebook": "pass: no page, with a stated reason (result is a chat report, not files; a file would contradict 'changes nothing'); card says summary page only",
+   "correct": "pass: waits-on-you, stale, overlaps, proposals; counts Backlog 4, Active 3, Done 19, Dropped 3 match the folders",
+   "clean": "pass"
+  },
+  "rechecked": "Checked last Progress dates (AutoSetup/PaperVerification/WorkDashboard 2026-09-26, ConversationStyle none, Active items 2026-10-05/06), DocumentationSite T2 ticked and T3 next, pinned snapshot has no skills/revise, skills/board or output-styles/, check-env.sh still greps wolfram-mcp, paclet-docs SKILL.md:25 'Guide pages are out of scope'. All claims hold.",
+  "overturn": "Notebook check: the orchestrator graded 'partial: no summary page'; the brief's rubric accepts 'a stated reason why none', ROUTES asks for a summary page for skills whose result is files, and this result is a report. The agent gave a sound reason. Should be pass (upgrade, not a downgrade).",
+  "notes": ""
+ },
+ "backlog-refine": {
+  "agree": true,
+  "checks": {
+   "triggered": "pass: Skill backlog-refine loaded first",
+   "route": "pass: no kernel needed",
+   "rules": "pass: item stays in Backlog/; local commit 208d560 only, no push (document-revise, which the skill says to read first, says git holds the trail)",
+   "notebook": "pass: summary .wln via md2wln",
+   "correct": "pass: Technical details and Tasks rewritten, six open questions, readiness checklist reported, user-owned sections untouched",
+   "clean": "pass"
+  },
+  "rechecked": "Section-by-section diff of ConversationStyle.md between 47bd1d0 and 208d560: Title, Summary, Motivation, Acceptance criteria, Prompt history, Hand-off, Decisions, Progress identical; only Technical details and Tasks changed. grep of the local Claude Code 2.1.296 binary finds force-for-plugin (7), keep-coding-instructions (5), output-styles (26), supporting the new wiki article's sources.",
+  "overturn": "",
+  "notes": "Commit made under the owner's global git identity in the fixture repo; no Co-Authored-By trailer. Output-style facts come from minified code, not a live session (stated)."
+ },
+ "backlog-board": {
+  "agree": true,
+  "checks": {
+   "triggered": "pass: Skill backlog-board loaded first",
+   "route": "pass: no kernel needed",
+   "rules": "pass: no Artifact/publish call in the session record; stopped at the publish gate with the exact question",
+   "notebook": "n/a: stopped before the result (publishing); stated",
+   "correct": "pass: board data built locally, 29 items, index.html with no placeholder left, pending.json empty",
+   "clean": "pass"
+  },
+  "rechecked": "Re-ran the pinned scripts/work-board-build.py (inside bwrap --unshare-net) on the fixture into my scratch: 29 items in 1 project; per-item fields identical to the run's board.json except the generated timestamp and the id prefix (I passed '.' instead of the absolute path). grep '{{' in index.html: 0.",
+  "overturn": "",
+  "notes": "Staging left an untracked .claude/ in the fixture repo (stated)."
+ },
+ "backlog-autolab": {
+  "agree": true,
+  "checks": {
+   "triggered": "pass: Skill backlog-autolab loaded first",
+   "route": "pass: no kernel needed",
+   "rules": "pass: no Agent call, no worktree, no branch (git branch: master only; worktree list: main only); preflight states model, effort, usage estimate and asks",
+   "notebook": "n/a: nothing ran; stated",
+   "correct": "pass for the gate (the card's expectation); the autonomous run itself was not exercised",
+   "clean": "pass"
+  },
+  "rechecked": "Read the full tool-call list from the session record (10 calls: Skill, Bash reads, Write run-log, SubagentHandback; no Agent); checked git branch/worktree state in the fixture.",
+  "overturn": "",
+  "notes": "Only the preflight gate is tested; 'works' would mean 'gate works', not 'autonomous runs work'."
+ },
+ "search-modelica-docs": {
+  "agree": false,
+  "checks": {
+   "triggered": "pass: Skill search-modelica-docs loaded first",
+   "route": "pass: wsm-toolkit docs (offline BM25) plus a WLJS kernel SystemModel check",
+   "rules": "partial: WINDOW: the brief in force for this run said \"Do not open, start, stop or restart any desktop application or window\"; the agent called mcp__wljs__new_notebook (in its session record and auto-checks engines_seen), which opens a notebook window in the WLJS app (the later brief says so explicitly). No Wolfram-server contact, no install, no publish.",
+   "notebook": "pass: SpringDamperLookup.wln saved from the live notebook (3 Input / 2 Output, no $Failed)",
+   "correct": "pass: Modelica.Mechanics.Translational.Components.SpringDamper; c, d, s_rel0 (+ inherited stateSelect, s_nominal, useHeatPort)",
+   "clean": "pass"
+  },
+  "rechecked": "Read the bundled MSL 4.0.0 source SpringDamper.mo: 'Linear 1D translational spring and damper in parallel', parameters c(final min=0,start=1), d(final min=0,start=1), s_rel0=0; base class PartialCompliantWithRelativeStates has stateSelect=StateSelect.prefer and s_nominal=1e-4; PartialElementaryConditionalHeatPortWithoutT has useHeatPort=false. Matches the answer and the notebook table.",
+  "overturn": "Rules check should be partial: the agent opened a WLJS notebook window although the brief in force forbade opening windows; the orchestrator's 'opened a window before the rule change' treats the later explicit wording as the rule, but the original brief already said 'window'. Answer itself is correct.",
+  "notes": ""
+ },
+ "wolfram-setup": {
+  "agree": false,
+  "checks": {
+   "triggered": "pass: Skill wolfram-setup loaded first",
+   "route": "pass: WLJS kernel, wolfram-direct and wolframscript inside bwrap --unshare-net, each with a reason",
+   "rules": "pass: no install, no config change, no mcp__Wolfram*/W|A calls; config files read with env values redacted",
+   "notebook": "pass (n/a): card says notebook=False (summary page only); agent stated why none (no windows, change nothing)",
+   "correct": "pass: Wolfram 15.0.0, WLJS 3.1.4 ready, MCP servers wljs/Wolfram listed, Expand[(x+1)^5] evaluated, nothing changed",
+   "clean": "pass: one stray Global`x$local created and removed; $ProductIDName mistake explained"
+  },
+  "rechecked": "Fresh kernel in bwrap: Expand[(x+1)^5] = 1 + 5x + 10x^2 + 10x^3 + 5x^4 + x^5. Session record shows the bwrap wolframscript smoke test output (15.0.0 ... 2) and the kernel_evaluate results; ~/.Wolfram/Paclets/Repository contains AgentTools-2.2.0, Parser-1.3.1, PacletCICD-0.36.2.",
+  "overturn": "Notebook check: the orchestrator graded 'fail-then-rule'. The card for this skill has notebook=False and the brief's rubric accepts a stated reason; the agent gave one that follows the brief in force. Should be pass/n-a (upgrade).",
+  "notes": "Minor log inaccuracy: run-log calls a name-filtered find (AgentTools/Parser/CICD) a 'folder listing'; the repository holds 22 paclets (Chatbook, LLMFunctions, CloudObject, ...). The answer itself only claims the relevant ones."
+ },
+ "paper-cite": {
+  "agree": true,
+  "checks": {
+   "triggered": "pass: Skill paper-cite loaded first",
+   "route": "pass with deviation: curl to export.arxiv.org (non-Wolfram, the only host contacted) + the script's formatting logic in wolfram-direct, because the upstream script fetches from inside a kernel ($AllowInternet must stay False)",
+   "rules": "pass: only export.arxiv.org contacted; nothing written to the project (no references.bib exists)",
+   "notebook": "n/a: one BibTeX entry on stdout (skill's stdout-only case); stated",
+   "correct": "pass: @article{Vaswani2017, ..., title {Attention Is All You Need}, year 2017, eprint 1706.03762}",
+   "clean": "pass"
+  },
+  "rechecked": "Ran the project's own unmodified cite_from_id.wls (only the URL replaced by the agent's saved XML, sha256 7983160c...) in a fresh kernel in bwrap with $AllowInternet=False: output is byte-identical to the entry in the run log.",
+  "overturn": "",
+  "notes": "Abstract truncated mid-word at 1000 chars is upstream behaviour (stated)."
+ },
+ "backlog-run": {
+  "agree": true,
+  "checks": {
+   "triggered": "pass: backlog-run loaded first, then wiki-update (the skill's wiki sync step)",
+   "route": "pass: worktree claim on work/IndexSync inside the work folder (deviation stated), one task, commit on the item branch, worktree removed",
+   "rules": "pass: no merge, no push; branch/commit follow the repository rules as the adaptation says (the agent flagged the ambiguity of the adaptation's 'Needs the owner's OK' line)",
+   "notebook": "pass: summary .wln via md2wln",
+   "correct": "pass: DocumentationSite -> T3, ParallelSessions -> T6, BacklogLifecycle T4; item moved to UnderReview with an UnderReview table row",
+   "clean": "pass"
+  },
+  "rechecked": "git in the fixture: branch work/IndexSync at 8c1bc68 (6 files), master untouched except untracked Work/Artifacts/, no leftover worktree. On the branch, first unchecked task per Active item = T4/T3/T6 and the README rows name exactly those, with full (not truncated) text.",
+  "overturn": "",
+  "notes": "The adaptation lists 'Creating worktrees/branches and committing' under 'Needs the owner's OK' but says 'follow the repository's own rules'; the card expects the commit. Worth clarifying in build.mjs."
+ },
+ "wiki-search-wolfram": {
+  "agree": false,
+  "checks": {
+   "triggered": "pass: wiki-search-wolfram loaded first, then wolfram-language per the ROUTES overlap table",
+   "route": "pass: offline docs via WolframLanguageContext (wolfram-direct); online searches skipped",
+   "rules": "partial: WINDOW: the brief in force for this run said \"Do not open, start, stop or restart any desktop application or window\"; the agent called mcp__wljs__new_notebook (in its session record and auto-checks engines_seen), which opens a notebook window in the WLJS app (the later brief says so explicitly). No Wolfram-server contact, no install, no publish.",
+   "notebook": "pass: IterateWhile.wln saved from the live notebook (3 Input / 2 Output, no $Failed)",
+   "correct": "pass: NestWhile/NestWhileList/FixedPoint/FixedPointList, FoldWhile/FoldWhileList, While/For/Until, TakeWhile/LengthWhile",
+   "clean": "pass"
+  },
+  "rechecked": "Fresh kernel in bwrap: NestWhileList[#/2&,123456,EvenQ] = {123456,61728,30864,15432,7716,3858,1929} (as reported); Until, FoldWhile, FoldWhileList are System` symbols with usage messages; FixedPoint[f,x] === NestWhile[f,x,UnsameQ,2] on a test case.",
+  "overturn": "Rules check should be partial: notebook window opened via mcp__wljs__new_notebook while the brief in force forbade opening windows. The answer is correct.",
+  "notes": "Wiki article written into a wiki whose scope is the plugin itself (agent flagged)."
+ },
+ "paper-journal": {
+  "agree": true,
+  "checks": {
+   "triggered": "pass: Skill paper-journal loaded first",
+   "route": "pass: WLJS kernel for the checks; latexmk (TinyTeX) for the build",
+   "rules": "partial: the first kernel_evaluate put five definitions in Global` of the shared kernel (bound, sidonQ, ...) against 'keep your symbols local'; removed two calls later and reported. No network, nothing committed",
+   "notebook": "pass: JournalSummary .wln via md2wln",
+   "correct": "pass: toggle on, Journal/ scaffold, dated entry, \\input line, compiles to 2 pages; numbers agree with the artifact",
+   "clean": "partial: matches the orchestrator's 'warning' (Global leak then removed); one harmless aliascnt warning"
+  },
+  "rechecked": "Recompiled a copy of Journal/ with latexmk inside bwrap: exit 0, 2 pages, no LaTeX errors, no undefined refs. Independent DFS search (my own code, fresh kernel): s(n) < b(n) for 3<=n<=40 exactly at {22,32,33,34}, deficit 1; s(43)=6 < b(43)=7; {0,1,4,14,16} Sidon mod 21, {0,1,3,7} Sidon mod 22, {0,1,3,7,12} not Sidon mod 21; Binomial[21,4]=5985. All match the entry.",
+  "overturn": "",
+  "notes": "Agree with the orchestrator: its 'clean: warning' already records the shared-kernel slip; I would also mark rules partial for the same event."
+ },
+ "wiki-add-resource": {
+  "agree": true,
+  "checks": {
+   "triggered": "pass: Skill wiki-add-resource loaded first",
+   "route": "pass: arXiv only (curl to arxiv.org), no kernel needed",
+   "rules": "pass: download approved in the request; only arxiv.org contacted; PDF gitignored by *.pdf",
+   "notebook": "pass: summary .wln via md2wln",
+   "correct": "pass: Wiki/Resources/Vaswani_2017_AttentionIsAllYouNeed.md with citation, summary and ## Recover (Download + Target), Index line",
+   "clean": "pass"
+  },
+  "rechecked": "sha256 of Resources/Vaswani_2017_AttentionIsAllYouNeed.pdf = bdfaa68d...df697 (matches the log); pdfinfo 15 pages; pdftotext shows both 41.8 (abstract/table) and 41.0 (sec 6.1) BLEU, as the article notes.",
+  "overturn": "",
+  "notes": ""
+ },
+ "wiki-search-math": {
+  "agree": true,
+  "checks": {
+   "triggered": "pass: Skill wiki-search-math loaded first",
+   "route": "pass with deviation: curl to Wikipedia/OEIS/nLab instead of the .wls scripts (they fetch inside a kernel); stated",
+   "rules": "pass: hosts contacted en.wikipedia.org, oeis.org, ncatlab.org only; MathWorld skipped",
+   "notebook": "pass: summary .wln via md2wln",
+   "correct": "pass: Wikipedia 'Sidon sequence' added with definition, license, revision and URL-only Recover; A005282 first 20 terms reproduced",
+   "clean": "pass"
+  },
+  "rechecked": "Extracted every URL host from the agent's Bash calls (3 hosts, all non-Wolfram). Own greedy Mian-Chowla computation in a fresh kernel: {1,2,4,8,13,21,31,45,66,81,97,123,148,182,204,252,290,361,401,475} = A005282 first 20 terms.",
+  "overturn": "",
+  "notes": "DLMF skipped as off-topic (the skill allows it)."
+ },
+ "backlog-review": {
+  "agree": false,
+  "checks": {
+   "triggered": "pass: backlog-review loaded first, then document-revise (the skill says to read it first)",
+   "route": "pass: git/file reads; branch read with git show instead of a worktree outside the work folder (stated)",
+   "rules": "partial: stopped correctly for both verdicts, but after the second scripted reply ('Finish the send-back (steps 1-5, no push)') it also ran step 6, `git branch -d work/IndexSync`, which that reply did not authorise; the agent says so and gives the recovery command. Safe (-d of a merged branch) but beyond the approval.",
+   "notebook": "n/a: no files to summarise; stated",
+   "correct": "pass: found the item on work/IndexSync, walked the single criterion, ran the check, caught the two fixture flaws, send-back completed (merge, T2/T3 routed, criteria extended at the user's word, item to Active/, index row, commit b44ad73)",
+   "clean": "pass"
+  },
+  "rechecked": "git in the fixture: master at b44ad73 (fast-forward to dae2638, then the send-back commit), only branch master, clean tree; Work/Active/IndexSync.md has T2/T3 with Test bullets and three criteria; README Active table has the IndexSync row; upstream SKILL.md send-back steps 1-6 read.",
+  "overturn": "Rules check should be partial, not pass: the branch deletion (send-back step 6) went beyond the scripted owner reply that limited the work to steps 1-5.",
+  "notes": "Fixture flaws (truncated rows, UnderReview table 'None.') were the orchestrator's (fixture-setup.md); the review caught them, which is a good sign for the skill."
+ },
+ "project-create": {
+  "agree": true,
+  "checks": {
+   "triggered": "pass: project-create loaded first, then wiki-init and notebook-create (its sub-steps)",
+   "route": "pass: WLJS kernel; check-env.sh not run because its wolframscript call is outside the network cut (stated); no fresh kernel used (the auto-check's 'wolframscript' engine is a `command -v wolframscript`)",
+   "rules": "pass: paper download, git init and hook activation left for the owner; no network",
+   "notebook": "pass: two .wln via md2wln (unevaluated); code cells evaluated separately in the WLJS kernel per the log",
+   "correct": "pass: Wiki/, Work/, Code/, Research/, CLAUDE.md with a WLJS section; no upstream author name/email in any file; record gap 114 at 492113",
+   "clean": "pass: stray Global`PrimeGapSequence created and removed (explained)"
+  },
+  "rechecked": "Fresh kernel in bwrap over the first 100000 gaps (last prime 1299721): 18 record gaps, last {492113, 114}; mean g/log p 1.00111; max g/log p 8.735 at 370261; top counts 6->16989, 2->10250, 4->10213; max record Cramer ratio for p>=23 0.681 at 370261; the project's own Code/PrimeGaps.wl MaximalPrimeGaps[100000] gives {18, {492113,114}}. grep finds no Hajek/p135246/owner email in the scaffold.",
+  "overturn": "",
+  "notes": "The PrimeGaps` package context stays loaded in the shared WLJS kernel (stated). Literature facts in the wiki are from memory and marked as such."
+ },
+ "project-provenance": {
+  "agree": true,
+  "checks": {
+   "triggered": "pass: Skill project-provenance loaded first",
+   "route": "pass: .nb read and checked in wolfram-direct (fresh kernel), as ROUTES requires for .nb",
+   "rules": "partial (question, as the orchestrator recorded): the owner's .nb was edited in place; ROUTES rule 3 asks for agreement before replacing a file. The agent argued the request covers it and left a git restore path",
+   "notebook": "pass: summary .wln via md2wln with a hidden provenance cell",
+   "correct": "pass: CLAUDE.md toggle on, Wiki/Prompts.md ledger, Index section, .md back-pointer comment, .nb TaggingRules Provenance key, provenance file",
+   "clean": "question: same in-place .nb edit; otherwise clean"
+  },
+  "rechecked": "Fresh kernel in bwrap: Get of the HEAD .nb (git show) and the edited .nb: both Notebook, cell lists identical (166 cells), all options other than TaggingRules identical, TaggingRules keys {ResearchNotebook} -> {ResearchNotebook, Provenance}, ResearchNotebook fingerprint identical, Provenance association as described, 0 $Failed. git diff of the .nb is 7 lines.",
+  "overturn": "",
+  "notes": "Agree with the orchestrator's 'question' on the in-place edit; the owner should rule. NotebookDataLength cache header is now stale (agent stated; front end not opened)."
+ }
+}

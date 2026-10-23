@@ -1,0 +1,39 @@
+{
+	"suite":"WolframDebuggingSkill",
+	"kernel":"WLJS",
+	"ok":true,
+	"tests":123,
+	"passed":118,
+	"failed":[
+		{
+			"id":"CapturePrints-Notebooks@@Tests\/WolframDebuggingSkill.wlt:936,1-948,2",
+			"outcome":"Failure"
+		},
+		{
+			"id":"TaskReport-SubmitAndWait@@Tests\/WolframDebuggingSkill.wlt:1439,1-1455,2",
+			"outcome":"Failure"
+		},
+		{
+			"id":"SubmitAndWait-OuterTimeLimit@@Tests\/WolframDebuggingSkill.wlt:1458,1-1466,2",
+			"outcome":"Failure"
+		},
+		{
+			"id":"DebugHTTPResponse@@Tests\/WolframDebuggingSkill.wlt:1558,1-1573,2",
+			"outcome":"Failure"
+		},
+		{
+			"id":"Cleanup-NoStateLeft@@Tests\/WolframDebuggingSkill.wlt:1773,1-1785,2",
+			"outcome":"Failure"
+		}
+	],
+	"seconds":5.25e1,
+	"messages":[
+		"                                  1\nPower::infy : Infinite expression - encountered.\n                                  0",
+		"General::stop : Further output of Power::infy will be suppressed during this calculation.",
+		"First::nofirst : {} has zero length and no first element.",
+		"Last::nolast : {} has zero length and no last element.",
+		"wdtTask::boom : Boom.",
+		"Function::slot1 : (wdtMyFn[#a, #b] & )[FormObject[<|a -> <|Disambiguation -> None, Interpreter -> Integer|>, b -> <|Disambiguation -> None, Interpreter -> Integ",
+		"Table::iterb : Iterator {i, #a, #b} does not have appropriate bounds."
+	]
+}

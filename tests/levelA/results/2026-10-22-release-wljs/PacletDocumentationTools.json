@@ -1,0 +1,24 @@
+{
+	"suite":"PacletDocumentationTools",
+	"kernel":"WLJS",
+	"ok":true,
+	"tests":93,
+	"passed":91,
+	"failed":[
+		{
+			"id":"EditSymbolPacletDocumentation-SetDetailsTable-BasicFunctionality@@Tests\/PacletDocumentationTools.wlt:1287,1-1300,2",
+			"outcome":"Failure"
+		},
+		{
+			"id":"EditSymbolPacletDocumentation-SetSeeAlso-EmptyCreatesPlaceholder@@Tests\/PacletDocumentationTools.wlt:1592,1-1608,2",
+			"outcome":"Failure"
+		}
+	],
+	"seconds":4.12e1,
+	"messages":[
+		"AgentTools::NotebookFileExists : Notebook already exists: \/tmp\/m00011616803201\/Documentation\/English\/ReferencePages\/Symbols\/ExistingFunc.nb.",
+		"General::ChatbookInternal : An unexpected error occurred. Hyperlink[Report this issue », https:\/\/github.com\/WolframResearch\/Chatbook\/issues\/new?title=Insert+Tit",
+		"Wolfram`AgentTools`ResourceFunctions`ImportMarkdownString`ImportMarkdownString::Internal : An unexpected error occurred. Hyperlink[Report this issue », https:\/\/",
+		"General::AgentToolsInternal : An unexpected error occurred. Hyperlink[Report this issue », https:\/\/github.com\/WolframResearch\/AgentTools\/issues\/new?title=Insert"
+	]
+}

@@ -1,0 +1,254 @@
+{
+ "wolfram-language": {
+  "agree": true,
+  "checks": {
+   "triggered": "pass: skill loaded via the Skill tool (session record, auto-checks)",
+   "route": "pass: WLJS kernel for Get/Collatz[27]/plot in a visible notebook; wolfram-direct (network-blocked fresh kernel) only for a PNG cross-check, reason stated (WLJS Rasterize gave a placeholder)",
+   "rules": "pass: session record scanned (scratch-D/rules.py): no Wolfram-server calls, no installs/publishing/pushes, no $AllowInternet=True, no Begin/$Context changes; $AllowInternet checked False in the WLJS kernel; temporary symbol collatzRun`c27 removed. Note: the requested Get leaves Collatz` on the shared kernel's $ContextPath (the user asked to load it; disclosed)",
+   "notebook": "pass: work/Collatz27.wln parses (7 inputs, 5 outputs, no $Failed); no capture tool existed at run time, so the WLJS window was not seen",
+   "correct": "pass: 112 iterates, 111 steps, max 9232 at step 77 (reference total27/peak27)",
+   "clean": "pass: Rasterize placeholder and the WolframNB child of the shared kernel are reported and explained"
+  },
+  "rechecked": "Fresh network-cut kernel (scratch-D/check1.wls -> check1.out), Get of ExampleData Collatz.wl inside Block[$ContextPath]: Collatz[27] -> {112 terms, 111 steps, max 9232, step 77}. Scanned the session record for rule hits: none.",
+  "overturn": "",
+  "notes": "Plot in WLJS never seen on screen; the agent viewed a front-end PNG of identical plot code (scratch/collatz27-check-fe.png)."
+ },
+ "wljs-markdown": {
+  "agree": true,
+  "checks": {
+   "triggered": "pass: skill loaded via the Skill tool (session record, auto-checks)",
+   "route": "pass: .md cell in a WLJS notebook; table values from the WLJS kernel inside Module",
+   "rules": "pass: session record scanned (scratch-D/rules.py): no Wolfram-server calls, no installs/publishing/pushes, no $AllowInternet=True, no Begin/$Context changes; $AllowInternet checked False in the WLJS kernel",
+   "notebook": "pass: CollatzMarkdown.wln saved (note: the file holds only the Input cells, no rendered output; reopening shows source until evaluated)",
+   "correct": "pass: KaTeX cases formula, conjecture, 9-row table all correct; rendering never seen by anyone (runs predate the capture tool) but the cell's KaTeX parses with WLJS's own KaTeX",
+   "clean": "pass: WLJS restart mid-run reported; no messages"
+  },
+  "rechecked": "Table n=1..9 {C(n), steps, peak} recomputed in a fresh kernel: exactly as in the cell (e.g. 7 -> 22,16,52; 9 -> 28,19,52). Every $...$/$$...$$ in the cell (after the guide's backslash un-escaping) rendered by WLJS's bundled KaTeX 0.16.10 (wljs-sharedlib-mk/dist/katex-*.js) with throwOnError: 7/7 OK (scratch-D/katex.out).",
+  "overturn": "",
+  "notes": "Card expects a screenshot; none exists. My KaTeX parse is a substitute, not a rendering check."
+ },
+ "wljs-mermaid": {
+  "agree": true,
+  "checks": {
+   "triggered": "pass: skill loaded via the Skill tool (session record, auto-checks)",
+   "route": "pass: .mermaid cell via mcp__wljs__*",
+   "rules": "pass: session record scanned (scratch-D/rules.py): no Wolfram-server calls, no installs/publishing/pushes, no $AllowInternet=True, no Begin/$Context changes; $AllowInternet checked False in the WLJS kernel",
+   "notebook": "pass: CollatzFlowchart.wln parses, holds the .mermaid input and a Display: mermaid output",
+   "correct": "pass: flowchart is a correct Collatz decision (n=1? stop; even -> n/2; odd -> 3n+1; loop). Not seen rendered by anyone, but it parses with WLJS's own Mermaid flowchart parser",
+   "clean": "pass"
+  },
+  "rechecked": "Ran WLJS's bundled flowDiagram parser (wljs-mermaid-support/dist, DOMPurify stubbed in a scratch copy) on the saved source: PARSE OK, 6 vertices S,C,E,P,H,T and 7 edges with the right labels. Fresh kernel: Collatz trajectory of 6 = {6,3,10,5,16,8,4,2,1}.",
+  "overturn": "",
+  "notes": "Screenshot expectation unmet (pre-capture-tool run)."
+ },
+ "wljs-html": {
+  "agree": true,
+  "checks": {
+   "triggered": "pass: skill loaded via the Skill tool (session record, auto-checks)",
+   "route": "pass: .html cell with <?wsp Prime[1000] ?> evaluated by the WLJS kernel",
+   "rules": "pass: session record scanned (scratch-D/rules.py): no Wolfram-server calls, no installs/publishing/pushes, no $AllowInternet=True, no Begin/$Context changes; $AllowInternet checked False in the WLJS kernel",
+   "notebook": "pass: Prime1000Card.wln has the WSP source and a Display: html output with 7919 substituted",
+   "correct": "pass: 7919 and 'PrimeQ check: True' in the stored output; static HTML (rendering not seen, low risk)",
+   "clean": "pass"
+  },
+  "rechecked": "Fresh kernel: Prime[1000] = 7919, PrimeQ True. Read the saved .wln output cell: value substituted by the template, not typed.",
+  "overturn": "",
+  "notes": "Screenshot expectation unmet (pre-capture-tool run)."
+ },
+ "wljs-javascript": {
+  "agree": false,
+  "checks": {
+   "triggered": "pass: skill loaded via the Skill tool (session record, auto-checks)",
+   "route": "pass: .js cell; kernel only for the save",
+   "rules": "pass: session record scanned (scratch-D/rules.py): no Wolfram-server calls, no installs/publishing/pushes, no $AllowInternet=True, no Begin/$Context changes; $AllowInternet checked False in the WLJS kernel",
+   "notebook": "pass: BouncingDot.wln with the .js input and a Display: js output",
+   "correct": "partial: the cell is valid (node --check OK) and animates a dot with gravity, rAF loop and ondestroy cleanup, but the run's answer says the dot 'bounces off all four walls'; with these parameters it never reaches the top wall. The canvas was never seen running: the owner's screenshot (images/3.png) shows only the input cell under the hash-mismatch dialog",
+   "clean": "pass"
+  },
+  "rechecked": "Re-simulated the cell's exact update rule in node (scratch-D/bounce.cjs, bounce2.cjs): over 10 simulated minutes at 30/60/144 fps and 1 h at dt=0.05, 240 fps and jittered frames, left/right/bottom hits occur but top-wall hits = 0; highest point y = 22-43 px vs. the top contact at y = 12 (the dot starts at rest at y=22 and energy does not grow). node --check of the cell body: OK.",
+  "overturn": "'correct' pass -> partial: the delivered behaviour differs from what the answer tells the user (top wall never hit), and the card's 'renders correctly (screenshot)' has no evidence for the output. The request itself (a bouncing dot) is met.",
+  "notes": "Fix is one line either way: start with an upward vy, or describe it as a ball bouncing on the floor and side walls."
+ },
+ "wljs-formatting": {
+  "agree": true,
+  "checks": {
+   "triggered": "pass: skill loaded via the Skill tool (session record, auto-checks)",
+   "route": "pass: WLJS notebook/kernel",
+   "rules": "pass: session record scanned (scratch-D/rules.py): no Wolfram-server calls, no installs/publishing/pushes, no $AllowInternet=True, no Begin/$Context changes; $AllowInternet checked False in the WLJS kernel; the draft's bare global `primes` was replaced by With before any evaluation (checked in the session record)",
+   "notebook": "pass: PrimesTable.wln (3 inputs, 2 outputs)",
+   "correct": "pass: primes 2..29, blue bold-white header, stripes, dividers",
+   "clean": "pass: Grid Background/Frame loss found and worked around, explained"
+  },
+  "rechecked": "Fresh kernel: Prime[Range[10]] = {2,...,29}. Viewed the projected cell capture wljs-slides/scratch/cap/0x1400035_Application.png: two-column table, header chips blue with white bold 'n'/'Prime(n)', alternating light-blue chips, dividers.",
+  "overturn": "",
+  "notes": "'Highlighted header' is drawn as rounded chips around each item, not a full row fill (WLJS limitation, documented)."
+ },
+ "wljs-dynamics": {
+  "agree": true,
+  "checks": {
+   "triggered": "pass: skill loaded via the Skill tool (session record, auto-checks)",
+   "route": "pass: Manipulate in the WLJS kernel",
+   "rules": "pass: session record scanned (scratch-D/rules.py): no Wolfram-server calls, no installs/publishing/pushes, no $AllowInternet=True, no Begin/$Context changes; $AllowInternet checked False in the WLJS kernel",
+   "notebook": "pass: SinSlider.wln",
+   "correct": "pass: Manipulate[Plot[Sin[k x]...], k 0.1..10, ContinuousAction] returned the JIT widget with no messages; capture shows heading and the k slider",
+   "clean": "pass"
+  },
+  "rechecked": "Viewed wljs-slides/scratch/cap/0x1400025_llm-b7f.wln.png (this run's window): rendered KaTeX heading sin(kx), Manipulate source and the k slider at 1.0. Read the saved cell source.",
+  "overturn": "",
+  "notes": "The plot under the slider and an actual live update were never seen (below the captured area; no drag). Agreement rests on the standard WLJS Manipulate path."
+ },
+ "wljs-async-programming": {
+  "agree": true,
+  "checks": {
+   "triggered": "pass: wljs-async-programming loaded (plus wljs-dynamics)",
+   "route": "pass: AsyncFunction/WhileAsync/PauseAsync in the WLJS kernel; ParallelSubmitAsync avoided with a stated reason (no subkernels in the shared kernel)",
+   "rules": "pass: session record scanned (scratch-D/rules.py): no Wolfram-server calls, no installs/publishing/pushes, no $AllowInternet=True, no Begin/$Context changes; $AllowInternet checked False in the WLJS kernel; test`asyncbtn`t0 removed. A second, unsaved check notebook was opened for the visual check (reason stated)",
+   "notebook": "pass: AsyncButton.wln (button cell + output)",
+   "correct": "pass: Run returns in 0.013 s; a separate kernel_evaluate issued after Run was answered at 'Running... 88%' 2.65 s in, Ping updated mid-run; capture shows bar ~87% and 'Pings: 1'",
+   "clean": "pass"
+  },
+  "rechecked": "Session record calls [20]-[23]: fireReturnedAfter 0.013 s; [23] sinceRun 2.65 s with status 'Running... 88%' and pingTook 0.00026 s. scratch/panel.wl is byte-identical to the saved notebook's button cell (1504 chars). Viewed scratch/cap2/0x1400051_llm-cfd.wln.png.",
+  "overturn": "",
+  "notes": "Button presses were EventFire, not real clicks."
+ },
+ "wljs-slides": {
+  "agree": true,
+  "checks": {
+   "triggered": "pass: wljs-slides loaded (plus wljs-dynamics)",
+   "route": "pass: .slide/.slides cells and WLJS dynamics",
+   "rules": "pass: no server contact, no installs. Note: six Collatz* definitions stay in Global of the shared kernel (needed by WLX slide tags; disclosed); a second check notebook left open",
+   "notebook": "pass: CollatzSlides.wln (definitions, 2 .slide, .md note, .slides with slide 3); the saved file has no deck output, deck rebuilds on evaluation",
+   "correct": "pass: 3 slides; slide-2 plot verified live (cap3 n=27 trajectory ends near step 111, cap4 after CollatzSlidesUpdate[97] ends near 118); facts on slide 3 consistent (2^68 = 2.95e20; Terras 1976; Tao 2019)",
+   "clean": "pass: workarounds documented"
+  },
+  "rechecked": "Fresh kernel: 27 -> 111 steps/9232; argmax steps n<=100 is 97 (118); max peak n<=100 = 9232 (so the fixed PlotRange holds every orbit); N[2^68]=2.95e20. Compared captures cap3 vs cap4 of window llm-4ab (curve changes). Slide KaTeX parses with WLJS KaTeX (6/6).",
+  "overturn": "",
+  "notes": "Fragments and keyboard navigation not testable; slider position does not follow a kernel push (cosmetic)."
+ },
+ "wljs-special-cells": {
+  "agree": true,
+  "checks": {
+   "triggered": "pass: skill loaded via the Skill tool (session record, auto-checks)",
+   "route": "pass: .sh and .latex cells",
+   "rules": "pass: session record scanned (scratch-D/rules.py): no Wolfram-server calls, no installs/publishing/pushes, no $AllowInternet=True, no Begin/$Context changes; $AllowInternet checked False in the WLJS kernel",
+   "notebook": "pass: SpecialCells.wln with shell, latex and markdown outputs",
+   "correct": "pass: pwd is the work folder, ls lists it; e^{i\\pi}+1=0 typeset",
+   "clean": "pass"
+  },
+  "rechecked": "Viewed scratch/cap/0x1400059_llm-e0b.wln.png: shell output lists .../wljs-special-cells/work and SpecialCells.wln; LaTeX output shows e^{iπ}+1=0 typeset. Saved file holds all three outputs.",
+  "overturn": "",
+  "notes": ""
+ },
+ "wljs-wlx": {
+  "agree": true,
+  "checks": {
+   "triggered": "pass: skill loaded via the Skill tool (session record, auto-checks)",
+   "route": "pass: .wlx cell",
+   "rules": "pass: no server contact; PrimeCard/PrimeCardList left in Global (WLX needs capitalised Global tags; disclosed)",
+   "notebook": "pass: PrimeCards.wln with Display: wlx output",
+   "correct": "pass: five cards PRIME #1..#5 = 2,3,5,7,11",
+   "clean": "pass"
+  },
+  "rechecked": "Parsed the saved wlx output: labels 1..5 and values [2,3,5,7,11]; fresh kernel Prime[Range[5]] = {2,3,5,7,11}; viewed scratch/cap/0x1400061_llm-f95.wln.png (five rendered cards).",
+  "overturn": "",
+  "notes": ""
+ },
+ "wljs-migration": {
+  "agree": true,
+  "checks": {
+   "triggered": "pass: skill loaded via the Skill tool (session record, auto-checks)",
+   "route": "pass: .nb read and .wlt baseline in network-cut fresh kernels (ROUTES reason), conversion evaluated in WLJS",
+   "rules": "pass: all three wolframscript runs inside bwrap with $AllowInternet=False; original not opened in WLJS",
+   "notebook": "pass: ExampleTestFile.wln (13 inputs, 12 outputs, no $Failed)",
+   "correct": "pass: 8 tests carried over with expected outputs and options; outcomes Success, Failure, MessagesFailure, Success, Failure, Success, Failure, Failure",
+   "clean": "pass: TestReport-on-.nb failure explained"
+  },
+  "rechecked": "cmp: work/ExampleTestFile.nb is byte-identical to ExampleData/ExampleTestFile.nb. Fresh kernel (check1.out): the .nb has Title 1, Section 2, VerificationTest 8, ExpectedOutput 8, TestOptions 4, BottomCell 8; the 8 VerificationTest/ExpectedOutput/TestOptions contents match the .wln inputs; running the 8 .wln tests in a fresh kernel gives the same 8 outcomes as the saved notebook.",
+  "overturn": "",
+  "notes": ""
+ },
+ "notebook-create": {
+  "agree": true,
+  "checks": {
+   "triggered": "pass: skill loaded via the Skill tool (session record, auto-checks)",
+   "route": "pass: WLJS notebook/kernel; package loaded inside Block[{$ContextPath=$ContextPath}]",
+   "rules": "pass: session record scanned (scratch-D/rules.py): no Wolfram-server calls, no installs/publishing/pushes, no $AllowInternet=True, no Begin/$Context changes; $AllowInternet checked False in the WLJS kernel",
+   "notebook": "pass: Code/Artifacts/CollatzTrajectories_261022.wln (16 inputs, 14 outputs) + .md source + README index",
+   "correct": "pass: 27 -> 111, 97 -> 118 steps, both peak 9232; merge at 94 (step 6 / step 13); both are step records; [[ LLM Generated ]] present",
+   "clean": "pass"
+  },
+  "rechecked": "Fresh kernel with the ExampleData package: c97 peak 9232 at step 84; first value of 97's path on 27's path = 94 at steps 6 (27) and 13 (97); 27 and 97 beat every smaller start; max steps for n<=120 is 97. The 7 wolfram fences of the .md are identical to the .wln code cells and all 8 .md cells appear in the source.",
+  "overturn": "",
+  "notes": ""
+ },
+ "document-revise": {
+  "agree": true,
+  "checks": {
+   "triggered": "pass: skill loaded via the Skill tool (session record, auto-checks)",
+   "route": "pass: .nb read/written in network-cut fresh kernels (ROUTES reason), check in WLJS kernel",
+   "rules": "pass: local commit only (57b80f8, stages _2.md and provenance by name), no push; v1 untouched",
+   "notebook": "pass: SidonBound_260821_r2-summary.wln",
+   "correct": "pass: both notes resolved, only those two passages differ, provenance written, new claim true",
+   "clean": "pass"
+  },
+  "rechecked": "cmp: v1 .md == tests/cards/fixtures/SidonBound_notes.md and v1 .nb == upstream plugin copy. diff v1/v2 .md: exactly the two note passages; 0 '<<' left. Fresh kernel (check2.out): _2.nb is a Notebook, 52 CellIDs vs 49, only cell 7 changed, new 50/51/52 in order (50/51 after 7, 52 after 40), 0 $Failed; the '=' in cell 52 is \\[LongEqual] as in v1. Python brute force: 0 of 5985 five-subsets of Z_22 with 0 are Sidon; b(22)=5; {0,1,3,7} Sidon in Z_22.",
+  "overturn": "",
+  "notes": "Commit uses the user's global git identity (unlike paper-create-note's one-off identity)."
+ },
+ "project-tour": {
+  "agree": true,
+  "checks": {
+   "triggered": "pass: project-tour loaded (plus notebook-create)",
+   "route": "pass: WLJS notebook; network-cut fresh kernel only to prove the .wl is self-contained",
+   "rules": "pass: no server contact; .gitignore appended 'Tour/' (upstream expectation, flagged as a question)",
+   "notebook": "pass: Tour/Tour_01.wln (12 inputs, 11 outputs, no $Failed or messages) + Tour/Tour.md",
+   "correct": "pass: nine-section plan, stop 1 built, stops for feedback; counts correct",
+   "clean": "pass: Markdown angle-bracket and Graph placeholder problems found and fixed"
+  },
+  "rechecked": "ls of the fixture: 27 skills (backlog 7, paper 6, wiki 6, paclet 3, project 3, notebook 1, document 1), 31 commands, 6 agents, 32 scripts, one hook. Independent Python recount of the same whole-word mention rule: 166 edges; top six document-revise 16, backlog-add 12, backlog-run 11, project-provenance 10, paper-create-notebook 10, wiki-update 9; no skill unnamed. Viewed scratch/trio.png (bar chart, graph, table).",
+  "overturn": "",
+  "notes": "Section 1 generated before plan feedback (upstream step 3 says wait); the card expects it, and the agent says so. Edge labels slightly clipped in the graph picture."
+ },
+ "paper-create-note": {
+  "agree": true,
+  "checks": {
+   "triggered": "pass: skill loaded via the Skill tool (session record, auto-checks)",
+   "route": "pass: WLJS kernel for computation; network-cut wolframscript and wolfram-direct for bare-kernel checks; TinyTeX for the PDF",
+   "rules": "pass: no server contact; local commit with one-off identity, no push",
+   "notebook": "pass: summary .wln (3 inputs) + the note's md2wln .wln (42 inputs, unevaluated by design)",
+   "correct": "pass: all values and both tables correct; proofs complete and correct where claimed; n=16,17 upper bounds honestly marked measured",
+   "clean": "pass"
+  },
+  "rechecked": "Independent Python search (scratch-D/sidon.py -> sidon.out): s(n), number of Sidon subsets (2,4,7,...,6845), number of largest sets (1,1,3,2,6,14,2,10,26,60,110,4,22,68,156,320,584,8,24,80), lexicographically first largest sets, and Table 2's full lists at n=4,7,12,18 all match; 2^n brute counts agree for n<=14; sum and difference definitions agree on all 2^14 subsets of [14]; 0/462 five-subsets of [11] and 0/12376 six-subsets of [17] are Sidon. Fresh network-cut kernel: Get of the shipped .wl, sidonNumber/@Range[20] and largest counts n<=16 as tabled, no messages. Recompiled the .tex in scratch: 0 warnings, 6 pages. Read every proof: Claims 1.3 (difference criterion, both directions), 1.4, 1.5, 1.6, 1.7, 2.3 (growth lists each set once), 3.1 (witness differences checked by hand), 3.2 (parity: e(5-e) in {0,4,6}), 3.3 are correct; the Golomb-ruler remark (spreads 0,1,3,6,11,17) and the 'no difference to spare' remark are correct.",
+  "overturn": "",
+  "notes": "Notebook is .wln (local adaptation) instead of an .nb; the card's 'notebook' accepts it."
+ },
+ "paper-create-notebook": {
+  "agree": true,
+  "checks": {
+   "triggered": "pass: skill loaded via the Skill tool (session record, auto-checks)",
+   "route": "pass: WLJS notebook/kernel, helpers in SidonPaper` removed after save",
+   "rules": "pass: MathNotebook not fetched (rule 0, stated); local commit (moves v1 to Archive with git mv, per the folder convention), no push",
+   "notebook": "pass: SidonBoundFailsInfinitelyOften_261022.wln (48 inputs, 45 outputs, no $Failed/$Aborted)",
+   "correct": "pass: the new parity theorem and its corollary are correct as stated and proved; every numerical claim checks",
+   "clean": "pass"
+  },
+  "rechecked": "Read Thm:Parity line by line: n=k^2-k+2 is even; m=n/2 is not a difference (a-a'=m implies a'-a=m); |D|=n-2 forces D=Z_n minus {0,m}; odd differences 2eo = m-eps; (e-o)^2 = k-2+2eps; eps=1 iff 4|k(k-1) iff k=0,1 mod 4. All steps valid; b(n)=k bound also checked. Cor:Infinite (k=5 mod 8 non-square) and least element 22 valid; Lem:Ruler and Prop:Small (b(n)=k iff k^2-k+1<=n<=k^2+k; n=21 set gives all 20 residues) valid. Independent Python: cyclic failures for 2<=n<=40 exactly {22,32,33,34}; s(43)=6<7; s(31)=6; no 7-set in Z_44, no 8-set in Z_58 (Thm:Parity cases k=7,8); {0,1,3,7,12} not Sidon in Z_21; {0,1,4,6} not Sidon in Z_12 (example). Notebook outputs read back: {22,44,58,92,...,382} for applicable k<=20 (checked by hand against the mod-4/square rule), {False,False}. All 357 KaTeX expressions of the .md cells parse with WLJS's KaTeX.",
+  "overturn": "",
+  "notes": "Scope grew beyond the source (new theorem answering Q:Finite); the agent asks about it. Not compared with the literature, as the paper says."
+ },
+ "simulate-and-plot-modelica": {
+  "agree": true,
+  "checks": {
+   "triggered": "pass: skill loaded via the Skill tool (session record, auto-checks)",
+   "route": "pass: SystemModelSimulate/SystemModelPlot in the WLJS kernel",
+   "rules": "pass: session record scanned (scratch-D/rules.py): no Wolfram-server calls, no installs/publishing/pushes, no $AllowInternet=True, no Begin/$Context changes; $AllowInternet checked False in the WLJS kernel; tankPIDRun` symbols removed",
+   "notebook": "pass: TankPID.wln with simulate + two SystemModelPlot cells (PlotRange -> All)",
+   "correct": "pass: IntroductoryExamples.Hierarchical.TankPID, 0-350 s, level vs reference and inflow vs outflow; every quoted number re-derived",
+   "clean": "pass: probing messages explained"
+  },
+  "rechecked": "Fresh network-cut kernel (scratch-D/tank.wls -> tank.out): first peak 0.9958 m at t=17.675 s (log says 17.75), dip 0.067 m at 59.85 s, h(149)=0.240 with qOut 0.1497, second peak 1.71208 m at 165.55 s, qOut at the 0.5 limit 172.15-202.72 s, h=0 from 202.7 to 234.8 s, h(350)=0.2519, qOut(350)=0.4497; PID K=0.1, T=10, Td=5, ref=0.25; no messages. Viewed cap5 projected plots 0x140005e (level, peaks 1.0 and 1.71, empty interval) and 0x1400068 (qIn step at 150, qOut capped at 0.5).",
+  "overturn": "",
+  "notes": "The orchestrator checked only the second peak and end values; the start-up and saturation figures also hold."
+ }
+}

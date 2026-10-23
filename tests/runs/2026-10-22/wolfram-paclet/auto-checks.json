@@ -1,0 +1,29 @@
+{
+ "skill": "wolfram-paclet",
+ "tool_calls": 39,
+ "check1_triggered": {
+  "pass": true,
+  "skills_loaded": [
+   "wolfram-paclet"
+  ]
+ },
+ "check3_rules_auto": {
+  "pass": false,
+  "hits": {
+   "paclet install / remote paclet": [
+    "PacletFindRemote"
+   ],
+   "Wolfram|Alpha / cloud / resources": [
+    "CloudConnect"
+   ]
+  }
+ },
+ "check4_notebooks_found": [
+  "work/ResourceDefinition-build-summary.wln"
+ ],
+ "engines_seen": [
+  "wolfram-direct",
+  "wolframscript"
+ ],
+ "run_log": true
+}

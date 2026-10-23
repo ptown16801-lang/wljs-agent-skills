@@ -1,0 +1,42 @@
+[Warning] Running tests on source directory instead of built paclet
+
+TestReport: Graphics.wlt | Collecting tests...Evaluating tests (0)Elapsed time 3s
+
+TestReport: Graphics.wlt | Collecting tests...Evaluating tests (0)Elapsed time 9s
+
+TestReport: Graphics.wlt | Collecting tests...Evaluating tests (0)Elapsed time 9s
+[Warning] Paclet MX file was not loaded
+
+TestReport: Graphics.wlt | 6 SuccessEvaluating tests (6)Elapsed time 9s
+
+TestReport: Graphics.wlt | 6 SuccessEvaluating tests (6)Elapsed time 10s
+
+TestReport: Graphics.wlt | 6 SuccessEvaluating tests (6)Elapsed time 10s
+
+TestReport: Graphics.wlt | 6 SuccessEvaluating tests (6)Elapsed time 10s
+
+TestReport: Graphics.wlt | 16 Success,1 MessagesFailureEvaluating tests (17)Elapsed time 11s
+
+TestReport: Graphics.wlt | 16 Success,1 MessagesFailureEvaluating tests (17)Elapsed time 11s
+
+TestReport: Graphics.wlt | 16 Success,1 MessagesFailureEvaluating tests (17)Elapsed time 12s
+
+TestReport: Graphics.wlt | 16 Success,1 MessagesFailureEvaluating tests (17)Elapsed time 12s
+
+TestReport: Graphics.wlt | 16 Success,1 MessagesFailureEvaluating tests (17)Elapsed time 12s
+
+TestReport: Graphics.wlt | 16 Success,1 MessagesFailureEvaluating tests (17)Elapsed time 13s
+
+TestReport: Graphics.wlt | 16 Success,1 MessagesFailureEvaluating tests (17)Elapsed time 13s
+
+TestReport: Graphics.wlt | 16 Success,1 MessagesFailureEvaluating tests (17)Elapsed time 14s
+
+TestReport: Graphics.wlt | 16 Success,1 MessagesFailureEvaluating tests (17)Elapsed time 14s
+
+TestReport: Graphics.wlt | 16 Success,1 MessagesFailureEvaluating tests (17)Elapsed time 14s
+
+TestReport: Graphics.wlt | 16 Success,1 MessagesFailureEvaluating tests (17)Elapsed time 15s
+
+TestReport: Graphics.wlt | 16 Success,1 MessagesFailureEvaluating tests (17)Elapsed time 15s
+
+TestReport: Graphics.wlt | 29 Success,1 MessagesFailureEvaluating tests (30)Elapsed time 16s

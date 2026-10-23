@@ -1,0 +1,21 @@
+[Warning] Running tests on source directory instead of built paclet
+
+TestReport: PacletTools.wlt | Collecting tests...Evaluating tests (0)Elapsed time 3s
+
+TestReport: PacletTools.wlt | Collecting tests...Evaluating tests (0)Elapsed time 7s
+
+TestReport: PacletTools.wlt | Collecting tests...Evaluating tests (0)Elapsed time 7s
+[Warning] Paclet MX file was not loaded
+
+TestReport: PacletTools.wlt | 3 SuccessEvaluating tests (3)Elapsed time 7s
+
+TestReport: PacletTools.wlt | 3 SuccessEvaluating tests (3)Elapsed time 8s
+
+TestReport: PacletTools.wlt | 3 SuccessEvaluating tests (3)Elapsed time 8s
+
+TestReport: PacletTools.wlt | 8 SuccessEvaluating tests (8)Elapsed time 9s
+
+TestReport: PacletTools.wlt | 8 Success,1 FailureEvaluating tests (9)Elapsed time 9s
+
+TestReport: PacletTools.wlt | 58 Success,2 FailureEvaluating tests (60)Elapsed time 9s
+PacletTools (fresh): 69/71 passed, 9.5 s

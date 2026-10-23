@@ -1,0 +1,81 @@
+
+TestReport: Tools.wlt | 12 SuccessEvaluating tests (12)Elapsed time 2s
+
+TestReport: Tools.wlt | 12 SuccessEvaluating tests (12)Elapsed time 3s
+
+TestReport: Tools.wlt | 12 SuccessEvaluating tests (12)Elapsed time 3s
+
+TestReport: Tools.wlt | 12 SuccessEvaluating tests (12)Elapsed time 4s
+
+TestReport: Tools.wlt | 12 SuccessEvaluating tests (12)Elapsed time 4s
+
+TestReport: Tools.wlt | 12 SuccessEvaluating tests (12)Elapsed time 4s
+
+TestReport: Tools.wlt | 12 SuccessEvaluating tests (12)Elapsed time 5s
+
+TestReport: Tools.wlt | 12 SuccessEvaluating tests (12)Elapsed time 5s
+
+TestReport: Tools.wlt | 12 SuccessEvaluating tests (12)Elapsed time 6s
+
+TestReport: Tools.wlt | 21 SuccessEvaluating tests (21)Elapsed time 6s
+
+TestReport: Tools.wlt | 21 SuccessEvaluating tests (21)Elapsed time 6s
+
+TestReport: Tools.wlt | 24 SuccessEvaluating tests (24)Elapsed time 7s
+
+TestReport: Tools.wlt | 38 SuccessEvaluating tests (38)Elapsed time 7s
+
+TestReport: Tools.wlt | 38 SuccessEvaluating tests (38)Elapsed time 8s
+
+TestReport: Tools.wlt | 38 Success,1 FailureEvaluating tests (39)Elapsed time 8s
+
+TestReport: Tools.wlt | 39 Success,3 FailureEvaluating tests (42)Elapsed time 8s
+
+TestReport: Tools.wlt | 39 Success,3 FailureEvaluating tests (42)Elapsed time 9s
+
+TestReport: Tools.wlt | 39 Success,3 FailureEvaluating tests (42)Elapsed time 9s
+
+TestReport: Tools.wlt | 39 Success,3 FailureEvaluating tests (42)Elapsed time 10s
+
+TestReport: Tools.wlt | 39 Success,3 FailureEvaluating tests (42)Elapsed time 10s
+
+TestReport: Tools.wlt | 39 Success,3 FailureEvaluating tests (42)Elapsed time 11s
+
+TestReport: Tools.wlt | 56 Success,8 FailureEvaluating tests (64)Elapsed time 11s
+
+TestReport: Tools.wlt | 56 Success,8 FailureEvaluating tests (64)Elapsed time 11s
+
+TestReport: Tools.wlt | 56 Success,8 FailureEvaluating tests (64)Elapsed time 12s
+
+TestReport: Tools.wlt | 56 Success,8 FailureEvaluating tests (64)Elapsed time 12s
+
+TestReport: Tools.wlt | 57 Success,8 FailureEvaluating tests (65)Elapsed time 13s
+
+TestReport: Tools.wlt | 57 Success,8 FailureEvaluating tests (65)Elapsed time 13s
+
+TestReport: Tools.wlt | 57 Success,8 FailureEvaluating tests (65)Elapsed time 13s
+
+TestReport: Tools.wlt | 57 Success,8 FailureEvaluating tests (65)Elapsed time 14s
+
+TestReport: Tools.wlt | 57 Success,8 FailureEvaluating tests (65)Elapsed time 14s
+
+TestReport: Tools.wlt | 58 Success,8 FailureEvaluating tests (66)Elapsed time 14s
+
+TestReport: Tools.wlt | 58 Success,8 FailureEvaluating tests (66)Elapsed time 15s
+
+TestReport: Tools.wlt | 58 Success,8 FailureEvaluating tests (66)Elapsed time 15s
+
+TestReport: Tools.wlt | 58 Success,8 FailureEvaluating tests (66)Elapsed time 16s
+
+TestReport: Tools.wlt | 58 Success,8 FailureEvaluating tests (66)Elapsed time 16s
+
+TestReport: Tools.wlt | 58 Success,8 FailureEvaluating tests (66)Elapsed time 16s
+
+TestReport: Tools.wlt | 59 Success,8 FailureEvaluating tests (67)Elapsed time 17s
+
+TestReport: Tools.wlt | 59 Success,8 FailureEvaluating tests (67)Elapsed time 17s
+
+TestReport: Tools.wlt | 59 Success,8 FailureEvaluating tests (67)Elapsed time 18s
+
+TestReport: Tools.wlt | 59 Success,8 FailureEvaluating tests (67)Elapsed time 18s
+Tools (fresh): 66/74 passed, 18.2 s

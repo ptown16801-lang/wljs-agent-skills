@@ -1,0 +1,34 @@
+{
+  "figures": [
+    {
+      "title": "Simulation results",
+      "identifier": "results",
+      "preferred": true,
+      "plots": [
+        {
+          "title": "Simulation results",
+          "x": {
+            "label": "time"
+          },
+          "curves": [
+            {
+              "x": "time",
+              "y": "mass.s",
+              "legend": "mass.s"
+            },
+            {
+              "x": "time",
+              "y": "mass.v",
+              "legend": "mass.v"
+            },
+            {
+              "x": "time",
+              "y": "springDamper.f",
+              "legend": "springDamper.f"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

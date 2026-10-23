@@ -1,0 +1,225 @@
+%-------------------------------%Notebook%--------------------------------%
+HaveToSaveAs: false
+ObjectFields:
+Quick: false
+%-------------------------------------------------------------------------%
+
+
+%---------------------------------%Cells%---------------------------------%
+Props:
+  Hidden: true
+Type: Input
+%-------------------------------------------------------------------------%
+.md
+<!-- provenance:
+     intent: one-page summary of the Oct 21 test of all 70 skills in WLJS
+     generator: wljs-agent-skills tests
+     model: claude-opus-5-5
+     date: 2026-10-21 -->
+
+%-------------------------------------------------------------------------%
+Display: markdown
+Type: Output
+%-------------------------------------------------------------------------%
+<!-- provenance:
+     intent: one-page summary of the Oct 21 test of all 70 skills in WLJS
+     generator: wljs-agent-skills tests
+     model: claude-opus-5-5
+     date: 2026-10-21 -->
+
+%-------------------------------------------------------------------------%
+Props:
+  Hidden: true
+Type: Input
+%-------------------------------------------------------------------------%
+.md
+# All 70 skills in WLJS: test results
+
+**[[ LLM Generated ]]**
+
+Tested Oct 21, 2026 in the WLJS 3.1.4 desktop app. Evidence: `TESTING.md`; routes: `ROUTES.md`.
+
+%-------------------------------------------------------------------------%
+Display: markdown
+Type: Output
+%-------------------------------------------------------------------------%
+# All 70 skills in WLJS: test results
+
+**[[ LLM Generated ]]**
+
+Tested Oct 21, 2026 in the WLJS 3.1.4 desktop app. Evidence: `TESTING.md`; routes: `ROUTES.md`.
+
+%-------------------------------------------------------------------------%
+Props:
+  Hidden: false
+Type: Input
+%-------------------------------------------------------------------------%
+With[{data = {{"works", 39}, {"works with fixes", 9}, {"limited", 13}, {"fails", 2}, {"not tested", 7}}}, Graphics[MapIndexed[{RGBColor[0.95, 0.75, 0.2], Rectangle[{#2[[1]] - 0.4, 0}, {#2[[1]] + 0.4, #1[[2]]}], Black, Text[#1[[1]], {#2[[1]], -3}], Text[#1[[2]], {#2[[1]], #1[[2]] + 2.5}]} &, data], PlotRange -> {{0.4, 5.6}, {-6, 44}}, AspectRatio -> 1/2, ImageSize -> 520]]
+
+%-------------------------------------------------------------------------%
+Props:
+  Hidden: true
+Type: Input
+%-------------------------------------------------------------------------%
+.md
+## Per skill
+
+| Skill | Status | Result |
+|---|---|---|
+| annotate-modelica-animation | works | hand-written Animation annotation on a MultiBody pendulum builds and simulates in WLJS; playback is in the System Modeler app |
+| annotate-modelica-graphics | works | wsm-toolkit schematic writes Placement/Line annotations; the model still builds in WLJS |
+| annotate-modelica-plots | works | figures annotation written from a vars file; plots reproduced live in WLJS |
+| backlog-add | works | test item created |
+| backlog-info | works | found the finished item on its branch |
+| backlog-refine | works | WLJS probe, trap and open question recorded; readiness check kept the item in Backlog |
+| backlog-review | works | check re-run in WLJS from the branch; accepted, merged, Done/ |
+| backlog-run | works | two sessions in a worktree claim; computation in WLJS matched OEIS A060412 |
+| diagnose-modelica | works | states, parameters, equation count in WLJS; deep reports (blocks, tearing, events) via wsm-toolkit |
+| modelica-model-architecture | works | a directory-form library loads in WLJS with no messages; its example matches the exact solution |
+| paclet-build | works | PacletTools`PacletBuild in WLJS; the archive loads and runs without installing |
+| project-tour | works | tour stop built as a .wln (tools/md2wln.py); its code runs in WLJS |
+| search-modelica-docs | works | offline search through wsm-toolkit docs |
+| simulate-and-plot-modelica | works | SystemModelPlot renders live in a WLJS notebook |
+| simulate-modelica | works | SystemModelSimulate in WLJS matches the exact solution |
+| validate-modelica | works | in WLJS: a build reports the exact error (missing connector); the toolkit flatten passes too |
+| wiki-check | works | links/index checked; missing article added |
+| wiki-init | works | test project wiki created |
+| wiki-update | works | run inside backlog-run |
+| wljs-async-programming | works | WLJS's own guide, used in the WLJS app (Oct 21) |
+| wljs-dynamics | works | Manipulate renders live with JIT updates |
+| wljs-formatting | works | WLJS's own guide, used in the WLJS app (Oct 21) |
+| wljs-html | works | WLJS's own guide, used in the WLJS app (Oct 21) |
+| wljs-javascript | works | WLJS's own guide, used in the WLJS app (Oct 21) |
+| wljs-markdown | works | WLJS's own guide, used in the WLJS app (Oct 21) |
+| wljs-mermaid | works | WLJS's own guide, used in the WLJS app (Oct 21) |
+| wljs-migration | works | .nb -> .wln conversion works; Manipulate fixes recorded in ROUTES.md |
+| wljs-slides | works | WLJS's own guide, used in the WLJS app (Oct 21) |
+| wljs-special-cells | works | WLJS's own guide, used in the WLJS app (Oct 21) |
+| wljs-wlx | works | WLJS's own guide, used in the WLJS app (Oct 21) |
+| wolfram-alpha | works | one owner-approved query in a WLJS notebook (WolframAlpha[...] with internet on, then off) |
+| wolfram-computational-essay | works | example builds a valid notebook offline (31 cells, no messages) |
+| wolfram-debugging | works | Wolfram's official suite 118/123 in WLJS = wolfram-direct; APIFunction/HTTP debugging needs wolfram-direct |
+| wolfram-guide-page | works | example builds a valid guide notebook offline |
+| wolfram-language | works | evaluation, CodeInspector, Trace and System Modeler calls run in the WLJS kernel |
+| wolfram-language-modelica | works | SystemModelSimulate in WLJS matches the exact solution to 9 digits |
+| wolfram-overview-page | works | test source builds a valid overview notebook offline |
+| wolfram-setup | works | diagnostic run: versions, WLJS ready, MCP entry, Expand[(x+1)^5] in WLJS; nothing installed |
+| wolfram-tech-note | works | test source builds a valid tech-note notebook offline |
+| annotate-control-panel | works with fixes | panel annotation written (suggested minimum 0 for a mass is singular: raise it); a WLJS Manipulate over SystemModelSimulate re-simulates live |
+| document-revise | works with fixes | notes found in the saved .wln; version _2 written with NotebookSave to a new path |
+| notebook-create | works with fixes | .wln built through the WLJS MCP tools; save with NotebookSave from the kernel (the Save button needs a dialog) |
+| project-create | works with fixes | scaffold scripts default the author/email to the upstream author: always pass the owner details |
+| project-provenance | works with fixes | .wln has no TaggingRules: the back-pointer is a hidden first .md cell |
+| wolfram-investigation | works with fixes | lifecycle stays in a fresh kernel: in WLJS NotebookDriftReport falsely reports drift |
+| wolfram-notebooks | works with fixes | ReadNotebook/WriteNotebook stay in wolfram-direct: in the WLJS kernel ReadNotebook output carries WLJS box markup and WriteNotebook fails |
+| wolfram-paclet | works with fixes | build in a fresh kernel (3 s; WLJS 106 s and 2 graphics missing) |
+| wolfram-symbol-page | works with fixes | build in a fresh kernel (in WLJS a section is lost: 96 vs 142 cells) |
+| backlog-board | limited | board data builds locally; publishing the page needs the owner OK (not run) |
+| create-wolfram-documentation | limited | steps 1-5 work offline (survey, backup, port, rebuild); PacletPage publishing needs a download |
+| paclet-docs | limited | CreateSymbolDoc must run in a fresh kernel (in WLJS it writes WLJS box markup); examples evaluate only if the paclet is installed |
+| paper-create | limited | sources written (upstream script fills in the upstream author email if blank); no PDF without TeX |
+| paper-create-note | limited | .wl checked in a bare kernel, .wln via tools/md2wln.py runs in WLJS; no PDF without TeX |
+| paper-create-notebook | limited | WLJS .wln path works; numbered statements and tag references need Mathematica and the MathNotebook paclet |
+| paper-journal | limited | sources written; no LaTeX/Typst on this computer, so no PDF |
+| wiki-search-wolfram | limited | offline search via wolfram-direct works; WLJS docs search returns no results (corpus missing); online parts not tested |
+| wolfram-data-repository | limited | builds in a fresh kernel (hangs in WLJS); category checkboxes stay empty offline |
+| wolfram-demonstration | limited | builds offline (empty categories); in WLJS the example needs three Manipulate fixes, then runs live |
+| wolfram-example-repository | limited | builds offline; category checkboxes stay empty without Wolfram servers |
+| wolfram-paclets | limited | PacletTools`PacletBuild works in WLJS; CheckPaclet/BuildPaclet/SubmitPaclet scripts need the Wolfram/PacletCICD paclet, not installed |
+| wolfram-prompt | limited | builds offline; category checkboxes stay empty without Wolfram servers |
+| create-hydraulic-model | fails | the Hydraulic Modelica library is not installed (the knowledge-graph tool runs) |
+| paper-lean | fails | Lean 4, Mathlib and the lean-lsp MCP are not installed |
+| astro-observation-planner | not tested | needs internet (not approved); offline Sunset returns a wrong time and planets stay unevaluated |
+| backlog-autolab | not tested | dispatching background agents needs the owner OK each time |
+| paclet-publish | not tested | past the local build every step publishes (owner OK) |
+| paper-cite | not tested | needs internet (not approved) |
+| wiki-add-resource | not tested | needs internet (not approved) |
+| wiki-search-math | not tested | needs internet (not approved) |
+| wolfram-function-resource | not tested | needs internet to build (fetches a template; not approved) |
+
+%-------------------------------------------------------------------------%
+Display: markdown
+Type: Output
+%-------------------------------------------------------------------------%
+## Per skill
+
+| Skill | Status | Result |
+|---|---|---|
+| annotate-modelica-animation | works | hand-written Animation annotation on a MultiBody pendulum builds and simulates in WLJS; playback is in the System Modeler app |
+| annotate-modelica-graphics | works | wsm-toolkit schematic writes Placement/Line annotations; the model still builds in WLJS |
+| annotate-modelica-plots | works | figures annotation written from a vars file; plots reproduced live in WLJS |
+| backlog-add | works | test item created |
+| backlog-info | works | found the finished item on its branch |
+| backlog-refine | works | WLJS probe, trap and open question recorded; readiness check kept the item in Backlog |
+| backlog-review | works | check re-run in WLJS from the branch; accepted, merged, Done/ |
+| backlog-run | works | two sessions in a worktree claim; computation in WLJS matched OEIS A060412 |
+| diagnose-modelica | works | states, parameters, equation count in WLJS; deep reports (blocks, tearing, events) via wsm-toolkit |
+| modelica-model-architecture | works | a directory-form library loads in WLJS with no messages; its example matches the exact solution |
+| paclet-build | works | PacletTools`PacletBuild in WLJS; the archive loads and runs without installing |
+| project-tour | works | tour stop built as a .wln (tools/md2wln.py); its code runs in WLJS |
+| search-modelica-docs | works | offline search through wsm-toolkit docs |
+| simulate-and-plot-modelica | works | SystemModelPlot renders live in a WLJS notebook |
+| simulate-modelica | works | SystemModelSimulate in WLJS matches the exact solution |
+| validate-modelica | works | in WLJS: a build reports the exact error (missing connector); the toolkit flatten passes too |
+| wiki-check | works | links/index checked; missing article added |
+| wiki-init | works | test project wiki created |
+| wiki-update | works | run inside backlog-run |
+| wljs-async-programming | works | WLJS's own guide, used in the WLJS app (Oct 21) |
+| wljs-dynamics | works | Manipulate renders live with JIT updates |
+| wljs-formatting | works | WLJS's own guide, used in the WLJS app (Oct 21) |
+| wljs-html | works | WLJS's own guide, used in the WLJS app (Oct 21) |
+| wljs-javascript | works | WLJS's own guide, used in the WLJS app (Oct 21) |
+| wljs-markdown | works | WLJS's own guide, used in the WLJS app (Oct 21) |
+| wljs-mermaid | works | WLJS's own guide, used in the WLJS app (Oct 21) |
+| wljs-migration | works | .nb -> .wln conversion works; Manipulate fixes recorded in ROUTES.md |
+| wljs-slides | works | WLJS's own guide, used in the WLJS app (Oct 21) |
+| wljs-special-cells | works | WLJS's own guide, used in the WLJS app (Oct 21) |
+| wljs-wlx | works | WLJS's own guide, used in the WLJS app (Oct 21) |
+| wolfram-alpha | works | one owner-approved query in a WLJS notebook (WolframAlpha[...] with internet on, then off) |
+| wolfram-computational-essay | works | example builds a valid notebook offline (31 cells, no messages) |
+| wolfram-debugging | works | Wolfram's official suite 118/123 in WLJS = wolfram-direct; APIFunction/HTTP debugging needs wolfram-direct |
+| wolfram-guide-page | works | example builds a valid guide notebook offline |
+| wolfram-language | works | evaluation, CodeInspector, Trace and System Modeler calls run in the WLJS kernel |
+| wolfram-language-modelica | works | SystemModelSimulate in WLJS matches the exact solution to 9 digits |
+| wolfram-overview-page | works | test source builds a valid overview notebook offline |
+| wolfram-setup | works | diagnostic run: versions, WLJS ready, MCP entry, Expand[(x+1)^5] in WLJS; nothing installed |
+| wolfram-tech-note | works | test source builds a valid tech-note notebook offline |
+| annotate-control-panel | works with fixes | panel annotation written (suggested minimum 0 for a mass is singular: raise it); a WLJS Manipulate over SystemModelSimulate re-simulates live |
+| document-revise | works with fixes | notes found in the saved .wln; version _2 written with NotebookSave to a new path |
+| notebook-create | works with fixes | .wln built through the WLJS MCP tools; save with NotebookSave from the kernel (the Save button needs a dialog) |
+| project-create | works with fixes | scaffold scripts default the author/email to the upstream author: always pass the owner details |
+| project-provenance | works with fixes | .wln has no TaggingRules: the back-pointer is a hidden first .md cell |
+| wolfram-investigation | works with fixes | lifecycle stays in a fresh kernel: in WLJS NotebookDriftReport falsely reports drift |
+| wolfram-notebooks | works with fixes | ReadNotebook/WriteNotebook stay in wolfram-direct: in the WLJS kernel ReadNotebook output carries WLJS box markup and WriteNotebook fails |
+| wolfram-paclet | works with fixes | build in a fresh kernel (3 s; WLJS 106 s and 2 graphics missing) |
+| wolfram-symbol-page | works with fixes | build in a fresh kernel (in WLJS a section is lost: 96 vs 142 cells) |
+| backlog-board | limited | board data builds locally; publishing the page needs the owner OK (not run) |
+| create-wolfram-documentation | limited | steps 1-5 work offline (survey, backup, port, rebuild); PacletPage publishing needs a download |
+| paclet-docs | limited | CreateSymbolDoc must run in a fresh kernel (in WLJS it writes WLJS box markup); examples evaluate only if the paclet is installed |
+| paper-create | limited | sources written (upstream script fills in the upstream author email if blank); no PDF without TeX |
+| paper-create-note | limited | .wl checked in a bare kernel, .wln via tools/md2wln.py runs in WLJS; no PDF without TeX |
+| paper-create-notebook | limited | WLJS .wln path works; numbered statements and tag references need Mathematica and the MathNotebook paclet |
+| paper-journal | limited | sources written; no LaTeX/Typst on this computer, so no PDF |
+| wiki-search-wolfram | limited | offline search via wolfram-direct works; WLJS docs search returns no results (corpus missing); online parts not tested |
+| wolfram-data-repository | limited | builds in a fresh kernel (hangs in WLJS); category checkboxes stay empty offline |
+| wolfram-demonstration | limited | builds offline (empty categories); in WLJS the example needs three Manipulate fixes, then runs live |
+| wolfram-example-repository | limited | builds offline; category checkboxes stay empty without Wolfram servers |
+| wolfram-paclets | limited | PacletTools`PacletBuild works in WLJS; CheckPaclet/BuildPaclet/SubmitPaclet scripts need the Wolfram/PacletCICD paclet, not installed |
+| wolfram-prompt | limited | builds offline; category checkboxes stay empty without Wolfram servers |
+| create-hydraulic-model | fails | the Hydraulic Modelica library is not installed (the knowledge-graph tool runs) |
+| paper-lean | fails | Lean 4, Mathlib and the lean-lsp MCP are not installed |
+| astro-observation-planner | not tested | needs internet (not approved); offline Sunset returns a wrong time and planets stay unevaluated |
+| backlog-autolab | not tested | dispatching background agents needs the owner OK each time |
+| paclet-publish | not tested | past the local build every step publishes (owner OK) |
+| paper-cite | not tested | needs internet (not approved) |
+| wiki-add-resource | not tested | needs internet (not approved) |
+| wiki-search-math | not tested | needs internet (not approved) |
+| wolfram-function-resource | not tested | needs internet to build (fetches a template; not approved) |
+
+%------------------------------%EndOfCells%-------------------------------%
+
+
+
+
+
+%-----------------------------%EndOfNotebook%-----------------------------%

@@ -1,0 +1,52 @@
+{
+	"suite":"Tools",
+	"kernel":"fresh",
+	"ok":true,
+	"tests":74,
+	"passed":66,
+	"failed":[
+		{
+			"id":"WolframAlpha-BasicQuery@@Tests\/Tools.wlt:380,1-385,2",
+			"outcome":"Failure"
+		},
+		{
+			"id":"WolframAlpha-ResultString@@Tests\/Tools.wlt:387,1-396,2",
+			"outcome":"Failure"
+		},
+		{
+			"id":"WolframAlpha-NonEmptyResult@@Tests\/Tools.wlt:398,1-403,2",
+			"outcome":"Failure"
+		},
+		{
+			"id":"WolframLanguageContext-BasicQuery@@Tests\/Tools.wlt:434,23-439,2",
+			"outcome":"Failure"
+		},
+		{
+			"id":"WolframLanguageContext-NonEmptyResult@@Tests\/Tools.wlt:441,23-446,2",
+			"outcome":"Failure"
+		},
+		{
+			"id":"WolframLanguageContext-RelevantContent@@Tests\/Tools.wlt:448,23-453,2",
+			"outcome":"Failure"
+		},
+		{
+			"id":"WolframContext-BasicQuery@@Tests\/Tools.wlt:497,23-502,2",
+			"outcome":"Failure"
+		},
+		{
+			"id":"WolframContext-NonEmptyResult@@Tests\/Tools.wlt:504,23-509,2",
+			"outcome":"Failure"
+		}
+	],
+	"seconds":1.82e1,
+	"messages":[
+		"URLSubmit::offline : The Wolfram Language is currently configured not to use the Internet. To allow Internet use set $AllowInternet = True or check the \"Allow t",
+		"General::ChatbookInternal : An unexpected error occurred. Hyperlink[Report this issue », https:\/\/github.com\/WolframResearch\/Chatbook\/issues\/new?title=Insert+Tit",
+		"General::AgentToolsInternal : An unexpected error occurred. Hyperlink[Report this issue », https:\/\/github.com\/WolframResearch\/AgentTools\/issues\/new?title=Insert",
+		"StringJoin::string : String expected at position 1 in StringJoin[Missing[]].",
+		"StringLength::string : String expected at position 1 in StringLength[StringJoin[Missing[]]].",
+		"SemanticSearch`PackageScope`$FunctionName::offline : The Wolfram Language is currently configured not to use the Internet. To allow Internet use set $AllowInter",
+		"AgentTools::TestFileNotFound : Test file not found: \"<session-id>\/does\/not\/exist.wlt\".",
+		"AgentTools::TestFileNotFound : Test file not found: \"<session-id>\/does\/not\/exist.wlt\"."
+	]
+}

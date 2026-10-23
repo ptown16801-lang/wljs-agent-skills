@@ -1,0 +1,59 @@
+%-------------------------------%Notebook%--------------------------------%
+HaveToSaveAs: true
+ObjectFields:
+Quick: true
+%-------------------------------------------------------------------------%
+
+
+%---------------------------------%Cells%---------------------------------%
+Props:
+  Hidden: false
+Type: Input
+%-------------------------------------------------------------------------%
+.md
+# J3 test: graphics saved from a cell survive a restart
+
+%-------------------------------------------------------------------------%
+Display: markdown
+Type: Output
+%-------------------------------------------------------------------------%
+# J3 test: graphics saved from a cell survive a restart
+
+%-------------------------------------------------------------------------%
+Props:
+  Hidden: false
+Type: Input
+%-------------------------------------------------------------------------%
+{$AllowInternet, Plot[Sin[x], {x, 0, 6}, PlotLabel -> "J3 sine"]}
+
+%-------------------------------------------------------------------------%
+Type: Output
+%-------------------------------------------------------------------------%
+{False,(*VB[*)(FrontEndRef["Fae521ebd-3845-4b5d-b5be-0291bf36b9ba"])(*,*)(*"1:eJxTTMoPSmNkYGAoZgESHvk5KRCeEJBwK8rPK3HNS3GtSE0uLUlMykkNVgUJJ6aaGhmmJqXoGluYmOqaJJmm6CaZJqXqGhhZGialGZslWSYlAgCjTBZv"*)(*]VB*)}
+
+%-------------------------------------------------------------------------%
+Props:
+  Hidden: false
+Type: Input
+%-------------------------------------------------------------------------%
+Graphics3D[{Orange, Sphere[]}, ImageSize -> 250]
+
+%-------------------------------------------------------------------------%
+Type: Output
+%-------------------------------------------------------------------------%
+(*VB[*)(Graphics3D[{RGBColor[1, 0.5, 0], Sphere[{0, 0, 0}]}, ImageSize -> 250])(*,*)(*"1:eJxTTMoPSmNkYGAoZgESHvk5KWlMIB4XkHAvSizIyEwuNnaBiIFU+GQWl6Qxg3gcQCLI3ck5Pye/KBNkQhEDGDywzwRREEPZgERwQUZqUSpEE8wIsBIEgTA/qDQntZgTyPDMTUxPDc6sSs38BeQBADw/H6Y="*)(*]VB*)
+
+%-------------------------------------------------------------------------%
+Props:
+  Hidden: false
+Type: Input
+%-------------------------------------------------------------------------%
+NotebookSave[EvaluationNotebook[], "<repo>/tests/bugs/wln-save-test/J3-after-patch.wln"]
+
+%------------------------------%EndOfCells%-------------------------------%
+
+
+
+
+
+%-----------------------------%EndOfNotebook%-----------------------------%

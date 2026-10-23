@@ -1,0 +1,23 @@
+{
+ "skill": "paper-create",
+ "tool_calls": 35,
+ "check1_triggered": {
+  "pass": true,
+  "skills_loaded": [
+   "paper-create"
+  ]
+ },
+ "check3_rules_auto": {
+  "pass": true,
+  "hits": {}
+ },
+ "check4_notebooks_found": [
+  "work/project/Research/Artifacts/SidonBoundPaperComputations_261022.wln"
+ ],
+ "engines_seen": [
+  "latexmk",
+  "mcp__wljs__kernel_evaluate",
+  "typst"
+ ],
+ "run_log": true
+}

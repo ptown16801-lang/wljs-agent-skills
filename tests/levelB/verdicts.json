@@ -1,0 +1,1537 @@
+{
+ "_about": "Checks 2 (route), 4 (notebook), 5 (correct), 6 (clean) judged by the orchestrator from each run's report, run-log and files; checks 1 (triggered) and 3 (rules) come from auto-checks.json (the agent's session record). Level C review may overturn any of these. scripted = the test needed a scripted user reply (recorded here).",
+ "wiki-init": {
+  "route": "pass: no kernel needed; facts checked in wolfram-direct",
+  "notebook": "pass: summary .wln via md2wln",
+  "correct": "pass: 27 -> 111 steps, peak 9232 (reference)",
+  "clean": "pass",
+  "scripted": "domain folders: Systems/, Experiments/; keep code/",
+  "findings": [
+   "upstream .gitignore 'Resources/' hides Wiki/Resources (used /Resources/)"
+  ],
+  "levelC": {
+   "reviewer": "A",
+   "agree": true,
+   "rechecked": "Fresh kernel in bwrap: Collatz.wl from the run folder (cmp-identical to ExampleData/Collatz.wl): 27 -> {111, 9232}; 97, 871, 837799, 63728127 -> {118, 178, 524, 949}; Collatz[6] = {6,3,10,5,16,8,4,2,1}; Collatz[2^1030] -> TerminatedEvaluation[RecursionLimit] (it also killed my whole script, as the agent reported). Every value in Wiki/Experiments/TrajectoryLengths.md matches. Checked .gitignore anc"
+  }
+ },
+ "wiki-check": {
+  "route": "pass: no kernel needed",
+  "notebook": "pass: summary .wln via md2wln",
+  "correct": "pass: 3 broken links + 2 stale articles found and fixed in the plugin's real wiki",
+  "clean": "pass",
+  "findings": [
+   "Work/README index drift; .nb tracked contrary to Status.md"
+  ],
+  "levelC": {
+   "reviewer": "A",
+   "agree": true,
+   "rechecked": "Ran my own link checker over the pinned snapshot's Wiki/: exactly the same 3 broken links; after the run's edits, 0 broken links in the fixture's Wiki/ (resolving code links against the snapshot). Confirmed JournalAsPaperSink is in Work/Done/2026-08-21-..., upstream .gitignore has no *.nb rule (so the 'gitignored .nb' claim was stale), README Active rows say T2/T3 while item files have T3/T6 next."
+  }
+ },
+ "backlog-add": {
+  "route": "pass: no kernel needed",
+  "notebook": "pass: summary .wln via md2wln",
+  "correct": "pass: item in Backlog with spec, prompt history, routed tasks; waits for approval",
+  "clean": "pass",
+  "levelC": {
+   "reviewer": "A",
+   "agree": true,
+   "rechecked": "Compared section headings with the pinned work_item_template.md (all present); git status: only README.md modified plus the new item and Artifacts; construction moduli in the spec (Singer 7,13,21,31; Bose 3,8,15,24,48; Ruzsa 6,20,42) are correct for q^2+q+1, q^2-1, p^2-p; 'sonnet row is measured, opus a prior' is the skill's own required wording (backlog-add SKILL.md:96)."
+  }
+ },
+ "backlog-info": {
+  "route": "pass",
+  "notebook": "pass: report-only result, reason stated (Level C)",
+  "correct": "pass: waits-on-you, stale, overlaps, proposals; changed nothing",
+  "clean": "pass",
+  "levelC": {
+   "reviewer": "A",
+   "agree": false,
+   "rechecked": "Checked last Progress dates (AutoSetup/PaperVerification/WorkDashboard 2026-09-26, ConversationStyle none, Active items 2026-10-05/06), DocumentationSite T2 ticked and T3 next, pinned snapshot has no skills/revise, skills/board or output-styles/, check-env.sh still greps wolfram-mcp, paclet-docs SKILL.md:25 'Guide pages are out of scope'. All claims hold.",
+   "resolution": "accepted",
+   "reason": "report-only result with a stated reason satisfies the notebook check"
+  }
+ },
+ "backlog-refine": {
+  "route": "pass",
+  "notebook": "pass: summary .wln",
+  "correct": "pass: questions recorded, readiness check, stays in Backlog",
+  "clean": "pass",
+  "levelC": {
+   "reviewer": "A",
+   "agree": true,
+   "rechecked": "Section-by-section diff of ConversationStyle.md between 47bd1d0 and 208d560: Title, Summary, Motivation, Acceptance criteria, Prompt history, Hand-off, Decisions, Progress identical; only Technical details and Tasks changed. grep of the local Claude Code 2.1.296 binary finds force-for-plugin (7), keep-coding-instructions (5), output-styles (26), supporting the new wiki article's sources."
+  }
+ },
+ "backlog-board": {
+  "route": "pass",
+  "notebook": "n/a: stopped at the publish gate",
+  "correct": "pass: board built locally, stopped before publishing (gate)",
+  "clean": "pass",
+  "levelC": {
+   "reviewer": "A",
+   "agree": true,
+   "rechecked": "Re-ran the pinned scripts/work-board-build.py (inside bwrap --unshare-net) on the fixture into my scratch: 29 items in 1 project; per-item fields identical to the run's board.json except the generated timestamp and the id prefix (I passed '.' instead of the absolute path). grep '{{' in index.html: 0."
+  }
+ },
+ "backlog-autolab": {
+  "route": "pass",
+  "notebook": "n/a: stopped at the preflight gate",
+  "correct": "gate verified: no workers dispatched without the owner; autonomous run itself not executed",
+  "clean": "pass",
+  "levelC": {
+   "reviewer": "A",
+   "agree": true,
+   "rechecked": "Read the full tool-call list from the session record (10 calls: Skill, Bash reads, Write run-log, SubagentHandback; no Agent); checked git branch/worktree state in the fixture."
+  },
+  "gap": "external"
+ },
+ "wolfram-setup": {
+  "route": "pass: WLJS + wolfram-direct + sandboxed wolframscript",
+  "notebook": "n/a: card notebook=False, reason stated (Level C)",
+  "correct": "pass: versions, evaluations, nothing changed",
+  "clean": "pass",
+  "findings": [
+   "test-build AgentTools path left in shared kernel by Level A (cleaned)",
+   "ROUTES PacletCICD note stale (fixed)"
+  ],
+  "levelC": {
+   "reviewer": "A",
+   "agree": false,
+   "rechecked": "Fresh kernel in bwrap: Expand[(x+1)^5] = 1 + 5x + 10x^2 + 10x^3 + 5x^4 + x^5. Session record shows the bwrap wolframscript smoke test output (15.0.0 ... 2) and the kernel_evaluate results; ~/.Wolfram/Paclets/Repository contains AgentTools-2.2.0, Parser-1.3.1, PacletCICD-0.36.2.",
+   "resolution": "accepted",
+   "reason": "card has notebook=False and the agent stated why"
+  }
+ },
+ "paper-cite": {
+  "route": "pass with deviation: curl to arXiv + skill formatter in wolfram-direct (skill fetches inside the kernel; route added to skill)",
+  "notebook": "n/a: one entry",
+  "correct": "pass: Vaswani et al. 2017, eprint 1706.03762",
+  "clean": "pass",
+  "levelC": {
+   "reviewer": "A",
+   "agree": true,
+   "rechecked": "Ran the project's own unmodified cite_from_id.wls (only the URL replaced by the agent's saved XML, sha256 7983160c...) in a fresh kernel in bwrap with $AllowInternet=False: output is byte-identical to the entry in the run log."
+  }
+ },
+ "backlog-run": {
+  "route": "pass: worktree claim (inside work folder), one task, commit on work/IndexSync",
+  "notebook": "pass: summary .wln",
+  "correct": "pass: index rows fixed and verified by script",
+  "clean": "pass",
+  "levelC": {
+   "reviewer": "A",
+   "agree": true,
+   "rechecked": "git in the fixture: branch work/IndexSync at 8c1bc68 (6 files), master untouched except untracked Work/Artifacts/, no leftover worktree. On the branch, first unchecked task per Active item = T4/T3/T6 and the README rows name exactly those, with full (not truncated) text."
+  }
+ },
+ "wiki-search-wolfram": {
+  "route": "pass: offline docs via wolfram-direct; online searches skipped",
+  "notebook": "pass: WLJS notebook (opened a window before the rule change)",
+  "correct": "pass: NestWhile/NestWhileList/FixedPoint/FoldWhile/Until",
+  "clean": "pass",
+  "levelC": {
+   "reviewer": "A",
+   "agree": false,
+   "rechecked": "Fresh kernel in bwrap: NestWhileList[#/2&,123456,EvenQ] = {123456,61728,30864,15432,7716,3858,1929} (as reported); Until, FoldWhile, FoldWhileList are System` symbols with usage messages; FixedPoint[f,x] === NestWhile[f,x,UnsameQ,2] on a test case.",
+   "resolution": "rejected with evidence",
+   "reason": "this run got brief v2, which said 'creating, editing, evaluating and saving notebooks in it through the WLJS MCP tools is allowed and expected'; the reviewer read v1. Rules pass stands"
+  }
+ },
+ "paper-journal": {
+  "route": "pass: WLJS kernel; TinyTeX",
+  "notebook": "pass: summary .wln",
+  "correct": "pass: entry compiles (2 pages); Sidon values match the paper",
+  "clean": "warning: shared-kernel Global symbols leaked then removed",
+  "levelC": {
+   "reviewer": "A",
+   "agree": true,
+   "rechecked": "Recompiled a copy of Journal/ with latexmk inside bwrap: exit 0, 2 pages, no LaTeX errors, no undefined refs. Independent DFS search (my own code, fresh kernel): s(n) < b(n) for 3<=n<=40 exactly at {22,32,33,34}, deficit 1; s(43)=6 < b(43)=7; {0,1,4,14,16} Sidon mod 21, {0,1,3,7} Sidon mod 22, {0,1,3,7,12} not Sidon mod 21; Binomial[21,4]=5985. All match the entry."
+  }
+ },
+ "wiki-add-resource": {
+  "route": "pass: arXiv only",
+  "notebook": "pass: summary .wln",
+  "correct": "pass: article with Recover section",
+  "clean": "pass",
+  "levelC": {
+   "reviewer": "A",
+   "agree": true,
+   "rechecked": "sha256 of Resources/Vaswani_2017_AttentionIsAllYouNeed.pdf = bdfaa68d...df697 (matches the log); pdfinfo 15 pages; pdftotext shows both 41.8 (abstract/table) and 41.0 (sec 6.1) BLEU, as the article notes."
+  }
+ },
+ "wiki-search-math": {
+  "route": "pass with deviation: curl to OEIS/nLab/Wikipedia (skill scripts fetch inside the kernel; route added)",
+  "notebook": "pass: summary .wln",
+  "correct": "pass: Sidon definition; A005282 first 20 terms reproduced",
+  "clean": "pass",
+  "levelC": {
+   "reviewer": "A",
+   "agree": true,
+   "rechecked": "Extracted every URL host from the agent's Bash calls (3 hosts, all non-Wolfram). Own greedy Mian-Chowla computation in a fresh kernel: {1,2,4,8,13,21,31,45,66,81,97,123,148,182,204,252,290,361,401,475} = A005282 first 20 terms."
+  }
+ },
+ "project-create": {
+  "route": "pass: WLJS kernel; check-env.sh skipped to keep internet off",
+  "notebook": "pass: two .wln via md2wln",
+  "correct": "pass: record gap 114 at 492113",
+  "clean": "pass (stray symbol fixed by the agent)",
+  "levelC": {
+   "reviewer": "A",
+   "agree": true,
+   "rechecked": "Fresh kernel in bwrap over the first 100000 gaps (last prime 1299721): 18 record gaps, last {492113, 114}; mean g/log p 1.00111; max g/log p 8.735 at 370261; top counts 6->16989, 2->10250, 4->10213; max record Cramer ratio for p>=23 0.681 at 370261; the project's own Code/PrimeGaps.wl MaximalPrimeGaps[100000] gives {18, {492113,114}}. grep finds no Hajek/p135246/owner email in the scaffold."
+  }
+ },
+ "project-provenance": {
+  "route": "pass: .nb work in wolfram-direct",
+  "notebook": "pass: summary .wln",
+  "correct": "pass: toggle, ledger, back-pointer; notebook content verified unchanged",
+  "clean": "question: .nb edited in place (ROUTES rule 3 asks for agreement)",
+  "levelC": {
+   "reviewer": "A",
+   "agree": true,
+   "rechecked": "Fresh kernel in bwrap: Get of the HEAD .nb (git show) and the edited .nb: both Notebook, cell lists identical (166 cells), all options other than TaggingRules identical, TaggingRules keys {ResearchNotebook} -> {ResearchNotebook, Provenance}, ResearchNotebook fingerprint identical, Provenance association as described, 0 $Failed. git diff of the .nb is 7 lines."
+  }
+ },
+ "wolfram-investigation": {
+  "route": "pass: fresh kernel (skill note forbids WLJS)",
+  "notebook": "n/a: read-only check",
+  "correct": "pass: Clean -> True; project tests 5/5",
+  "clean": "pass",
+  "levelC": {
+   "reviewer": "B",
+   "agree": true,
+   "rechecked": "Fresh kernel inside the network cut on the work copy: NotebookDriftReport Clean -> True, Stamped -> True, schema 2; SourceSHA256 == SHA-256 of chart-behavior.md (ff29d6a4...62fa); TestReport project_notebooks.wlt 5/5, $MessageList {}. sha256 of chart-behavior.nb b17d8c04... and .md ff29d6a4... equal the upstream worktree copies; diff -rq of .agents/ and docs/wolfram/ against upstream: identical (n"
+  }
+ },
+ "paper-create": {
+  "route": "pass: WLJS kernel; TinyTeX",
+  "notebook": "pass: summary .wln",
+  "correct": "pass: 5-page paper compiles; numbers recomputed",
+  "clean": "warning: Global`sidonQ collision in the shared kernel",
+  "findings": [
+   "skill note said no TeX (fixed)",
+   "scaffold-paper.sh drops backslashes (note added)"
+  ],
+  "levelC": {
+   "reviewer": "B",
+   "agree": true,
+   "rechecked": "latexmk -pdf of Research/SidonBound.tex into scratch-B: exit 0, 0 LaTeX errors, 5 pages. Independent Python backtracking of max Sidon subsets of Z_n, n = 2..40: s(n) < floor((1+sqrt(4n-3))/2) exactly at n = 22, 32, 33, 34; s(21) = 5, s(22) = 4 = paper's values. \\author is the model; \\thanks names operator ptown16801-lang with the noreply email."
+  }
+ },
+ "wolfram-guide-page": {
+  "route": "pass: local converter in wolfram-direct (skill's ResourceFunction route avoided)",
+  "notebook": "pass: summary .wln",
+  "correct": "pass: guide page built, rendered preview checked",
+  "clean": "pass",
+  "findings": [
+   "upstream example: MazeGenerate/MazeParse lacked backticks"
+  ],
+  "levelC": {
+   "reviewer": "B",
+   "agree": true,
+   "rechecked": "Fresh kernel in network cut: Get of build/DocSource/English/Guides/DocPageExamples.nb -> Notebook, 83 Cell expressions (Count[_Cell]), $Failed 0, InlineGuideFunction 3, GuideText 13; paclet ref links include ref/MazeGenerate, ref/MazeParse, ref/MazeWalkTime. Viewed build/preview/DocPageExamples-guide.png. diff -rq vs upstream: only docs/DocPageExamples.md differs (the logged edit)."
+  }
+ },
+ "wolfram-overview-page": {
+  "route": "pass: fresh kernel build",
+  "notebook": "pass: summary .wln",
+  "correct": "pass: 12 links resolve; page indexed",
+  "clean": "warning: offline doc build logs EntityValue::conopen (expected under rule 0)",
+  "findings": [
+   "example build.wls: overview naming, converter path, preference leak (fixed in the copy)"
+  ],
+  "levelC": {
+   "reviewer": "B",
+   "agree": true,
+   "rechecked": "Fresh kernel in network cut: build/DocSource/.../Tutorials/Overview.nb TOCChapter 5, TOCSection 7, TOCSubsection 8, 12 ButtonData targets, $Failed 0; built Documentation/English/Tutorials/Overview.nb same TOC counts, 1 $Failed (CitationPopupData). 13 built .nb under Documentation/. diff vs upstream: build.wls changed and docs/Overview.md added, as logged."
+  }
+ },
+ "wolfram-paclet": {
+  "route": "fresh kernel via wolfram-direct (orchestrator's 'WLJS kernel' was wrong, Level C)",
+  "notebook": "pass: summary .wln",
+  "correct": "partial: definition notebook built, but holds a Failure output (Lorem offline, rule 0), empty categories, and the definition check did not run (Level C)",
+  "clean": "pass",
+  "scripted": "keep internet off",
+  "levelC": {
+   "reviewer": "B",
+   "agree": false,
+   "rechecked": "sha256 of ResourceDefinition.nb = 1843693e5d02..., 725,579 bytes, as logged. Fresh kernel in network cut: styles Title 1, Section 5, Subsection 19, Input 12, Output 25, Text 16, Notes 4 (matches log); an Output cell holds a Failure summary box; 'Notebook Documents' absent (no category ticked). diff -rq vs upstream: only ResourceDefinition.nb added.",
+   "resolution": "accepted",
+   "reason": "Failure output (Lorem), empty categories, definition check not run; route was wolfram-direct, not WLJS; auto-check rules hit is a Trace-pattern false positive"
+  },
+  "gap": "external"
+ },
+ "wolfram-prompt": {
+  "route": "fresh wolframscript kernel with $AllowInternet = False first, no network cut (Level C correction; the earlier 'WLJS kernel' was wrong)",
+  "notebook": "pass: summary .wln",
+  "correct": "partial: prompt built; categories empty offline; CheckDefinitionNotebook blocked by the session classifier",
+  "clean": "pass",
+  "levelC": {
+   "reviewer": "B",
+   "agree": false,
+   "rechecked": "Fresh kernel in network cut: AdaLovelace.nb Count[_Cell] = 314 (matches log), styled cells Title 1, Section 6, Subsection 24, Input 13, Output 8; $Failed 0; 'Fictional Characters' absent (categories not recorded).",
+   "resolution": "accepted",
+   "reason": "route was a fresh wolframscript kernel, not WLJS (factual correction; grade unchanged)"
+  },
+  "gap": "external"
+ },
+ "wolfram-computational-essay": {
+  "route": "pass: MarkdownToNotebook in sandboxed wolframscript (upstream build scripts call PacletInstall/CloudDeploy; avoided); numbers re-checked in WLJS kernel",
+  "notebook": "pass: .wln via md2wln (unevaluated)",
+  "correct": "pass: valid .nb, 5 sections, no $Failed; chi-square p=0.40367",
+  "clean": "warning: aborted Rasterize skipped End[] and left the shared kernel in a test context (agent restored it; launched before the no-Begin/End brief). Grader hit https://reference.wolfram.com = link text written into Markdown, no fetch",
+  "findings": [
+   "no visual check possible: front-end Rasterize hangs offline; WLJS Rasterize fails (FilterRules::rep)",
+   "wolfram-direct first attempt hit its 110 s limit, cause unknown",
+   "example essay text: 'five plotting commands' vs two plots; doubtful Kanada 2025 reference; Sources/Links frontmatter not rendered by the template"
+  ],
+  "levelC": {
+   "reviewer": "B",
+   "agree": true,
+   "rechecked": "Fresh kernel in network cut: PiIsMostlyRandom.nb styles Title 1, Section 5, Input 5, Output 5, Text 6, $Failed 0; recomputed first 20 digits 3,1,4,1,5,9,2,6,5,3,5,8,9,7,9,3,2,3,8,4; PearsonChiSquareTest p = 0.40366769139384584; walk {82.5799, 100.}."
+  }
+ },
+ "paclet-publish": {
+  "route": "pass: fresh offline kernel (wolfram-direct) for lint, smoke test and archive",
+  "notebook": "pass: summary .wln via md2wln",
+  "correct": "gate verified: stopped before any cloud upload; asked for approval, route, docs-first and version",
+  "clean": "pass",
+  "findings": [
+   "fixture: DocPageExamples copied out of its repo, so build.wls cannot find MarkdownToNotebook.wl three folders up",
+   "no Documentation/ built; a release would ship no docs",
+   "possible duplicate entity-store registration on reload (unconfirmed)",
+   "2 CodeInspector warnings (ReturnAmbiguous l.107, PrivateContextSymbol l.191) in the upstream example"
+  ],
+  "levelC": {
+   "reviewer": "B",
+   "agree": true,
+   "rechecked": "unzip -l of build/WolframInstitute__DocPageExamples-1.0.0.paclet: 5722 bytes, PacletInfo.wl + Kernel/DocPageExamples.wl + Scripts/mazegen.wls (3 files), no Documentation. Kernel source line 107 is the Return[Infinity] inside If (ReturnAmbiguous) and line 191 references WolframInstitute`DocPageExamples`Private`params after EndPackage (PrivateContextSymbol): both lint findings confirmed."
+  },
+  "gap": "external"
+ },
+ "paper-lean": {
+  "route": "pass: Lean via lake (no Wolfram needed); lean-lsp MCP absent in this session (registered after it started)",
+  "notebook": "pass: summary .wln via md2wln",
+  "correct": "pass: sum_range_succ induction + ring; Lean accepts, axioms propext/Classical.choice/Quot.sound only (no sorry); n=10 by decide",
+  "clean": "pass",
+  "findings": [
+   "skill note said Lean not installed (fixed in build.mjs)",
+   "lean-lsp tool path untested: needs a session started after the install",
+   "skill's checklist-with-user step skipped (no user); would ask \u2115 vs 2i-1 form"
+  ],
+  "levelC": {
+   "reviewer": "B",
+   "agree": true,
+   "rechecked": "Copied LeanTest/OddSum.lean to scratch-B and ran 'lake env lean' inside bwrap --unshare-net: exit 0, no errors; '#print axioms' -> [propext, Classical.choice, Quot.sound]; the n = 10 decide example checks."
+  }
+ },
+ "wolfram-example-repository": {
+  "route": "pass: MarkdownToNotebook in sandboxed wolframscript; examples checked in WLJS kernel",
+  "notebook": "pass: summary .wln via md2wln",
+  "correct": "pass: two definition notebooks (88/100 cells), no $Failed; quantum-walk peaks \u00b168 vs \u00b1100/\u221a2 expected",
+  "clean": "warning: CheckDefinitionNotebook UnableToUseCell (no detail); categories empty offline (CheckboxesCell::autofail, rule 0)",
+  "findings": [
+   "first build stalled ~10 min, rerun 20 s (cause unknown; concurrent kernels)",
+   "HeroImageSquashed suggestion on QuantumWalk (0.60 aspect, within guideline)"
+  ],
+  "levelC": {
+   "reviewer": "B",
+   "agree": true,
+   "rechecked": "Fresh kernel in network cut: PrimeSpiralPoints.nb 88 styled cells, QuantumWalk.nb 100, $Failed 0 in both. Independent numpy Hadamard walk (n = 100, coin {1, i}/sqrt 2): total probability 1, highest peaks at x = +/-68, std. dev. 54.124 (the run's numbers)."
+  }
+ },
+ "diagnose-modelica": {
+  "route": "pass: WLJS kernel for states/equations/timing; wsm-toolkit for block/tearing/event reports WLJS cannot give",
+  "notebook": "pass: summary .wln via md2wln",
+  "correct": "pass: 4 states, 1368 equations, one 15-eq linear block torn to 2; compile dominates (6.0 s vs 0.62 s rerun, 0.042 s integration). Orchestrator re-ran in a fresh kernel: phi(20)=0.011329, s(20)=1.19167 match",
+  "clean": "pass",
+  "findings": [
+   "toolkit summary 'coupled nonlinear systems=2' while detail reports say linear (one system counted for init and step)",
+   "199 ParameterNames vs 457 parameters in build (unexplained)"
+  ],
+  "levelC": {
+   "reviewer": "B",
+   "agree": true,
+   "rechecked": "Fresh kernel in network cut: DrawingRobot states {slider.s, slider.v, revolute.phi, revolute.w}, 1368 SystemEquations, 199 ParameterNames; with f = 0.5 Sin[2t], tau = 0.05 Cos[3t]: phi(20) = 0.0113285, s(20) = 1.1916738, NumberOfEvents 2."
+  }
+ },
+ "annotate-modelica-graphics.attempt1-already-annotated": {
+  "route": "pass: wsm-toolkit schematic",
+  "notebook": "n/a",
+  "correct": "card defect: fixture already fully laid out; agent correctly refused --force (would delete hand-drawn icons) and asked",
+  "clean": "pass",
+  "findings": [
+   "fixture fixed: bundled DocumentationExamples.Control.Submarine with graphics stripped",
+   "ExampleData Submarine.mo lacks noEvent on 'y <= -R' and fails to build standalone in 15.0 (bundled library copy has it) - upstream example bug",
+   "f/deltarho pins outside the canvas edge; BuoyancyDynamics.y has no diagram placement"
+  ]
+ },
+ "modelica-model-architecture": {
+  "route": "pass: WLJS first (all calls before the hang answered cleanly), then wsm-toolkit with the reason stated (Level C)",
+  "notebook": "pass: card notebook=False; md2wln summary as the brief prescribed (Level C)",
+  "correct": "pass: SimpleCircuits library one class per file (Components, Blocks, Examples, Tests); all three examples match the originals over 0-10 s at 0.01 s and 8 in-between times (max diff 1.4e-12); 12 classes check clean; tests pass and a deliberate mismatch is caught",
+  "clean": "pass",
+  "scripted": "approved one-shot; name SimpleCircuits; no doc images (agent resumed)",
+  "findings": [
+   "deviation from plan: TwoPin base instead of OnePort (current leaves via mid) - justified",
+   "diagrams hand-written: schematic tool mishandles inherited connectors; test diagrams have crossing lines",
+   "Level C: this run did not cause the WLJS hang (its combined call came 4 min after the kernel stopped answering)"
+  ],
+  "levelC": {
+   "reviewer": "C",
+   "agree": false,
+   "rechecked": "wsm-toolkit wsm --mode simulate inside bwrap --unshare-net, tempdirs in scratch-C/mma: SimpleCircuits.Examples.ElectricCircuit2, BlockCircuit, SimpleCircuitsTests.MidpointTest: flatten/build/result Pass, 0 errors, 0 warnings (notifications only). The originals ComponentBased.ElectricCircuit2 and BlockCircuit pass with the 'Unbound parameter sineVoltage1.f/.V' and 'sine1.f' warnings the log names. ",
+   "resolution": "accepted",
+   "reason": "timeline from session records; route and notebook regraded pass"
+  }
+ },
+ "paclet-build": {
+  "route": "pass with deviation: PacletBuild in WLJS refused (missing Documentation/), CreatePacletArchive in WLJS for code-only; docs build and with-docs archive in a fresh network-cut kernel after the WLJS kernel hung",
+  "notebook": "pass: summary .wln via md2wln",
+  "correct": "pass: code-only archive (stage 1) and 510,820-byte archive with 12 doc pages built by the unchanged build.wls in a network-cut fresh kernel (74 s); contents match the source; extracted copy loads offline and all 12 doc URIs resolve; nothing installed",
+  "clean": "pass (a comparison run was blocked by the session classifier, not retried)",
+  "findings": [
+   "skill note updated for the PacletBuild/Documentation refusal",
+   "Lorem ServiceExecute fails offline in two runs: cause unconfirmed",
+   "WFRCrosslinks PacletInstall is in Wolfram's DocumentationBuild package itself (Export.wl l.14), not the example",
+   "build.wls FE light/dark preference pointed at a private prefs copy; real init.m unchanged",
+   "Lorem fails on the source too: not a build defect",
+   "dead link workflow/ImportData on FilterADataset page",
+   "Level C: harmless CitationPopupData -> {$Failed, \"\"} on every page (offline) and a leftover SearchIndex write.lock in the archive"
+  ],
+  "scripted": "no install; build docs in network-cut fresh kernel; one Lorem test on source (agent resumed)",
+  "levelC": {
+   "reviewer": "C",
+   "agree": true,
+   "rechecked": "Network-cut fresh kernel ($AllowInternet = False first line), on my own unzip of the with-docs archive in scratch-C/pb: PacletFind resolves only to that copy, version 1.0.0; MazeGenerate[{3,3}] 7x7 with S and G; MazeWalkTime -> Quantity[8, s] (SeedRandom[1] maze); MazeParse ragged input issues MazeParse::ragged; all 12 docs/*.md URIs resolve via Documentation`ResolveLink to files inside my copy; G"
+  }
+ },
+ "wolfram-paclets": {
+  "route": "pass: WLJS attempted (hung), then wolfram-direct + network-cut wolframscript",
+  "notebook": "pass: summary .wln via md2wln",
+  "correct": "pass: diagnosed why the paclet does not build; working 313 KB archive with 12 doc pages from a copy; CheckPaclet errors listed; 4 upstream bugs confirmed",
+  "clean": "pass",
+  "findings": [
+   "Lorem cause confirmed: ServiceFramework 0.1.7 refuses every ServiceExecute while $AllowInternet is False",
+   "mazegen.wls usage '-h' collides with wolframscript's own -h",
+   "FindDevices[\"RandomSignal\"] returns {} though page says discoverable",
+   "PacletBuild rebuilds pre-built pages and drops them; feed build/DocSource instead",
+   "asked to set $AllowInternet=True in sandbox: refused under rule 0 (not sent)"
+  ],
+  "levelC": {
+   "reviewer": "B",
+   "agree": true,
+   "rechecked": "check-copy/archive/WolframInstitute__DocPageExamples-1.0.0.paclet is 313,251 bytes and holds 12 documentation .nb pages plus SearchIndex; ResourceDefinition.md Description is 186 characters (CheckPaclet's 128 limit finding holds); diff -rq of work/DocPageExamples vs upstream: identical (originals untouched)."
+  }
+ },
+ "wolfram-tech-note": {
+  "route": "pass: fresh offline wolframscript in network cut (kept paclet registrations out of shared WLJS)",
+  "notebook": "pass: preview .wln via md2wln",
+  "correct": "pass: 'Parsing Mazes' note, 17 examples all match text; built page rendered to PNG and checked",
+  "clean": "pass",
+  "findings": [
+   "MarkdownToNotebook hangs when an expected-output comment quotes a message text (upstream bug, reproducer in run)",
+   "Import[\"file.maze\"] without format reads as Table: MAZE format page is wrong (upstream)",
+   "timeout-killed builds leave wolframscript running",
+   "shared scratchpad log collision (brief now gives per-run scratch)"
+  ],
+  "levelC": {
+   "reviewer": "B",
+   "agree": true,
+   "rechecked": "Fresh kernel in network cut: authoring ParsingMazes.nb Input 17, Output 16, Message 2, $Failed 0; built Documentation/English/Tutorials/ParsingMazes.nb present (one $Failed = CitationPopupData). Viewed scratchpad technote-parsingmazes-1767465/page-1.png: title, jump box, sections and outputs render."
+  }
+ },
+ "wolfram-alpha": {
+  "blocked": "rule 0: every Wolfram|Alpha query goes to Wolfram's servers"
+ },
+ "astro-observation-planner": {
+  "blocked": "rule 0: sky and location data come from Wolfram's servers; offline results are wrong (Sunset returned midnight)"
+ },
+ "create-hydraulic-model": {
+  "blocked": "Hydraulic Modelica library not installed (Wolfram download; rule 0)"
+ },
+ "wolfram-function-resource": {
+  "blocked": "rule 0: the build fetches a template from Wolfram"
+ },
+ "paclet-docs.attempt1-levelC": {
+  "route": "pass: markdown page + MarkdownToNotebook in fresh offline kernel (build.wls regenerates Documentation/, so direct .nb pages would be wiped)",
+  "notebook": "pass: review .wln via md2wln",
+  "correct": "partial: MazeGenerate/MazeParse pages correct, but only as build/DocSource authoring notebooks; the paclet's Documentation/ tree was not produced (Level C)",
+  "clean": "pass",
+  "scripted": "shape approved; write MazeParse; leave guide; no install (agent resumed)",
+  "findings": [
+   "MazeGenerate[{1,1}] has no start cell (goal overwrites it), documented under Possible Issues",
+   "MarkdownToNotebook caches examples under ~/.Wolfram/Objects/Persistence (outside work folder)",
+   "fixture build.wls path (fixed in cards.py after this run)",
+   "MarkdownToNotebook evaluates a page in one run, so a 3rd identical message adds a stray General::stop cell (worked around with Quiet; upstream issue)",
+   "MazeParse takes width from line 1 and its ::ragged text names the wrong line (upstream example)"
+  ],
+  "levelC": {
+   "reviewer": "B",
+   "agree": false,
+   "rechecked": "Fresh kernel in network cut: build/DocSource/.../Symbols/MazeGenerate.nb Input 14, Output 14, Notes 8; MazeParse.nb Input 13, Output 13, Message 2 (both MazeParse::ragged, no General::stop); no (*BB[*) markup, $Failed 0. 'ls DocPageExamples/DocPageExamples' shows only Kernel, PacletInfo.wl, Scripts: no Documentation tree.",
+   "resolution": "accepted",
+   "reason": "the card expects pages in the paclet's Documentation/ tree; only build/DocSource authoring notebooks exist"
+  }
+ },
+ "wolfram-symbol-page.attempt1-levelC": {
+  "route": "pass: local MarkdownToNotebook in fresh offline wolframscript (cloud converter avoided; .nb build kept out of WLJS)",
+  "notebook": "pass: preview .wln via md2wln",
+  "correct": "pass: 141 cells, no $Failed/messages; all outputs match source values (15.7143 s, 396/25 s, Missing[NotReachable], ...)",
+  "clean": "fail (Level C): killed another session's processes",
+  "findings": [
+   "141 vs 142 cells in Oct 21 hand run (section-reset difference, unchecked)",
+   "front-end hangs in sandboxed fresh kernels (3rd observation)",
+   "the 'read-back script hung on exit' finding belonged to wolfram-prompt's process, not this run"
+  ],
+  "levelC": {
+   "reviewer": "B",
+   "agree": false,
+   "rechecked": "Fresh kernel in network cut: MazeWalkTime.nb 141 styled cells, Input 12, Output 11, $Failed 0, no (*BB[*); the file contains 15.714285714285715, FractionBox 396/25, 48.5714..., 7.857142857142858 and Missing[NotReachable]. Independent BFS on the example maze: 22 steps -> 22/1.4 = 15.714 s and 22/(5 km/h) = 15.84 s = 396/25 s.",
+   "resolution": "accepted",
+   "reason": "confirmed in its session record: kill -9 of PIDs 1737626/1737628 (wolfram-prompt's inspect.wls, same file name in the shared scratchpad). Rules fail; rerun under the per-run-scratch brief"
+  },
+  "rerun": true
+ },
+ "wolfram-notebooks.attempt1-levelC": {
+  "route": "pass: wolfram-direct for .nb read/write",
+  "notebook": "partial: card expects a WLJS summary page; none made (Level C)",
+  "correct": "pass: document.nb outline; notes.nb built",
+  "clean": "pass",
+  "findings": [
+   "fixture note says 111 steps, code returns 112 terms"
+  ],
+  "levelC": {
+   "reviewer": "B",
+   "agree": false,
+   "rechecked": "sha256 work/document.nb == ExampleData/document.nb (119598ff...); work/notes.md == tests/cards/fixtures/notes.md. Fresh kernel in network cut: document.nb styles Section 4, Subsection 1, Input 7, Output 7, Text 3; notes.nb 4 cells {Title 1, Text 2, Input 1}, no $Failed.",
+   "resolution": "accepted",
+   "reason": "the card lists a WLJS summary page as expected; none was made"
+  }
+ },
+ "wolfram-notebooks": {
+  "route": "pass: wolfram-direct / network-cut fresh kernel for .nb read and write (ROUTES: no .nb work in WLJS)",
+  "notebook": "pass: summary .wln via md2wln",
+  "correct": "pass: document.nb outline (Text, Expressions, Graphics, Dynamic Objects with codes and saved outputs); notes.nb = Title, two Text cells, unevaluated Input; NestWhileList gives 112 terms = 111 steps",
+  "clean": "pass",
+  "findings": [
+   "earlier finding '111 vs 112' was a misreading: 112 terms = 111 steps (both correct)"
+  ],
+  "levelC": {
+   "reviewer": "B",
+   "agree": false,
+   "resolution": "accepted",
+   "reason": "first run made no WLJS summary page; rerun made one. Orchestrator re-checked the rerun: notes.nb cells and no $Failed, 112 terms, document.nb byte-identical to ExampleData, summary.wln present"
+  },
+  "levelC2": {
+   "reviewer": "E",
+   "agree": true,
+   "rechecked": "Fresh kernel in the network cut (scratch-E/static.wls -> static.out). document.nb styles <|Section 4, Text 3, Subsection 1, Input 7, Output 7|>; sections {Text, Subsection, Expressions, Graphics, Dynamic Objects}; inputs 2+2, N[GoldenRatio,80], Nest[Style...], Graphics3D[Sphere[]...], Plot[Abs[x]...",
+   "resolution": "agree"
+  }
+ },
+ "create-wolfram-documentation.attempt1-levelC": {
+  "route": "pass: fresh wolframscript inside the network cut for all conversions and the trial build",
+  "notebook": "pass: summary .wln (round 2) via md2wln",
+  "correct": "partial: all pages build, but the MazeParse page keeps a stray General::stop message cell (Level C)",
+  "clean": "partial: stray message cell in a published page (Level C)",
+  "findings": [
+   "upstream build.wls tries PacletInstall[WFRCrosslinks] (Wolfram paclet server) - rule-0 hazard; ROUTES now requires the network cut for every fresh-kernel script",
+   "trial build 13 min, 4 of 12 pages failed (Guide, CirclePlus, RandomSignal, WallpaperGroup) - cause not investigated",
+   "Lorem ServiceExecute::isrv offline (3rd run)",
+   "ResourceDefinition links ref/MazeGenerate, ref/MazeParse which have no pages",
+   "PacletPage not installed (rule 0)",
+   "round-1 page failures were front-end LinkConnect::linkc, not the sources (rebuilt in 32 s)",
+   "build's search-index step calls EntityValue/WolframLanguageData (blocked offline)",
+   "agent replaced build.wls's global CurrentValue[$FrontEnd, LightDark] setting (would persist in user prefs) with $AllowInternet=False - upstream example writes a persistent FE preference",
+   "Localized::nokey x16; CitationPopupData -> $Failed in page metadata (same as upstream page)"
+  ],
+  "scripted": "add MazeGenerate/MazeParse pages + guide links; offline build.wls route, investigate 4 failing pages; write output into paclet; Lorem left as is (agent resumed)",
+  "levelC": {
+   "reviewer": "B",
+   "agree": false,
+   "rechecked": "Listed 14 built pages under DocPageExamples/Documentation/English (incl. Symbols/MazeGenerate.nb, MazeParse.nb, MazeWalkTime.nb) plus Index/SearchIndex/SpellIndex. Fresh kernel in network cut: built MazeGenerate.nb Input 14 / Output 12, one $Failed (CitationPopupData); built MazeParse.nb Message cells = {MazeParse::ragged 'Line 2 ...', General::stop 'Further output of MazeParse::ragged ...', MazeP",
+   "resolution": "accepted",
+   "reason": "confirmed: MazeParse.nb (DocSource and built Documentation) still holds one General::stop Message cell"
+  }
+ },
+ "wolfram-language": {
+  "route": "pass: WLJS kernel (package load, Collatz[27], plot) and a visible WLJS notebook; fresh kernel only for a PNG cross-check",
+  "notebook": "pass: Collatz27.wln, visible on the second monitor, saved in the work folder",
+  "correct": "pass: 112 iterates = 111 steps, peak 9232 at step 77 (reference total27/peak27); identical to an independent NestWhileList and to a fresh kernel",
+  "clean": "pass",
+  "findings": [
+   "Rasterize in the WLJS kernel returned a tiny '...' placeholder image with no message",
+   "an SVG export from the WLJS kernel started a headless WolframNB under the shared kernel",
+   "NotebookSave from the kernel triggered a WLJS 'File hash mismatch' dialog, which opened on the main monitor (dialog fix in main.js, active after restart)"
+  ],
+  "levelC": {
+   "reviewer": "D",
+   "agree": true,
+   "rechecked": "Fresh network-cut kernel (scratch-D/check1.wls -> check1.out), Get of ExampleData Collatz.wl inside Block[$ContextPath]: Collatz[27] -> {112 terms, 111 steps, max 9232, step 77}. Scanned the session record for rule hits: none."
+  }
+ },
+ "wljs-dynamics": {
+  "route": "pass: WLJS notebook, Manipulate in the WLJS kernel",
+  "notebook": "pass: SinSlider.wln (visible on the second monitor, saved)",
+  "correct": "pass: Manipulate over Plot[Sin[k x]] with k slider 0.1-10, ContinuousAction, fixed PlotRange/ImageSize for in-place updates; evaluation returned the live widget with no messages; orchestrator window capture shows the rendered heading and the k slider (plot below the captured area)",
+  "clean": "pass; save raised no dialog (J1 patch)",
+  "levelC": {
+   "reviewer": "D",
+   "agree": true,
+   "rechecked": "Viewed wljs-slides/scratch/cap/0x1400025_llm-b7f.wln.png (this run's window): rendered KaTeX heading sin(kx), Manipulate source and the k slider at 1.0. Read the saved cell source."
+  }
+ },
+ "wljs-formatting": {
+  "route": "pass: WLJS notebook and kernel",
+  "notebook": "pass: PrimesTable.wln (visible on the second monitor, saved)",
+  "correct": "pass: first 10 primes 2..29 in a two-column table, blue bold header, striped rows, dividers; orchestrator saw it rendered (projected cell window on the second monitor): header and stripes drawn as rounded chips per item",
+  "clean": "pass",
+  "findings": [
+   "WLJS Grid drops Background and Frame silently (BoxesWorkarounds.wl GridBox FilterRules); Item backgrounds work (ROUTES note); upstream formatting guide does not mention it"
+  ],
+  "levelC": {
+   "reviewer": "D",
+   "agree": true,
+   "rechecked": "Fresh kernel: Prime[Range[10]] = {2,...,29}. Viewed the projected cell capture wljs-slides/scratch/cap/0x1400035_Application.png: two-column table, header chips blue with white bold 'n'/'Prime(n)', alternating light-blue chips, dividers."
+  }
+ },
+ "wljs-async-programming": {
+  "route": "pass: WLJS notebook and kernel (AsyncFunction, WhileAsync, PauseAsync // Await)",
+  "notebook": "pass: AsyncButton.wln (visible on the second monitor, saved)",
+  "correct": "pass: Run returns in 0.013 s; kernel answered a separate evaluation 2.6 s into the run and Ping updated mid-run; window capture shows the bar at 87% and 'Pings: 1' while running (orchestrator viewed the capture); button presses simulated with EventFire, not mouse clicks",
+  "clean": "pass",
+  "findings": [
+   "a second, unsaved test notebook left open (no close tool used)"
+  ],
+  "levelC": {
+   "reviewer": "D",
+   "agree": true,
+   "rechecked": "Session record calls [20]-[23]: fireReturnedAfter 0.013 s; [23] sinceRun 2.65 s with status 'Running... 88%' and pingTook 0.00026 s. scratch/panel.wl is byte-identical to the saved notebook's button cell (1504 chars). Viewed scratch/cap2/0x1400051_llm-cfd.wln.png."
+  }
+ },
+ "wljs-special-cells": {
+  "route": "pass: WLJS .sh and .latex cells",
+  "notebook": "pass: SpecialCells.wln (visible on the second monitor, saved)",
+  "correct": "pass: shell cell lists the notebook folder (pwd + ls -la), LaTeX cell typesets e^{i pi}+1=0; orchestrator viewed the window capture showing both rendered",
+  "clean": "pass",
+  "findings": [
+   "a shell cell needs the notebook saved first (it runs in the notebook's folder); window title keeps WLJS's temporary name after saving"
+  ],
+  "levelC": {
+   "reviewer": "D",
+   "agree": true,
+   "rechecked": "Viewed scratch/cap/0x1400059_llm-e0b.wln.png: shell output lists .../wljs-special-cells/work and SpecialCells.wln; LaTeX output shows e^{i\u03c0}+1=0 typeset. Saved file holds all three outputs."
+  }
+ },
+ "wljs-wlx": {
+  "route": "pass: WLJS .wlx cell",
+  "notebook": "pass: PrimeCards.wln (visible on the second monitor, saved)",
+  "correct": "pass: PrimeCard/PrimeCardList components render five cards 2,3,5,7,11 labelled PRIME #1..#5; orchestrator viewed the capture",
+  "clean": "pass",
+  "findings": [
+   "WLX components must be Global symbols (capitalized tags) in the shared kernel; tag body arrives as a string (ToExpression)"
+  ],
+  "levelC": {
+   "reviewer": "D",
+   "agree": true,
+   "rechecked": "Parsed the saved wlx output: labels 1..5 and values [2,3,5,7,11]; fresh kernel Prime[Range[5]] = {2,3,5,7,11}; viewed scratch/cap/0x1400061_llm-f95.wln.png (five rendered cards)."
+  }
+ },
+ "wljs-slides": {
+  "route": "pass: WLJS .slide/.slides cells, live plot via WLJS dynamics",
+  "notebook": "pass: CollatzSlides.wln (visible on the second monitor, saved)",
+  "correct": "pass: 3 slides (rule and example; live trajectory slider 1-100 with steps/peak label, 27 -> 111/9232 and 97 -> 118 match reference; status with Terras 1976, Tao 2019, Barina 2^68); merged deck has exactly 3 slides; live update verified by pushing n=97 from the kernel; each slide rendered in captures (orchestrator viewed slide 3)",
+  "clean": "pass",
+  "findings": [
+   "an empty .slides cell adds a blank slide (the .slides cell's own text becomes a slide)",
+   "Markdown fragment markers hid the wrong element; HTML list fragments work",
+   "slide dynamics need Global symbols in the shared kernel",
+   "fragment reveal and keyboard navigation not testable without key presses"
+  ],
+  "levelC": {
+   "reviewer": "D",
+   "agree": true,
+   "rechecked": "Fresh kernel: 27 -> 111 steps/9232; argmax steps n<=100 is 97 (118); max peak n<=100 = 9232 (so the fixed PlotRange holds every orbit); N[2^68]=2.95e20. Compared captures cap3 vs cap4 of window llm-4ab (curve changes). Slide KaTeX parses with WLJS KaTeX (6/6)."
+  }
+ },
+ "wljs-migration": {
+  "route": "pass: .nb read and .wlt cross-check in network-cut fresh kernels; conversion built and evaluated in the WLJS kernel",
+  "notebook": "pass: ExampleTestFile.wln (visible on the second monitor, saved next to the copy)",
+  "correct": "pass: MUnit notebook -> title/sections as Markdown, 8 VerificationTest cells with options kept; 4 pass, 4 fail by design (same as a fresh-kernel .wlt run for 7/8; $TestFileName test needs a file run); original .nb byte-identical to ExampleData",
+  "clean": "pass",
+  "findings": [
+   "MUnit button bars have no WLJS equivalent (dropped)",
+   "TestReport on the .nb itself needs a front end"
+  ],
+  "levelC": {
+   "reviewer": "D",
+   "agree": true,
+   "rechecked": "cmp: work/ExampleTestFile.nb is byte-identical to ExampleData/ExampleTestFile.nb. Fresh kernel (check1.out): the .nb has Title 1, Section 2, VerificationTest 8, ExpectedOutput 8, TestOptions 4, BottomCell 8; the 8 VerificationTest/ExpectedOutput/TestOptions contents match the .wln inputs; running the 8 .wln tests in a fresh kernel gives the same 8 outcomes as the saved notebook."
+  }
+ },
+ "notebook-create": {
+  "route": "pass: WLJS notebook and kernel (package loaded without changing the shared $Path)",
+  "notebook": "pass: Code/Artifacts/CollatzTrajectories_261022.wln (visible on the second monitor, saved) + .md source + index",
+  "correct": "pass: trajectories of 27 and 97, 111 and 118 steps, both peak 9232 (reference); 97 joins 27's path at 94 (step 13 vs 6, orchestrator checked by hand) which explains the 7-step difference; step-count plot to 120; agent fixed display issues after viewing captures",
+  "clean": "pass",
+  "findings": [
+   "WLJS log plot clips the top tick label ('.00e+3')",
+   "5 projected inspection windows left open (no close tool)"
+  ],
+  "levelC": {
+   "reviewer": "D",
+   "agree": true,
+   "rechecked": "Fresh kernel with the ExampleData package: c97 peak 9232 at step 84; first value of 97's path on 27's path = 94 at steps 6 (27) and 13 (97); 27 and 97 beat every smaller start; max steps for n<=120 is 97. The 7 wolfram fences of the .md are identical to the .wln code cells and all 8 .md cells appear in the source."
+  }
+ },
+ "document-revise": {
+  "route": "pass: WLJS kernel for the new mathematical check; .nb edited in the notebook's existing style",
+  "notebook": "pass: SidonBound_260821_r2-summary.wln (visible on the second monitor)",
+  "correct": "pass: both << >> notes resolved in _2 (.md and .nb), v1 untouched (no diff), provenance file written, committed locally only; orchestrator re-checked the new claim: none of the 5,985 five-element subsets of Z_22 containing 0 is Sidon, {0,1,3,7} is",
+  "clean": "pass",
+  "findings": [
+   "v1 notebook already shows a literal [Eq:Bound] (pre-existing, not asked)"
+  ],
+  "levelC": {
+   "reviewer": "D",
+   "agree": true,
+   "rechecked": "cmp: v1 .md == tests/cards/fixtures/SidonBound_notes.md and v1 .nb == upstream plugin copy. diff v1/v2 .md: exactly the two note passages; 0 '<<' left. Fresh kernel (check2.out): _2.nb is a Notebook, 52 CellIDs vs 49, only cell 7 changed, new 50/51/52 in order (50/51 after 7, 52 after 40), 0 $Failed; the '=' in cell 52 is \\[LongEqual] as in v1. Python brute force: 0 of 5985 five-subsets of Z_22 wi"
+  }
+ },
+ "project-tour": {
+  "route": "pass: WLJS notebook and kernel (offline fresh-kernel re-run of the code too)",
+  "notebook": "pass: Tour/Tour_01.wln (visible on the second monitor) + plan Tour/Tour.md",
+  "correct": "pass: nine-section plan; stop 1 built live (skills per area bar chart, mention graph, most-named table); counts re-checked by the orchestrator: 27 skills (backlog 7, paper 6, wiki 6, paclet 3, project 3, notebook 1, document 1), 31 commands, 6 agents; stopped for feedback after stop 1 as the skill requires",
+  "clean": "pass",
+  "findings": [
+   "angle brackets in Markdown text broke two cells",
+   "a Graph showed a placeholder; drawn as Graphics instead",
+   "8 inspection windows left open"
+  ],
+  "levelC": {
+   "reviewer": "D",
+   "agree": true,
+   "rechecked": "ls of the fixture: 27 skills (backlog 7, paper 6, wiki 6, paclet 3, project 3, notebook 1, document 1), 31 commands, 6 agents, 32 scripts, one hook. Independent Python recount of the same whole-word mention rule: 166 edges; top six document-revise 16, backlog-add 12, backlog-run 11, project-provenance 10, paper-create-notebook 10, wiki-update 9; no skill unnamed. Viewed scratch/trio.png (bar chart"
+  }
+ },
+ "paper-create-note": {
+  "route": "pass: WLJS kernel for the computation; bare-kernel checks of the shipped .wl in network-cut wolframscript / wolfram-direct; TinyTeX for the PDF",
+  "notebook": "pass: summary .wln (visible on the second monitor, saved) + the note's .wln via md2wln (unevaluated, as the skill ships it)",
+  "correct": "pass: largest Sidon subset sizes and counts for n=1..20 all match the orchestrator's independent brute force (sizes 1,2,2,3,3,3,4,4,4,4,4,5,5,5,5,5,5,6,6,6; counts 1..80); 6-page PDF; proofs by hand except n=16,17 upper bounds, labelled measured",
+  "clean": "pass",
+  "findings": [
+   "project .gitignore excludes *.pdf although the note conventions say every file is tracked (upstream inconsistency)",
+   "local commit made with a one-off author identity"
+  ],
+  "levelC": {
+   "reviewer": "D",
+   "agree": true,
+   "rechecked": "Independent Python search (scratch-D/sidon.py -> sidon.out): s(n), number of Sidon subsets (2,4,7,...,6845), number of largest sets (1,1,3,2,6,14,2,10,26,60,110,4,22,68,156,320,584,8,24,80), lexicographically first largest sets, and Table 2's full lists at n=4,7,12,18 all match; 2^n brute counts agree for n<=14; sum and difference definitions agree on all 2^14 subsets of [14]; 0/462 five-subsets o"
+  }
+ },
+ "simulate-and-plot-modelica": {
+  "route": "pass: WLJS kernel (SystemModelSimulate + SystemModelPlot), the skill's local default",
+  "notebook": "pass: TankPID.wln with live SystemModelPlot output (visible on the second monitor, saved), plots checked on screen by the agent",
+  "correct": "pass: TankPID over its default 0-350 s; level vs reference and inflow vs outflow (the model's stored figure); orchestrator re-ran in a fresh offline kernel: peak 1.712 m at t=165.55 s, level 0.252 m and outflow 0.450 m^3/s at 350 s, all as reported",
+  "clean": "pass",
+  "findings": [
+   "SystemModelPlot's default PlotRange clipped the level curve and hid both peaks in WLJS; PlotRange -> All fixes it",
+   "a projected window kept the stale clipped plot"
+  ],
+  "levelC": {
+   "reviewer": "D",
+   "agree": true,
+   "rechecked": "Fresh network-cut kernel (scratch-D/tank.wls -> tank.out): first peak 0.9958 m at t=17.675 s (log says 17.75), dip 0.067 m at 59.85 s, h(149)=0.240 with qOut 0.1497, second peak 1.71208 m at 165.55 s, qOut at the 0.5 limit 172.15-202.72 s, h=0 from 202.7 to 234.8 s, h(350)=0.2519, qOut(350)=0.4497; PID K=0.1, T=10, Td=5, ref=0.25; no messages. Viewed cap5 projected plots 0x140005e (level, peaks 1."
+  }
+ },
+ "paper-create-notebook": {
+  "route": "pass: WLJS notebook and kernel (helpers in a private context, removed)",
+  "notebook": "pass: SidonBoundFailsInfinitelyOften_261022.wln (visible on the second monitor, saved) + .md source, index, provenance; v1 archived",
+  "correct": "pass: paper with settled statements only; attainment for 2<=n<=21 now proved; new theorem at n=k^2-k+2 (parity count) with infinitely many failures; orchestrator's independent search confirms failures exactly at n=22,32,33,34 for n<=40 and the theorem's predicted failures at n=44 (k=7) and n=58 (k=8). The theorem's proof itself has not been reviewed by a mathematician; the paper says it was not compared with the literature",
+  "clean": "pass",
+  "scripted": "none; three questions recorded (retained material, theorem placement, operator name)",
+  "findings": [
+   "statement numbers and [Tag] references need Mathematica's MathNotebook paclet (not installed, rule 0)",
+   "local commit made; nothing pushed",
+   "literature search: the 'new theorem' is Corollary 3.9 of Buratti-Stinson 2021 (arXiv:2007.01908); Gordon 2025 is far stronger; the paper should cite them (it said it had not checked the literature)"
+  ],
+  "levelC": {
+   "reviewer": "D",
+   "agree": true,
+   "rechecked": "Read Thm:Parity line by line: n=k^2-k+2 is even; m=n/2 is not a difference (a-a'=m implies a'-a=m); |D|=n-2 forces D=Z_n minus {0,m}; odd differences 2eo = m-eps; (e-o)^2 = k-2+2eps; eps=1 iff 4|k(k-1) iff k=0,1 mod 4. All steps valid; b(n)=k bound also checked. Cor:Infinite (k=5 mod 8 non-square) and least element 22 valid; Lem:Ruler and Prop:Small (b(n)=k iff k^2-k+1<=n<=k^2+k; n=21 set gives al"
+  }
+ },
+ "wiki-update.attempt1-levelC": {
+  "route": "pass: WLJS kernel for the check",
+  "notebook": "pass: summary .wln (evaluated, saved)",
+  "correct": "pass: NestTrajectory 27 -> 112 terms, peak 9232",
+  "clean": "pass (own test bug fixed); Level C: rules partial (brief in force (v1) said 'Do not open )",
+  "scripted": "file now saved; document it here",
+  "findings": [
+   "card fixture lacked Code/Tools.wl (fixed)",
+   "save recipe left global nb (recipe fixed)"
+  ],
+  "rerun": true,
+  "levelC": {
+   "reviewer": "A",
+   "agree": false,
+   "rechecked": "Fresh kernel in bwrap, Tools.wl from the run folder (cmp-identical to tests/cards/fixtures/Tools.wl) loaded in a private context: Collatz trajectory from 27 has 112 elements, peak 9232, starts {27,82,41,124,62}, ends {4,2,1}, === NestWhileList; NestTrajectory[#+1&,5,#<0&] = {5}; halving from 64 = {64,...,1}; 4-argument call stays unevaluated. All article claims hold. git diff of Index/Status read.",
+   "resolution": "accepted",
+   "reason": "brief in force (v1) said 'Do not open ... any ... window'; the agent opened a WLJS notebook window. Rules partial; rerun under the current brief"
+  }
+ },
+ "wiki-update": {
+  "route": "pass: WLJS kernel for the function check (loaded under a private context, removed)",
+  "notebook": "pass: WikiUpdate_NestTrajectory.wln (visible on the second monitor, saved; capture checked)",
+  "correct": "pass: Wiki/Code/Tools.md article; NestTrajectory = NestWhileList, Collatz from 27 gives 112 elements, peak 9232 (reference); Index and Status updated",
+  "clean": "pass: window opened under the brief that allows it; no symbols left in the shared kernel",
+  "findings": [
+   "upstream inconsistency: CLAUDE.md and the skill specify the marker [[ LLM Generated ]] but all 22 existing example articles use [ LLM Generated ] (orchestrator counted)",
+   "Tools.wl has no BeginPackage"
+  ],
+  "levelC": {
+   "reviewer": "F",
+   "agree": true,
+   "rechecked": "Fresh network-cut kernel, Code/Tools.wl loaded into a private context: Collatz trajectory from 27 has 112 elements, max 9232, starts {27,82,41,124,62}, ends {4,2,1}, === NestWhileList; start 1 -> {1}; halving from 64 -> {64,32,16,8,4,2,1}; 4-argument call unevaluated. Every claim in Wiki/Code/Tools.md and the Status line holds. git diff of Index.md and Status.md read; counted 22 '*[ LLM Generated "
+  }
+ },
+ "search-modelica-docs.attempt1-levelC": {
+  "route": "pass: wsm-toolkit docs + WLJS kernel check",
+  "notebook": "pass: WLJS notebook (opened a window before the rule change)",
+  "correct": "pass: SpringDamper; c, d, s_rel0",
+  "clean": "pass; Level C: rules partial (same as wiki-update (v1 brief, window opened))",
+  "rerun": true,
+  "levelC": {
+   "reviewer": "A",
+   "agree": false,
+   "rechecked": "Read the bundled MSL 4.0.0 source SpringDamper.mo: 'Linear 1D translational spring and damper in parallel', parameters c(final min=0,start=1), d(final min=0,start=1), s_rel0=0; base class PartialCompliantWithRelativeStates has stateSelect=StateSelect.prefer and s_nominal=1e-4; PartialElementaryConditionalHeatPortWithoutT has useHeatPort=false. Matches the answer and the notebook table.",
+   "resolution": "accepted",
+   "reason": "same as wiki-update (v1 brief, window opened). Rules partial; rerun"
+  }
+ },
+ "search-modelica-docs": {
+  "route": "pass: wsm-toolkit docs (offline corpus) + WLJS kernel check of parameter names",
+  "notebook": "pass: SpringDamperLookup.wln (visible on the second monitor, saved; screenshot checked by the agent)",
+  "correct": "pass: Modelica.Mechanics.Translational.Components.SpringDamper; own parameters c, d, s_rel0 (card expectation), inherited stateSelect, s_nominal, useHeatPort; kernel returned {s_nominal, c, d, s_rel0}",
+  "clean": "pass: windows opened under the brief that allows them (the first attempt opened one under a brief that forbade it)",
+  "findings": [
+   "docs index stores short class names only",
+   "agent quoted the MSL 4.0 description; the installed library is 4.1.0 (same component)"
+  ],
+  "levelC": {
+   "reviewer": "F",
+   "agree": true,
+   "rechecked": "Read the installed '<SystemModeler-install>/15.0/L/Modelica 4.1.0/Modelica/Mechanics/Translational/Components/SpringDamper.mo': description 'Linear 1D translational spring and damper in parallel', parameter c(final min=0, start=1), d(final min=0, start=1), s_rel0=0, extends PartialCompliantWithRelativeStates and PartialElementaryConditionalHeatPortWithoutT. scratch/docs-query1.txt has the"
+  }
+ },
+ "backlog-review.attempt1-levelC": {
+  "route": "pass",
+  "notebook": "n/a",
+  "correct": "pass: found the item, walked criteria, caught 2 fixture flaws, send-back path completed",
+  "clean": "pass; Level C: rules partial (scripted reply approved steps 1-5 only; agent also ran step 6 (git branch -d of an already merged branch))",
+  "scripted": "send back with the two findings; approve T2/T3 and routing",
+  "findings": [
+   "fixture rows truncated and UnderReview table not updated (my fixture)"
+  ],
+  "rerun": true,
+  "levelC": {
+   "reviewer": "A",
+   "agree": false,
+   "rechecked": "git in the fixture: master at b44ad73 (fast-forward to dae2638, then the send-back commit), only branch master, clean tree; Work/Active/IndexSync.md has T2/T3 with Test bullets and three criteria; README Active table has the IndexSync row; upstream SKILL.md send-back steps 1-6 read.",
+   "resolution": "accepted",
+   "reason": "scripted reply approved steps 1-5 only; agent also ran step 6 (git branch -d of an already merged branch). Rules partial; rerun"
+  }
+ },
+ "backlog-review": {
+  "route": "pass: git + a WLJS notebook for the criterion check",
+  "notebook": "pass: IndexSync-review.wln (visible on the second monitor, saved; stale after the send-back, left as instructed)",
+  "correct": "pass: criterion walked and verified on the branch (3 Active rows match first unchecked tasks); 3 findings incl. truncated rows; stopped at the verdict; on the scripted send-back did exactly the skill's send-back steps 1-6 (fast-forward merge, T2/T3, git mv to Active, index row, commit 536d4c3, branch -d is step 6 of the skill), no push",
+  "clean": "pass",
+  "scripted": "verdict: send back, findings 1-2 as new tasks; skill's send-back steps only, no push",
+  "findings": [
+   "routing for new tasks chosen from backlog-add's table (reply did not rule on it)"
+  ],
+  "levelC": {
+   "reviewer": "F",
+   "agree": true,
+   "rechecked": "Criterion recomputed with git: first unchecked task in dae2638's Active files: BacklogLifecycle T4, DocumentationSite T3, ParallelSessions T6, all equal to the README rows; IndexSync now first unchecked T2 = its README row. Branches, worktrees, remotes and the commit diff checked as above; upstream SKILL.md send-back steps read."
+  }
+ },
+ "simulate-modelica.attempt1-levelC": {
+  "route": "pass: WLJS kernel (SystemModelSimulate)",
+  "notebook": "fail (Level C): none made, no reason",
+  "correct": "pass: x(1)=0.367879, y(2)=11.0159 (exact reference)",
+  "clean": "partial: overwrote a pre-existing Global`res in the shared kernel (Level C)",
+  "levelC": {
+   "reviewer": "B",
+   "agree": false,
+   "rechecked": "Fresh kernel in network cut, same ExampleModel.mo (cmp identical to ExampleData): x(1) = 0.36787944113, y(1) = 3.89348302257, x(2) = 0.13533528322, y(2) = 11.01591650800; exact e^-1, 1.5e - 0.5/e etc. agree to ~1e-10.",
+   "resolution": "accepted",
+   "reason": "no .wln/.md in the run folder; run log says none without a reason (orchestrator's verdict was wrong)"
+  },
+  "rerun": true
+ },
+ "simulate-modelica": {
+  "route": "pass: WLJS kernel (SystemModelSimulate), the local default",
+  "notebook": "pass: ExampleModelSimulation.wln (visible on the second monitor, saved) with table vs exact values and plot; captures checked",
+  "correct": "pass: x(1)=0.367879, y(1)=3.89348, x(2)=0.135335, y(2)=11.0159 = exact solution to 1.2e-9 (reference y(1)=3.893483, y(2)=11.015917)",
+  "clean": "pass: temporary symbol removed; no Global overwrite this time",
+  "levelC": {
+   "reviewer": "F",
+   "agree": true,
+   "rechecked": "Fresh network-cut kernel, ExampleModel.mo (cmp-identical to ExampleData): SystemModelSimulate[m, 2] -> x(1)=0.36787944113444454, y(1)=3.893483022568041, x(2)=0.13533528322298682, y(2)=11.01591650799995, bit-identical to the run's notebook table; exact e^-1 = 0.3678794412, 1.5e - 0.5/e = 3.8934830221, y(2) = 11.0159165068."
+  }
+ },
+ "wolfram-debugging.attempt1-wljs-hung": {
+  "route": "fallback: fresh offline wolframscript after WLJS hung; WLJS kernel hung (02:20-, not caused by this run): rerun needed for WLJS-route evidence",
+  "notebook": "none",
+  "correct": "pass: Assert[y > 5] fails for x=1 (y=1), passes x=3 (y=9); silent unless On[Assert]; CollectMessages chain; $AssertFunction throw demo",
+  "clean": "pass",
+  "findings": [
+   "skill helpers in WLJS not exercised (kernel hung)"
+  ],
+  "rerun": true
+ },
+ "wolfram-language-modelica.attempt1-levelC": {
+  "route": "pass: WLJS kernel",
+  "notebook": "pass: summary .wln",
+  "correct": "pass: parameter sweep matches reference to ~1e-9",
+  "clean": "partial: left the shared kernel in its private context for three calls (Level C; brief-induced)",
+  "levelC": {
+   "reviewer": "B",
+   "agree": false,
+   "rechecked": "Fresh kernel in network cut: SystemModelSimulate with InitialValues x -> {0.5, 1., 2.}: y(1) = {3.3058824259, 3.8934830228, 5.0686842167}; exact e + x0 sinh 1 = {3.3058824253, 3.8934830221, 5.0686842157}.",
+   "resolution": "accepted",
+   "reason": "call [6] ran Begin without End; shared $Context stayed testModelicaSweep` until call [9] (other runs logged it); caused by the brief at the time"
+  },
+  "rerun": true
+ },
+ "annotate-modelica-plots.attempt1-wljs-hung": {
+  "route": "fallback: wsm-toolkit (WSMKernelX) after WLJS calls hung; WLJS kernel hung (02:20-, not caused by this run): rerun needed for WLJS-route evidence",
+  "notebook": "n/a (System Modeler figure)",
+  "correct": "pass: preferred figure with x and y plots; flatten/build/simulate Pass; x(10)=4.54e-5 (=e^-10), y(10)=33040; idempotent",
+  "clean": "pass",
+  "findings": [
+   "not viewed in System Modeler GUI (no app start allowed)"
+  ],
+  "rerun": true
+ },
+ "annotate-modelica-graphics.attempt2-wljs-hung": {
+  "route": "fallback: wsm-toolkit (WSMKernelX) for validate/simulate after WLJS hung; WLJS kernel hung (02:20-): rerun needed for WLJS-route evidence",
+  "notebook": "n/a (System Modeler diagram)",
+  "correct": "pass: placements, orthogonal lines on real pins, custom BuoyancyDynamics icon; flattened model identical apart from annotations; builds and simulates 50 s; idempotent",
+  "clean": "pass",
+  "findings": [
+   "wsm-toolkit schematic pin positions wrong for Position, Prismatic (frame_b, axis), World.frame_b (skill note added)",
+   "not viewed in System Modeler GUI"
+  ],
+  "rerun": true
+ },
+ "annotate-modelica-animation.attempt2-wljs-hung": {
+  "route": "fallback: wsm-toolkit after WLJS calls hung; WLJS kernel hung (02:20-, not caused by this run): rerun needed for WLJS-route evidence",
+  "notebook": "n/a (System Modeler animation)",
+  "correct": "pass (structure): FollowLastLink camera on chainLink4 shape, trace, autoplay; model builds and simulates; shape variables exist in results",
+  "clean": "pass",
+  "findings": [
+   "not watched in Simulation Center",
+   "traced point may be the link's joint rather than the free tip (agent's note)"
+  ],
+  "rerun": true
+ },
+ "annotate-control-panel.attempt2-wljs-hung": {
+  "route": "fallback: wsm-toolkit after WLJS hung; WLJS Manipulate cell written but never run; rerun needed for WLJS-route evidence",
+  "notebook": "partial: .wln via md2wln, unevaluated",
+  "correct": "pass (structure): 3 log-scale sliders R1/C/R2, all 8 range corners simulate to t=10 without recompiling, validation clean",
+  "clean": "pass",
+  "findings": [
+   "panel analyzer misses component-modifier parameters (note added)",
+   "tool left a duplicate empty __Wolfram marker (removed by agent; note added)",
+   "--report empty for no-recompile runs (note added)",
+   "not viewed in Simulation Center"
+  ],
+  "rerun": true
+ },
+ "wljs-markdown.attempt1-nocapture": {
+  "route": "pass: WLJS notebook cells; table values from the WLJS kernel",
+  "notebook": "pass: CollatzMarkdown.wln (visible on the second monitor, saved)",
+  "correct": "pass: .md cell with a KaTeX cases formula for the Collatz map, the conjecture, and a computed table n=1..9 (e.g. 7: 16 steps, peak 52; 9: 19 steps); rendering not seen by the agent",
+  "clean": "pass (owner's WLJS restart mid-run; notebook survived)",
+  "levelC": {
+   "reviewer": "D",
+   "agree": true,
+   "rechecked": "Table n=1..9 {C(n), steps, peak} recomputed in a fresh kernel: exactly as in the cell (e.g. 7 -> 22,16,52; 9 -> 28,19,52). Every $...$/$$...$$ in the cell (after the guide's backslash un-escaping) rendered by WLJS's bundled KaTeX 0.16.10 (wljs-sharedlib-mk/dist/katex-*.js) with throwOnError: 7/7 OK (scratch-D/katex.out).",
+   "resolution": "accepted",
+   "reason": "agreed on content; rerun to see the rendering"
+  },
+  "rerun": true,
+  "gap": "run",
+  "findings": [
+   "Level C D: ran before the capture tool existed; the card's 'renders correctly' was never seen; rerun with capture"
+  ]
+ },
+ "wljs-markdown": {
+  "route": "pass: WLJS .md cell; table values from the WLJS kernel",
+  "notebook": "pass: CollatzMarkdown.wln (visible on the second monitor, saved)",
+  "correct": "pass: KaTeX cases formula, conjecture sentence, computed table n=1..9 (3: 7 steps/16, 7: 16/52, 9: 19/52), info box; orchestrator viewed the rendered projected cell; KaTeX parse check with WLJS's bundled KaTeX",
+  "clean": "pass",
+  "levelC": {
+   "reviewer": "F",
+   "agree": true,
+   "rechecked": "Recomputed the table in Python: [(1,0,1),(2,1,2),(3,7,16),(4,2,4),(5,5,16),(6,8,16),(7,16,52),(8,3,8),(9,19,52)], identical to the rendered table in the capture."
+  },
+  "findings": [
+   "orchestrator's capture copied to evidence/orchestrator-capture.png"
+  ]
+ },
+ "wljs-mermaid.attempt1-nocapture": {
+  "route": "pass: WLJS notebook cells via mcp__wljs__*",
+  "notebook": "pass: CollatzFlowchart.wln (visible on the second monitor, saved)",
+  "correct": "pass: .mermaid cell with the Collatz decision flowchart; WLJS produced the Mermaid output cell; Wolfram check from 6 gives {6,3,10,5,16,8,4,2,1}; rendering not seen by the agent (no browser allowed)",
+  "clean": "pass (WLJS restarted by the owner mid-run; notebook survived)",
+  "findings": [
+   "save raised a 'File hash mismatch' dialog, now on the second monitor (dialog patch works)",
+   "Level C D: ran before the capture tool existed; the card's 'renders correctly' was never seen; rerun with capture"
+  ],
+  "levelC": {
+   "reviewer": "D",
+   "agree": true,
+   "rechecked": "Ran WLJS's bundled flowDiagram parser (wljs-mermaid-support/dist, DOMPurify stubbed in a scratch copy) on the saved source: PARSE OK, 6 vertices S,C,E,P,H,T and 7 edges with the right labels. Fresh kernel: Collatz trajectory of 6 = {6,3,10,5,16,8,4,2,1}.",
+   "resolution": "accepted",
+   "reason": "agreed on content; rerun to see the rendering"
+  },
+  "rerun": true,
+  "gap": "run"
+ },
+ "wljs-mermaid": {
+  "route": "pass: WLJS .mermaid cell",
+  "notebook": "pass: CollatzFlowchart.wln (visible on the second monitor, saved)",
+  "correct": "pass: Collatz decision flowchart; orchestrator viewed the rendered diagram in its projected window (nodes, decisions and loops drawn); rule check from 6 correct",
+  "clean": "pass",
+  "levelC": {
+   "reviewer": "F",
+   "agree": true,
+   "rechecked": "Parsed the saved .mermaid source: 6 nodes, 7 edges as listed; viewed both captures. Source text is the same diagram reviewer D parsed with WLJS's bundled parser for the earlier attempt."
+  },
+  "findings": [
+   "orchestrator's capture copied to evidence/orchestrator-capture.png"
+  ]
+ },
+ "wljs-html.attempt1-nocapture": {
+  "route": "pass: WLJS notebook cells; Prime[1000] via WSP template in the WLJS kernel",
+  "notebook": "pass: Prime1000Card.wln (visible on the second monitor, saved)",
+  "correct": "pass: HTML card with 7919 filled in by <?wsp Prime[1000] ?> (reference prime1000=7919), PrimeQ True; output read back; rendering not seen by the agent",
+  "clean": "pass",
+  "levelC": {
+   "reviewer": "D",
+   "agree": true,
+   "rechecked": "Fresh kernel: Prime[1000] = 7919, PrimeQ True. Read the saved .wln output cell: value substituted by the template, not typed.",
+   "resolution": "accepted",
+   "reason": "agreed on content; rerun to see the rendering"
+  },
+  "rerun": true,
+  "gap": "run",
+  "findings": [
+   "Level C D: ran before the capture tool existed; the card's 'renders correctly' was never seen; rerun with capture"
+  ]
+ },
+ "wljs-html": {
+  "route": "pass: WLJS .html cell with WSP template",
+  "notebook": "pass: PrimeCard.wln (visible on the second monitor, saved)",
+  "correct": "pass: card shows 7919 from <?wsp Prime[1000] ?> (reference prime1000), PrimeQ True; orchestrator viewed the rendered card (xcapture)",
+  "clean": "pass",
+  "findings": [
+   "capture via xwd failed (BadColor); replaced by tools/xcapture.py",
+   "orchestrator's capture copied to evidence/orchestrator-capture.png"
+  ],
+  "levelC": {
+   "reviewer": "F",
+   "agree": true,
+   "rechecked": "Read the saved .wln: input cell has <?wsp Prime[1000] ?>, output cell (Display: html) has 7919 and True. Viewed the orchestrator's capx capture of window llm-e02.wln. Prime[1000] = 7919 is the reference value prime1000."
+  }
+ },
+ "wljs-javascript.attempt1-nocapture": {
+  "route": "pass: WLJS .js cell (no kernel needed except the save)",
+  "notebook": "pass: BouncingDot.wln (visible on the second monitor, saved)",
+  "correct": "partial: the cell runs, but the run told the user the dot bounces off all four walls; with the cell's own settings it never reaches the top wall (reviewer D simulated the update rule at 30-240 fps, 0 top hits); not seen animating",
+  "clean": "pass",
+  "findings": [
+   "owner's screenshot showed the save's 'File hash mismatch' dialog over this notebook (WLJS bug J1, now patched)",
+   "Level C D: ran before the capture tool existed; the card's 'renders correctly' was never seen; rerun with capture"
+  ],
+  "levelC": {
+   "reviewer": "D",
+   "agree": false,
+   "rechecked": "Re-simulated the cell's exact update rule in node (scratch-D/bounce.cjs, bounce2.cjs): over 10 simulated minutes at 30/60/144 fps and 1 h at dt=0.05, 240 fps and jittered frames, left/right/bottom hits occur but top-wall hits = 0; highest point y = 22-43 px vs. the top contact at y = 12 (the dot starts at rest at y=22 and energy does not grow). node --check of the cell body: OK.",
+   "resolution": "accepted",
+   "reason": "description wrong; rerun with screen capture"
+  },
+  "rerun": true,
+  "gap": "run"
+ },
+ "wljs-javascript": {
+  "route": "pass: WLJS .js cell",
+  "notebook": "pass: BouncingDot.wln (visible on the second monitor, saved)",
+  "correct": "pass: dot bounces off all four walls (Node simulation 15-240 fps; two captures 3 s apart show it moving and the hit counter rising); orchestrator saw the projected window with counters L6 R7 T8 B8",
+  "clean": "pass",
+  "findings": [
+   "agent used ffmpeg x11grab for captures when xwd failed (read-only)",
+   "orchestrator's capture copied to evidence/orchestrator-capture.png"
+  ],
+  "levelC": {
+   "reviewer": "F",
+   "agree": true,
+   "rechecked": "Read the .js cell in the saved .wln (W=400, H=250, r=12, start (60,60), velocity (190,140), dt capped at 0.05 s, reflections set |v| sign, hits counted per wall). Viewed three captures with increasing T counts."
+  }
+ },
+ "wolfram-demonstration.attempt-before-final": {
+  "route": "pass: MarkdownToNotebook in a network-cut fresh kernel (.nb); live preview in WLJS",
+  "notebook": "pass: BlochSphereGates-preview.wln (visible on the second monitor) with the Manipulate, snapshots and an exact Bloch-vector table",
+  "correct": "pass: 123-cell authoring notebook, no unfilled slots, no General::stop; CheckDefinitionNotebook 2 warnings (SnapshotSettingsNotFound, UnableToUseCell); 4 factual errors in the upstream source found and verified by the orchestrator (tests/bugs I3)",
+  "clean": "partial: 3D graphics could not be seen: WebGL2 blocklisted in WLJS since the X11 launch flag (orchestrator's regression; fix pending); categories empty offline; rerun for the 3D visual check now that WebGL works",
+  "findings": [
+   "WLJS shows Graphics3D as '...' when launched with --ozone-platform=x11 (log: WebGL2 blocklisted)"
+  ],
+  "rerun": true
+ },
+ "wolfram-demonstration": {
+  "route": "pass: MarkdownToNotebook in a network-cut fresh kernel (.nb); live preview in WLJS",
+  "notebook": "pass: BlochSphereGates-preview.wln (visible on the second monitor) with the live Manipulate and 3 snapshot scenes",
+  "correct": "pass: 123-cell authoring notebook, no unfilled slots or message cells; 3D Bloch spheres render (orchestrator viewed the snapshot capture: spheres, red trajectories, the straight chord through the centre that contradicts the source's 'walks around the equator'); the four source errors found again independently (tests/bugs I3)",
+  "clean": "partial: Categories empty offline (CheckboxesCell::autofail, rule 0); lint warnings SnapshotSettingsNotFound, UnableToUseCell",
+  "gap": "external",
+  "findings": [
+   "the source's Manipulate cell is blochDemo[], which the skill's own rules forbid; build and lint did not object",
+   "reviewer F: the build rewrote 5 shared MarkdownToNotebook cache entries though the log says none changed"
+  ],
+  "levelC": {
+   "reviewer": "F",
+   "agree": true,
+   "rechecked": "Fresh network-cut kernel Get of work/Demonstration/BlochSphereGates.nb: Notebook, 123 styled cells (Title 1, Section 12, Text 9, Input 2, Output 7), $Failed 0, TemplateSlot 0, General::stop 0, (*BB[ 0, 7 DynamicModuleBox. Source .md cmp-identical to the pinned example. Checked the four source statements by hand from the gate matrices in the source. Listed the persistence-store files and their mtim"
+  }
+ },
+ "validate-modelica.attempt-before-final": {
+  "route": "pass: WLJS kernel + wsm-toolkit cross-check",
+  "notebook": "partial: no summary page",
+  "correct": "pass: ExampleModel valid (x(1)=0.3679, y(1)=3.8935); Broken.mo rejected 'z not found' by both engines",
+  "clean": "warning: Global res/msgs/r may remain in shared kernel",
+  "findings": [
+   "Import of a broken .mo succeeds silently; the error shows on build (SystemModelSimulate::bld/::bldl) and in wsm-toolkit; SystemModelValidate[...] returned unevaluated in a fresh kernel (Level C correction)"
+  ],
+  "levelC": {
+   "reviewer": "B",
+   "agree": true,
+   "rechecked": "Fresh kernel in network cut: Import + SystemModelSimulate of Broken.mo -> SystemModelSimulate::bld and ::bldl 'Element not found. When looking up 'z' in scope 'Broken''; ExampleModel x(1) = 0.367879, y(1) = 3.893483. wsm-toolkit wsm --mode validate inside the cut: ExampleModel flatten Pass, 0 errors; Broken flatten Fail, LOOKUP id 20004 at 6:3, same message."
+  },
+  "gap": "run",
+  "rerun": true
+ },
+ "validate-modelica": {
+  "route": "pass: WLJS kernel (renamed copies, shared-namespace rule) + wsm-toolkit validate in the network cut",
+  "notebook": "pass: ModelicaValidation.wln (visible on the second monitor, saved) with both results and a plot; capture checked by the agent",
+  "correct": "pass: ExampleModel compiles (x(1)=0.3679, y(1)=3.8935); Broken.mo fails 'z' not found at line 6 in both engines; fix suggested",
+  "clean": "pass",
+  "findings": [
+   "wsm-toolkit exits 0 when flatten fails; status only in validate.out.json (ROUTES already says to read status fields)",
+   "renamed model classes cannot be unloaded from the shared kernel"
+  ],
+  "levelC": {
+   "reviewer": "F",
+   "agree": true,
+   "rechecked": "wsm-toolkit wsm --mode validate in the network cut on copies: ExampleModel flatten Pass, 0 errors; Broken flatten Fail, one error 'Element not found. When looking up `z` in scope `Broken`' at 6:3 (run: LOOKUP 20004 at 6:3). Fresh kernel ExampleModel x(1) = 0.36787944, y(1) = 3.89348302."
+  }
+ },
+ "wolfram-symbol-page.attempt-before-final": {
+  "route": "pass: local MarkdownToNotebook in a network-cut fresh kernel (cloud converter avoided; .nb build kept out of WLJS)",
+  "notebook": "partial: no WLJS summary page and no reason (rule now explicit in the m2n group note)",
+  "correct": "pass: page built (12 inputs, 11 outputs, 0 message cells, no $Failed; outputs match the source's expected values)",
+  "clean": "pass: no processes killed, nothing left running; DocumentationBuild final step not run (front end, WFRCrosslinks)",
+  "findings": [
+   "first attempt killed another session's processes (Level C); rerun clean under per-run scratch brief",
+   "summary-page omission recurring in m2n skills: group note added"
+  ],
+  "levelC": {
+   "reviewer": "B",
+   "agree": false,
+   "resolution": "accepted",
+   "reason": "first run killed wolfram-prompt's processes; rerun has no kill calls (session record scanned) and the page re-checked by the orchestrator (11 outputs, 0 messages, no $Failed)"
+  },
+  "levelC2": {
+   "reviewer": "E",
+   "agree": true,
+   "rechecked": "Fresh kernel in the network cut: MazeWalkTime.nb In 12, Out 11, Msg 0, General::stop 0, $Failed 0, no (*BB[* (static.out). scratch-E/evalpage.wls evaluated the page's 12 Input cells in order, with the run's paclet folder loaded: 10 outputs matched exactly. The one mismatch (input 8, the TraditionalF",
+   "resolution": "accepted",
+   "reason": "fixed; notebook partial stands (no summary page)"
+  },
+  "gap": "run",
+  "rerun": true
+ },
+ "wolfram-symbol-page": {
+  "route": "pass: pinned MarkdownToNotebook in a network-cut fresh kernel (.nb build kept out of WLJS); examples re-run live in WLJS",
+  "notebook": "pass: MazeWalkTime-summary.wln (visible on the second monitor, saved) with the maze plot, walk times and Neat Examples plot; captures checked",
+  "correct": "pass: page built (141 cells, 12 inputs, 11 outputs, no messages, no $Failed, no General::stop); outputs match the source's expected values",
+  "clean": "pass",
+  "findings": [
+   "converter drops symbol-page Keywords (bug I4, reproduced by the orchestrator)",
+   "loading the example paclet registers a format, a service and a device class in the shared kernel",
+   "WLJS does not draw PlotMarkers -> Automatic"
+  ],
+  "levelC": {
+   "reviewer": "F",
+   "agree": true,
+   "rechecked": "Fresh network-cut kernel Get of work/.../build/DocSource/English/ReferencePages/Symbols/MazeWalkTime.nb: Notebook, 141 styled cells, Input 12, Output 11, $Failed 0, General::stop 0, no (*BB[; outputs contain 15.714285714285715 s, FractionBox 396/25 s, 48.57142857142857 s, 7.857142857142858 s, True, True, Missing[\"NotReachable\"] and the unevaluated MazeWalkTime[{{\"S\",\"G\"}}, 3 kg]. Counted the short"
+  }
+ },
+ "wolfram-data-repository.attempt-before-final": {
+  "route": "pass: MarkdownToNotebook in fresh network-cut wolframscript (.nb build kept out of WLJS per ROUTES); WLJS check skipped (kernel hung)",
+  "notebook": "partial: no WLJS summary page and no reason given",
+  "correct": "partial: notebooks and values correct, but Categories/ContentTypes from the source are missing offline (CheckboxesCell::autofail) and the WLJS preview the card expects was not done (kernel hung) (Level C); optional template sections left as MTNUnfilled placeholders by design",
+  "clean": "warning: 2 of 4 builds hung at front-end connect (retry worked); CheckDefinitionNotebook: Description >128 chars, UnableToUseCell x2; categories empty offline",
+  "findings": [
+   "front-end hangs coincide with concurrent front-end launches (ROUTES note)",
+   "hung runs left orphan WolframNB/WolframKernel (agent killed its own)",
+   "--unshare-pid refused by session classifier for this agent"
+  ],
+  "levelC": {
+   "reviewer": "C",
+   "agree": false,
+   "rechecked": "Network-cut fresh kernel: Get of the unchanged TPTPProblemLibrary-index.wl gives Length 26264, frontier (Rating >= 0.98) 4565, and GRP ratings {Min 0., Median 0.18, Max 1., Count 1207}, all equal to the source's '<!-- => -->' expectations. Get of WallpaperGroups.nb: Notebook, 150 styled cells, 12 Input / 10 Output, no Message cells, no General::stop. Its outputs include 17, {0,0,0,0,0,0} and <|0 -",
+   "resolution": "accepted",
+   "reason": "external gaps (offline checkbox lists, hung kernel) make it limited"
+  },
+  "gap": "run",
+  "rerun": true
+ },
+ "wolfram-data-repository": {
+  "route": "pass: MarkdownToNotebook per source in network-cut fresh kernels; examples re-run live in WLJS",
+  "notebook": "pass: DataRepositoryBuildSummary.wln (visible on the second monitor, saved; capture checked)",
+  "correct": "pass: two definition notebooks, no messages, every expected value matches; categories and content types filled offline from the skill's official list (passed to the converter for the run only)",
+  "clean": "pass: CheckDefinitionNotebook: Description 163 > 128 chars (source), suggestions; empty optional sections are template placeholders",
+  "findings": [
+   "skill says 34 categories but lists 35 (BUGS I5, counted)",
+   "category validity flagged by the offline check (likely because the list cannot be fetched)"
+  ],
+  "levelC": {
+   "reviewer": "G",
+   "agree": true,
+   "rechecked": "Fresh network-cut kernel (tests/levelC/scratch-G/dr.wls, drf.wls, stop.wls): Get of both built .nb (cell counts, output values, checkbox states and counts above, $Failed locations, Message cells by box pattern = 0). Counted the upstream category list: 35 names although the text says 34 (finding I5 confirmed). diff -rq of work/Data against the pinned examples/Data. Description length 163."
+  }
+ },
+ "create-wolfram-documentation.attempt2-gate-skipped": {
+  "route": "pass: per-page network-cut fresh kernels (one kernel per page to avoid build.wls's double conversion and General::stop); no WLJS (hung)",
+  "notebook": "fail: no WLJS summary page and no reason (Level C E)",
+  "correct": "pass: MazeGenerate and MazeParse pages written and checked against the live paclet; DocumentationBuild 14/14 + ResourceDefinition.nb + index; orchestrator re-check: MazeParse has its 2 intended messages and no General::stop",
+  "clean": "partial: skipped the skill's confirm-the-plan gate (attempt 1 stopped there correctly); Lorem page keeps offline errors (rule 0)",
+  "findings": [
+   "build.wls converts every page twice in one kernel (source of the stray General::stop), sets a FE LightDark preference, writes the shared example cache",
+   "first MazeParse conversion hung 400 s during concurrent front-end starts; retry 9 s"
+  ],
+  "levelC": {
+   "reviewer": "B",
+   "agree": false,
+   "resolution": "accepted",
+   "reason": "first run left a stray General::stop on MazeParse; rerun fixed it (re-checked by the orchestrator across all 14 built pages: only Lorem keeps one, from the rule-0 offline failure)"
+  },
+  "levelC2": {
+   "reviewer": "E",
+   "agree": false,
+   "rechecked": "Fresh kernel in the network cut (static.out), every built page: MazeParse built In 14 / Out 12 / Msg 2 (both MazeParse::ragged) / stop 0; DocSource In 12 / Out 12 / Msg 2 / stop 0. MazeGenerate DocSource In 15 / Out 15 / Msg 0. Lorem built Msg 5 (stop 1). ragged.nb Msg 2 / stop 0. Each built page's ",
+   "resolution": "accepted",
+   "reason": "rerun skipped approval gates; needs another rerun that stops at the gate and gets a scripted approval"
+  },
+  "rerun": true,
+  "gap": "run"
+ },
+ "create-wolfram-documentation": {
+  "route": "pass: per-page network-cut fresh kernels (build.wls double conversion avoided), DocumentationBuild offline",
+  "notebook": "pass: DocPageExamples-docs.wln (visible on the second monitor, saved; plot checked by capture)",
+  "correct": "partial: new pages and guide links correct; the Lorem page holds a General::stop after 4 offline ServiceExecute::isrv messages, which the run's flat-string check missed",
+  "clean": "partial: Lorem page shows 5 ServiceExecute::isrv failures and WFRCrosslinks is missing (both rule 0, accepted in the approved plan)",
+  "gap": "external",
+  "fixedBy": "skill text: confirm the plan is a hard stop (build.mjs, Oct 22); earlier runs skipped it",
+  "scripted": "plan approved with scope, folder, Lorem, WFRCrosslinks and no-deploy answers",
+  "findings": [
+   "first DocumentationBuild run dropped the guide (13/14); retry built all 14"
+  ],
+  "levelC": {
+   "reviewer": "G",
+   "agree": false,
+   "rechecked": "Fresh network-cut kernel: read back all 14 built pages (scratch-G/pd.wls) and Message cells by box pattern (stop.wls): Lorem.nb names {isrv, isrv, isrv, General::stop, isrv}; MazeParse.nb {ragged, ragged}; ragged.nb {ragged, ragged}; no others. Recomputed new-page examples from the built paclet (cwd.wls): Dimensions {9, 15}, MazeWalkTime 10 s and 2 s, MazeGenerate[{1,1}] = {{#,#,#},{#,G,#},{#,#,#}",
+   "resolution": "accepted",
+   "reason": "Lorem General::stop is a consequence of the rule-0 offline failures (external); status stays limited"
+  }
+ },
+ "paclet-docs.attempt2-gate-skipped": {
+  "route": "pass: paclet's own build.wls in a network-cut fresh kernel (docs built from Markdown); no WLJS (hung)",
+  "notebook": "pass: summary .wln via md2wln",
+  "correct": "pass: MazeGenerate (15 outputs) and MazeParse (12 outputs) built into the paclet's Documentation/ReferencePages/Symbols; 0 message cells, no General::stop, $Failed only in offline CitationPopupData metadata (orchestrator re-check); 5/5 links resolve with the paclet folder loaded",
+  "clean": "partial: skipped the skill's agree-scope and approve-one-page gates (attempt 1 stopped correctly); author's ragged page keeps a build.wls General::stop",
+  "findings": [
+   "build.wls double conversion causes the ragged page's stray General::stop (per-page build has none)",
+   "converter cache still written to ~/.Wolfram/Objects/Persistence (not redirectable via $LocalBase)",
+   "build.wls lost a parallel subkernel on the first run (13/14); retry built all"
+  ],
+  "levelC": {
+   "reviewer": "B",
+   "agree": false,
+   "resolution": "accepted",
+   "reason": "first run stopped at build/DocSource; rerun after the skill note built into Documentation/ (re-checked by the orchestrator)"
+  },
+  "levelC2": {
+   "reviewer": "E",
+   "agree": false,
+   "rechecked": "Fresh kernel in the network cut (static.out): built MazeGenerate In 17 / Out 15 / Msg 0, MazeParse In 14 / Out 12 / Msg 0, $Failed only \"CitationPopupData\" -> $Failed (1 each, grep); DocSource MazeGenerate 15/15, MazeParse 12/12, no (*BB[*. ragged.nb (built and DocSource) Msg 3 including 1 General::",
+   "resolution": "accepted",
+   "reason": "rerun skipped approval gates; needs another rerun that stops at the gate and gets a scripted approval"
+  },
+  "rerun": true,
+  "gap": "run"
+ },
+ "paclet-docs": {
+  "route": "pass: paclet's own build.wls in network-cut fresh kernels; probes in fresh kernels (paclet kept out of the shared kernel)",
+  "notebook": "pass: review notebooks per round (DocPageExamples-docs-scope.wln, -MazeGenerate-review.wln, -reference-pages-review_3.wln), captures checked",
+  "correct": "pass: MazeGenerate (18 outputs, 0 messages) and MazeParse (15 outputs, 1 intended warning, 0 General::stop) built into Documentation/ReferencePages/Symbols; links resolve; orchestrator re-counted the built pages",
+  "clean": "pass: stopped at both approval gates (scope, then first page) and continued only on the scripted replies",
+  "fixedBy": "skill text: approval made a hard stop (build.mjs, Oct 22); earlier runs skipped it",
+  "scripted": "round 1: scope + sections + one page first; round 2: page approved, write MazeParse",
+  "levelC": {
+   "reviewer": "G",
+   "agree": true,
+   "rechecked": "Fresh network-cut kernel: read back all 14 built pages (scratch-G/pd.wls, stop.wls with a box-pattern Message/General::stop count) and recomputed page examples from the built paclet (pd2.wls): MazeWalkTime of the seeded 3x5 maze = Quantity[11.428571428571429, Seconds] (page shows 11.4286 s), S/G at {{2,2},{6,10}}, 2rc-1 open squares True, tree True, MazeParse ragged example gives the padded matrix"
+  }
+ },
+ "paclet-docs.attempt3-gate-skipped": {
+  "route": "pass",
+  "notebook": "pass: DocPageExamples-ReferencePages.wln",
+  "correct": "pass: MazeGenerate (15 outputs) and MazeParse (11 + intended warning) built into Documentation/, 6/6 links resolve",
+  "clean": "partial: skipped the skill's agree-scope/approve-one-page gate again (2nd time), questions written but work continued",
+  "gap": "run"
+ },
+ "wolfram-debugging.attempt2-levelC": {
+  "route": "pass: WLJS kernel and a visible notebook, cross-checked in a network-cut fresh kernel",
+  "notebook": "pass: AssertDebugging.wln (visible on the second monitor, saved)",
+  "correct": "partial: diagnosis right, but the skill's helpers (FailedAssertions / CollectMessages) were not used",
+  "clean": "partial: toggled On[Assert] globally in the shared kernel (and saved that toggle in a notebook cell) against the brief",
+  "findings": [
+   "$AssertFunction set in a Block was called for a failing Assert even with Assert off (both kernels; not checked against docs)",
+   "capture script hit X BadColor errors when several sessions captured at once"
+  ],
+  "levelC": {
+   "reviewer": "F",
+   "agree": false,
+   "rechecked": "Fresh network-cut kernel: file cmp-identical to ExampleData/FunctionWithAssert.wl. Default: both calls return Sin[1], Sin[9] with no messages. With On[Assert]: Compute[1] -> Hold[Message[Assert::asrtfl, y > 5, 5, file]], Compute[3] -> {} (same as the run). With Assert Off: Internal`HandlerBlock[{\"Assertions\", ...}] collects HoldComplete[Assert[y > 5, {5, file}]] for Compute[1] only, and the skill'",
+   "resolution": "accepted",
+   "reason": "helpers unused, global toggle; rerun"
+  },
+  "rerun": true,
+  "gap": "run"
+ },
+ "wolfram-debugging": {
+  "route": "pass: skill helpers (WolframDebugging`FailedAssertions) in the WLJS kernel; On[Assert] only in a network-cut fresh kernel",
+  "notebook": "pass: ComputeAssertDiagnosis.wln (visible on the second monitor, saved)",
+  "correct": "pass: FailedAssertions reports the failure for Compute[1] (y > 5, line 5, file, caller Compute) and none for Compute[3]; silent because Assert is off by default; fails for |x| <= Sqrt[5]; file unchanged (sha256)",
+  "clean": "pass: no global toggles in the shared kernel",
+  "findings": [
+   "run's claim confirmed (reviewer G and orchestrator): FailedAssertions reports 0 after one plain call with a Block body until reloaded (BUGS W5); the orchestrator's first contrary test toggled On[Assert], a different condition"
+  ],
+  "levelC": {
+   "reviewer": "G",
+   "agree": true,
+   "rechecked": "Fresh network-cut kernels (scratch-G/assert.wls, assert2.wls) with the pinned WolframDebugging.wl, Assert Off throughout unless stated: (1) fresh Get, FailedAssertions first: Compute[1] -> 1, again -> 1, Compute[3] -> 0. (2) Get, one plain Compute[1], then FailedAssertions[Compute[1]] -> 0 and FailedAssertions[Compute[2]] -> 0 (DownValues still contain the Assert). (3) plain Compute[3] then FA Com",
+   "resolution": "agree"
+  }
+ },
+ "wolfram-language-modelica.attempt2-levelC": {
+  "route": "pass: WLJS kernel (SystemModelSimulate sweep) and a visible notebook",
+  "notebook": "partial: sweep plot never viewed; its PlotLegends call gives three separate same-colour legends (reviewer F reproduced it)",
+  "correct": "pass: y(1) for x0=0.5,1,2 = 3.30588242589, 3.89348302285, 5.06868421666, matching the exact solution to ~1e-9 and the reference sweep 3.305882/3.893483/5.068684",
+  "clean": "pass: temporary symbols cleared; no Begin/End this time",
+  "findings": [
+   "shared kernel has one System Modeler model namespace: another session's ExampleModel import could replace this one (ROUTES note)",
+   "model object inside a list gave display messages (Set::shape, Part::partd) in WLJS",
+   "window capture failed with X BadColor under concurrent captures"
+  ],
+  "levelC": {
+   "reviewer": "F",
+   "agree": false,
+   "rechecked": "Fresh network-cut kernel: SystemModelSimulate[m, {0,1}, <|\"InitialValues\" -> {\"x\" -> {0.5, 1., 2.}}|>]: y(1) = 3.3058824258927495, 3.893483022849462, 5.068684216663753, identical to the run; exact 3.305882425281, 3.893483022103, 5.068684215747. Reproduced the notebook's plot cell: line colours in plot order are RGBColor[0.24,0.6,0.8], RGBColor[0.95,0.627,0.1425], RGBColor[0.455,0.7,0.21]; the lege",
+   "resolution": "accepted",
+   "reason": "plot unviewed and legend wrong; rerun"
+  },
+  "rerun": true,
+  "gap": "run"
+ },
+ "create-wolfram-documentation.attempt3-before-hardstop": {
+  "route": "pass",
+  "notebook": "pass: DocPageExamples-docs-summary.wln (capture checked)",
+  "correct": "pass: two new symbol pages, guide linked, 14 pages + indexes built offline, outputs match probes",
+  "clean": "partial: plan not confirmed (launched before the skill's hard-stop wording); Lorem offline (rule 0)",
+  "gap": "run"
+ },
+ "wolfram-language-modelica.attempt3-levelC": {
+  "route": "pass: WLJS kernel, renamed model copy (shared-namespace rule)",
+  "notebook": "partial: plot right on screen, but the saved .wln holds no plot output (save cell inserted between the plot input and its output)",
+  "correct": "pass: y(1)=3.30588242589, 3.89348302285, 5.06868421666 vs exact to <1e-9 (reference sweep); slope sinh(1)",
+  "clean": "pass",
+  "findings": [
+   "x(0) column shows Mathematica number marks (0.5`) in the table (cosmetic)"
+  ],
+  "levelC": {
+   "reviewer": "G",
+   "agree": false,
+   "rechecked": "Re-ran the same sweep in a fresh network-cut kernel (scratch-G/wlm.wls, renamed copy ExampleModel_revG): identical y(1) values to the last digit and identical differences to the exact solution. Plot legend: evidence/plot.png is byte-identical (sha256 9cce6da5...) to the run's capture cap3/0x14000b7_Application.png; one legend, three entries, colours match the curves (green ends at about 5.07 = x(0",
+   "resolution": "accepted",
+   "reason": "saved file lacks the plot; rerun with the save-cell-last rule"
+  },
+  "rerun": true,
+  "gap": "run"
+ },
+ "wolfram-language-modelica": {
+  "route": "pass: WLJS kernel, renamed model copy",
+  "notebook": "pass: ExampleModelSweep.wln (visible on the second monitor) saved with the save cell last; orchestrator checked the file: the plot's Output cell follows its input (Legended graphics, one LineLegend with three colours)",
+  "correct": "pass: y(1) = 3.30588242589, 3.89348302285, 5.06868421666 vs exact (e + x0 sinh 1) to <1e-9",
+  "clean": "pass",
+  "findings": [
+   "deleting a misplaced save cell also deleted the output below it (agent re-ran the plot)",
+   "model object display in WLJS raises Set::shape / Part::partd (known)",
+   "reviewer H: saved plot is a FrontEndRef without stored objects, so it redraws only while WLJS stays open (bug J3, confirmed)"
+  ],
+  "levelC": {
+   "reviewer": "H",
+   "agree": true,
+   "rechecked": "Fresh network-cut kernel (bwrap --unshare-net, $AllowInternet = False first line; scratch-H/wlm.wls, renamed copy ExampleModel_revH): SystemModelSimulate with InitialValues x -> {0.5, 1., 2.} gives y(1) = 3.3058824258927495, 3.893483022849462, 5.068684216663753, identical to the run to the last digi"
+  }
+ },
+ "annotate-modelica-graphics.attempt-novisual": {
+  "route": "pass: wsm-toolkit schematic (preview) + validate; WLJS kernel for simulation and a layout preview",
+  "notebook": "pass: SubmarineLayout.wln (visible on the second monitor, saved) with a simulation plot and a box-and-line layout preview (capture viewed by the agent)",
+  "correct": "pass: placements and orthogonal lines on the real MSL pins, custom icons; flattened model identical apart from annotations; validates and simulates 50 s (y=0 at equilibrium; -0.83 m when 50 kg/m^3 denser)",
+  "clean": "pass",
+  "findings": [
+   "second independent hit of the toolkit pin bug (W4 in tests/bugs): s_ref, prismatic.axis, world.frame_b",
+   "window capture produced empty files (X BadColor) under concurrent captures"
+  ],
+  "levelC": {
+   "reviewer": "F",
+   "agree": true,
+   "rechecked": "wsm-toolkit validate (network cut): annotated copy Pass (3 warnings), original fixture Pass (3 warnings); flat models with annotation(...) stripped are identical (268,902 chars each). Fresh network-cut kernel: inputs f = 0, deltarho = 0 -> y = 0 for the whole 50 s; deltarho = 50 -> y(10) = -1.20730, y(50) = -0.83121 = subBody.r_0[3](50) (run: -1.21, -0.83)."
+  }
+ },
+ "annotate-modelica-graphics": {
+  "route": "pass: wsm-toolkit schematic preview + hand layout on MSL pin positions; diagram/icons rendered with System Modeler's renderer in a network-cut fresh kernel; simulation in WLJS",
+  "notebook": "pass: Submarine-schematic.wln (visible on the second monitor) showing the diagram",
+  "correct": "pass: clean schematic (orchestrator viewed Submarine-diagram.png: right-angled lines on the real connectors, new BuoyancyDynamics icon); flattened model identical apart from annotations; validates; simulation unchanged (-0.83 m at +50 kg/m^3)",
+  "clean": "pass",
+  "findings": [
+   "toolkit pin bug W4 hit again (third independent time)",
+   "Submarine.stl missing (affects 3D animation only)"
+  ],
+  "levelC": {
+   "reviewer": "I",
+   "agree": true,
+   "rechecked": "Fresh kernel inside the network cut (scratch-I/graphics.wls and graphics2.wls). I imported two copies with only the class renamed: the card fixture as SubOrigI and work/Submarine.mo as SubNewI. Compared properties: SystemEquations 1419/1419 identical; InitialEquations 48/48 identical; StateVariables, InputVariables, OutputVariables, AlgebraicVariables (1456) and Connections (9) identical. ParameterNames (92) are identical after sorting. ParameterValues are identical. Components differ only in the renamed nested class SubOrigI.BuoyancyDynamics vs SubNewI.BuoyancyDynamics. I simulated both for 50 s with deltarho = 50 and f = 0: y(50) = subBody.r_0[3](50) = -0.8312141299265333 for both, matching the run's -0.8312. I exported SystemModel[\"SubNewI\"][\"Diagram\"] to PNG (Head Graphics) and looked at it.",
+   "notes": "1) `extends Modelica.Icons.Example;` is a non-annotation edit. It comes from the upstream tool. Equations are unchanged, but the Example icon suits a runnable example, and Submarine has input and output connectors. The run flagged this itself. 2) Cosmetic: subShape's icon label (its shapeType string) is clipped at the right edge of the diagram ('ntationExamples/Resou'). 3) W4 (tests/bugs/BUGS.md) was confirmed again: the automatic layout was wrong for Position, Prismatic and World.frame_b, and the final layout is the hand fix, not the tool's output. 4) The .wln stores its images as FrontEndRefs with no Objects section (J3). The PNGs on disk are unaffected."
+  }
+ },
+ "annotate-modelica-animation.attempt-novisual": {
+  "route": "pass: WLJS kernel for build/simulation (renamed copy per the shared-namespace rule) + annotation edit",
+  "notebook": "pass: ChainPendulumAnimation.wln (visible on the second monitor, saved) with the annotation, simulation and a path plot (capture checked)",
+  "correct": "pass (structure): FollowLastLink camera on chainLink4's box shape, trace and autoplay in the Default window, original camera kept; model builds and simulates 5 s; the 3D animation itself plays only in System Modeler, which the run may not start",
+  "clean": "pass; grader hit 'https://reference.wolfram.com' is a local lookup key: `wsm-toolkit docs --show <url>` reads the offline index (docsearch/main.py cmd_show -> Index().get(url); the package has no network code), no contact",
+  "findings": [
+   "traced point is the link shape's frame, not the free tip (agent suggests a marker on frame_b)"
+  ],
+  "levelC": {
+   "reviewer": "F",
+   "agree": true,
+   "rechecked": "wsm-toolkit validate (network cut) on a copy of work/ChainPendulum.mo: Fail without the library (IntroductoryExamples not found), Pass with --load-library IntroductoryExamples (4 MSL warnings). Fresh network-cut kernel: Import -> SystemModel[\"ChainPendulum\", True]; SystemModelSimulate 5 s: 15 result variables under chainLink4.bodyBox1.frameTranslation.shape.* (rvisobj, rxvisobj, ...), so the cref "
+  }
+ },
+ "annotate-modelica-animation": {
+  "route": "pass: model copied from the installed library; motion extents and frames from a network-cut fresh kernel (stated reason: skill note on WLJS stalls), simulation also run in WLJS (renamed copy); WLJS replay from JSON",
+  "notebook": "pass: ChainPendulum-animation.wln (visible on the second monitor, saved) with summary and Graphics3D replay (frame slider, follow toggle)",
+  "correct": "pass: FollowLastLink camera (follow chainLink4.bodyBox1.frameTranslation.shape, NODE_CENTER), original Default camera kept, window preferred/autoPlay/repeat with trace of a tip marker; builds and simulates, tip at t=5 (-1.89,-2.07) same as attempt3. Orchestrator viewed scratch/cap3/0x14000b8_Application.png: last link centred, trace and floor shown",
+  "clean": "pass (StringStartsQ::strse from the agent's own name filter, explained)",
+  "findings": [
+   "added two visual-only components (tip marker, floor) beyond pure annotation; dynamics unchanged",
+   "camera/trace not confirmed in System Modeler Simulation Center (desktop app not started by rule)",
+   "agent left replay symbols in the shared kernel deliberately so the notebook stays live",
+   "WLJS Graphics3D ignored PlotRange for a follow view (agent shifted+clipped instead)"
+  ],
+  "history": "attempt3: annotation correct (FollowLastLink camera on chainLink4 box, trace, autoplay; builds and simulates), matplotlib GIF replay; its WLJS query of sampled positions stalled >220 s, so no WLJS notebook. Orchestrator then drew the replay in WLJS from its JSON in seconds (attempt3 evidence/caps2/0x140009a_Application.png) -> route note added to the skill.",
+  "levelC": {
+   "reviewer": "J",
+   "agree": true,
+   "rechecked": "Fresh kernel in the network cut (tests/levelC/scratch-J/recheck.wls, output recheck.out), $AllowInternet False. Imported work/ChainPendulum.mo with only the class renamed (ChainPendulumJrev; diff otherwise identical): SystemModel[ChainPendulumJrev, True], simulated 5 s. Tip (chainLink4.frame_b.r_0) at t=0: (4,0,0); t=2.5: (-1.84376,-1.14859,0); t=5: (-1.89187,-2.06863,0). tipMarker.frame_a.r_0 matches exactly. JSON tip at t=0, 2.5, 5: (4,0), (-1.8438,-1.1486), (-1.8919,-2.0686). Max |sim - JSON| over all 251 times, joints 1-4 and tip, is 5.0e-5 (JSON rounded to 1e-4); JSON times are exactly Subdivide[0,5,250]. The original IntroductoryExamples.CustomComponent.ChainPendulum gives the same tip values. Max |modified - original| over the 251 times for all joints and the tip is exactly 0. The state selection differs only cosmetically: chainLink3 uses revolute1.phi/w in the original and damper1.phi_rel/w_rel in the copy. Both are 8 states and the same motion. Link-4 length from the JSON stays 1.000 +/- 1e-4, tip z = 0 throughout, and the lowest point is y = -3.9318. Visual check: I mapped the t=5 positions into cap3/0x14000b8_Application.png (6 m viewport ~ 275 px, centred on the last-link midpoint). The predicted pixels are (348,376), (303,372), (310,417), (265,425), tip (262,470) and ground y~570. The image shows the yellow chain vertices, the red tip sphere and the green floor at those spots. The red trace's lowest point (predicted y~556) and its right-edge clipping (trace x up to +5.85 m vs the 3 m half-width) also match. The replay therefore shows the simulated motion and a correct follow-the-last-link framing. cap2/0x14000ac shows the first, unclipped attempt, consistent with the log.",
+   "notes": "Adding the two components was reasonable and disclosed. The ground plane is step 2 of the upstream workflow, sized from the extents: top at y=-4.24 below the motion floor of -3.93. tipMarker gives the trace a visualizer at the chain's free end; tracing the link's own box shape would follow its frame_a origin, which is the joint between links 3 and 4. Both are visualizer-only, and the dynamics are unchanged (difference 0). Both are named in the Answer and in Problems. A pure-annotation alternative (trace = {chainLink4.bodyBox1.frameTranslation.shape}) could have been offered as an option. Open, also stated by the agent: whether SM traces the shape's frame origin or the r_shape-offset centre; at worst 7.5 cm. The NODE_CENTER choice over the upstream NODE_CENTER_AND_AZIM suggestion is justified for a planar swing. rotation {0,0,0,1} matches the original Default camera. The replay label 'frame (t = 0.02 (i-1) s)' is terse but correct. The saved .wln's .md first line carries leading spaces (a WLJS artifact, not in the agent's content); it rendered fine."
+  }
+ },
+ "annotate-control-panel.attempt-novisual": {
+  "route": "pass: wsm-toolkit panel/validate (network cut) + WLJS kernel simulation of a renamed copy",
+  "notebook": "pass: ElectricCircuitExplore.wln (visible on the second monitor, saved): Manipulate re-simulating over the same ranges; sliders, plot and label seen in a capture",
+  "correct": "pass: 'Resistor and capacitor values' panel, 3 log-scale sliders (R1 1-100, C 0.001-0.1, R2 10-1000) with the stored current plot; tunable without rebuild (checked in the .sim); range corners simulate (peak 0.0059-0.587 A)",
+  "clean": "pass",
+  "findings": [
+   "panel analyzer finds 0 parameters when values are set in component modifiers (note already in the skill)",
+   "tool leaves an empty __Wolfram marker and writes the file with mode 600",
+   "WLJS Manipulate has no log-scale slider; exponent sliders used"
+  ],
+  "levelC": {
+   "reviewer": "F",
+   "agree": true,
+   "rechecked": "wsm-toolkit wsm --mode validate in the network cut on a copy of work/ElectricCircuit.mo: flatten Pass, 0 errors, 2 warnings (same as the run). Fresh network-cut kernel: Import + SystemModelSimulate with the slider corners: peak |i| = 0.58723 (R1=1, C=0.1, R2=10), 0.09965 (1, 0.001, 10), 0.01115 (100, 0.1, 1000), 0.00592 (100, 0.001, 1000); default i(10) = -0.044985. All equal the run's 0.587 / 0.0"
+  }
+ },
+ "annotate-control-panel": {
+  "route": "pass: copied model, wsm-toolkit panel --annotate (hand spec, analyzer found no modifier params), validate + simulate in network cut; diagram via fresh kernel; WLJS Manipulate over SystemModelSimulate (renamed copy)",
+  "notebook": "pass: ElectricCircuit-panel.wln (visible on the second monitor, saved)",
+  "correct": "pass: one ControlPanels panel with 3 log sliders (R1 1-100, C 0.001-0.1, R2 10-1000) and the stored figure; validates; all 3 params tunable. Orchestrator viewed the panel and plot windows and checked the AC steady state by hand (V=1, f=1, L=0.1): default |I|=0.059 A, R1=28.2/R2=501 gives 0.0326 A, corner 0.586 A -- all match the WLJS plots",
+  "clean": "pass",
+  "findings": [
+   "analyzer misses modifier parameters again (known, in skill note)",
+   "WLJS sliders have no log scale (log10 of value used)",
+   "agent could not drive the sliders itself (no xdotool); re-simulation seen after the sliders were moved in the window",
+   "native System Modeler Explore panel not opened (outside rule: no desktop app starts)",
+   "cell outputs vanished after inserting a cell; re-evaluation restored them"
+  ],
+  "levelC": {
+   "reviewer": "I",
+   "agree": true,
+   "rechecked": "Fresh kernel inside the network cut (scratch-I/panel.wls), with work/ElectricCircuit.mo imported standalone. Defaults: V=1, f=1, L=0.1, R1=10, C=0.01, R2=100. Peak |sineVoltage1.i| over [5,10] s, after transients: defaults 0.05908 A (0.05918 over the whole run); R1=28.2, C=0.01, R2=501 gives 0.03263 A (0.03404 over the whole run, including the start-up transient, which is the run's '0.0341 max'); corner R1=1, C=0.1, R2=10 gives 0.58626 A (0.5872 over the whole run). The analytic AC steady-state amplitudes |1/(R1+1/(jwC)) + 1/(R2+jwL)| with w=2*pi are 0.059083, 0.032634 and 0.586303 A. These agree with the run's and the orchestrator's 0.059, 0.033/0.0326 and 0.59 A. Annotation check: ControlPanels appears once, __Wolfram appears once, and the bracket balance is 0.",
+   "notes": "1) The slider move to 28.2/501 Ohm was not made by the run agent; it says so, and the cause is unknown. That capture still shows the Manipulate re-simulating correctly. The agent itself only saw the default state and the side-by-side comparison. 2) WLJS display finding: after the slider update the y-axis kept the first render's range (about \u00b10.055) while the new curve peaks at about 0.034. PlotRange -> All is apparently not re-applied on WLJS's JIT update. This is cosmetic. 3) The labelled but dead .js probe cells remain in the user's notebook, which is clutter. 4) work/ElectricCircuit.mo was left with mode 600 by the toolkit's write. The graphics run restored 664 on its file. 5) The run folder has no auto-checks.json, unlike the other runs."
+  }
+ },
+ "annotate-modelica-plots.attempt-novisual": {
+  "route": "pass: wsm-toolkit figures/validate + WLJS kernel import and simulation",
+  "notebook": "pass: ExampleModel_plots.wln (visible on the second monitor, saved), y plot viewed",
+  "correct": "pass: default figure with x and y plots in a copy; flatten Pass; x(10)=4.54e-5, y(10)=33039.70 = exact; idempotent",
+  "clean": "pass",
+  "findings": [
+   "annotator wrote the copy with mode 600",
+   "no experiment annotation, so System Modeler's default stop time applies"
+  ],
+  "levelC": {
+   "reviewer": "F",
+   "agree": true,
+   "rechecked": "wsm-toolkit validate (network cut) on a copy of work/ExampleModel_plots.mo: flatten Pass, 0 errors/warnings. Fresh network-cut kernel: x(10) = 4.539992e-5, y(10) = 33039.70458 (run: 4.539992e-5, 33039.70)."
+  }
+ },
+ "annotate-modelica-plots": {
+  "route": "pass: wsm-toolkit figures + validate; WLJS kernel import and SystemModelPlot of the stored figure (renamed copy)",
+  "notebook": "pass: ExampleModel_plots.wln (visible on the second monitor, save cell last)",
+  "correct": "pass: default figure 'States x and y' with x and y plots stored; flatten Pass; x(10)=4.539992e-5, y(10)=33039.70 exact; the stored figure rendered in WLJS and viewed (orchestrator viewed evidence/stored-plots.png: full range)",
+  "clean": "pass",
+  "findings": [
+   "WLJS shows each plot's name twice above it and no caption (display difference, not the stored figure)",
+   "saved plot needs re-evaluation after a WLJS restart (J3)"
+  ],
+  "levelC": {
+   "reviewer": "I",
+   "agree": true,
+   "rechecked": "Fresh kernel inside the network cut (scratch-I/plots.wls, first line $AllowInternet = False). Import of work/ExampleModel_plots.mo returned SystemModel[ExampleModel, True]. PlotNames = {\"States x and y\"}. x(10) = 4.539992182967693e-5 and y(10) = 33039.70458019909, identical to the run's WLJS output. The exact values are e^-10 = 4.539992976e-5 and 1.5e^10 - 0.5e^-10 = 33039.69867, so the relative errors are -1.7e-7 and +1.8e-7. I exported SystemModelPlot[sim, \"States x and y\", PlotRange -> All] to scratch-I/plots-stored-figure.png and looked at it: two panels matching the WLJS capture. diff shows the copy differs from the original only by the added Documentation(figures) annotation. $AllowInternet was still False at the end.",
+   "notes": "The plots and graphics runs' .wln files store graphics only as FrontEndRef keys with no Objects section (J3). The control-panel .wln, by contrast, does have an Objects section, with 14 keys covering every reference. The WLJS window shows the Markdown cell both as source and as rendered output (the .md input is not hidden). This is cosmetic."
+  }
+ }
+}

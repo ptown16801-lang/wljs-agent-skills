@@ -1,0 +1,19 @@
+{
+ "skill": "paper-cite",
+ "tool_calls": 9,
+ "check1_triggered": {
+  "pass": true,
+  "skills_loaded": [
+   "paper-cite"
+  ]
+ },
+ "check3_rules_auto": {
+  "pass": true,
+  "hits": {}
+ },
+ "check4_notebooks_found": [],
+ "engines_seen": [
+  "wolfram-direct"
+ ],
+ "run_log": true
+}

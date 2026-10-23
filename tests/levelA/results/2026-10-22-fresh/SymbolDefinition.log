@@ -1,0 +1,18 @@
+[Warning] Running tests on source directory instead of built paclet
+
+TestReport: SymbolDefinition.wlt | Collecting tests...Evaluating tests (0)Elapsed time 3s
+
+TestReport: SymbolDefinition.wlt | Collecting tests...Evaluating tests (0)Elapsed time 7s
+[Warning] Paclet MX file was not loaded
+
+TestReport: SymbolDefinition.wlt | 3 SuccessEvaluating tests (3)Elapsed time 8s
+
+TestReport: SymbolDefinition.wlt | 3 SuccessEvaluating tests (3)Elapsed time 8s
+
+TestReport: SymbolDefinition.wlt | 3 SuccessEvaluating tests (3)Elapsed time 8s
+
+TestReport: SymbolDefinition.wlt | 3 SuccessEvaluating tests (3)Elapsed time 9s
+
+TestReport: SymbolDefinition.wlt | 42 SuccessEvaluating tests (42)Elapsed time 9s
+
+TestReport: SymbolDefinition.wlt | 69 SuccessEvaluating tests (69)Elapsed time 10s

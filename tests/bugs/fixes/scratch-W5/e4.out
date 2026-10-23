@@ -1,0 +1,13 @@
+top-level Off Assert[False] evaluates to: Assert[False]  Off[Assert] state: True
+g3 (no Block, Assert free of x): 1 after plain: 0
+g3 after $z = 2 (timestamp of $z bumped): 0
+g3 after reassigning same value $z = 2: 0
+g3 stale again: 0, with Update[Assert]: 1, repeated: 1
+Short[bm, 1]: fresh 1, stale 0, with Update[Assert] 1, again 1
+Short[Function[x, Block[{y}, y = x; Assert[y > 5]; y]], 1]: fresh 1, stale 0, with Update[Assert] 1, again 1
+Short[v4, 1]: fresh 1, stale 0, with Update[Assert] 1, again 1
+Short[v5, 1]: fresh 1, stale 0, with Update[Assert] 1, again 1
+Short[v7, 1]: fresh 2, stale 0, with Update[Assert] 2, again 2
+Short[v8, 1]: fresh 2, stale 0, with Update[Assert] 2, again 2
+stale after DownValues[bm]=DownValues[bm]: 0
+Assert still Off afterwards (no message, unevaluated): Assert[False] ; $AssertFunction $AssertFunction

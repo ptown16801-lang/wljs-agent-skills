@@ -1,0 +1,12 @@
+bm before: 1
+Trace fresh: InputForm[{HoldCompleteForm[bm[1]], HoldCompleteForm[Block[{y}, y = 1^2; Assert[y > 5]; y]], {HoldCompleteForm[y = 1^2; Assert[y > 5]; y], {{HoldCompleteForm[1^2], HoldCompleteForm[1]}, HoldCompleteForm[y = 1], HoldCompleteForm[1]}, {HoldCompleteForm[y], HoldCompleteForm[1]}, HoldCompleteForm[1]}, HoldCompleteForm[1]}]
+bm after plain: 0
+Trace after: InputForm[{HoldCompleteForm[bm[1]], HoldCompleteForm[Block[{y}, y = 1^2; Assert[y > 5]; y]], {HoldCompleteForm[y = 1^2; Assert[y > 5]; y], {{HoldCompleteForm[1^2], HoldCompleteForm[1]}, HoldCompleteForm[y = 1], HoldCompleteForm[1]}, {HoldCompleteForm[y], HoldCompleteForm[1]}, HoldCompleteForm[1]}, HoldCompleteForm[1]}]
+DownValues: InputForm[{HoldPattern[bm[x_]] :> Block[{y}, y = x^2; Assert[y > 5]; y]}]
+top-level Assert: 1
+ownvalue block before 1
+after 0
+g block no locals before 1
+after 1
+h no block before 1
+after 1

@@ -1,0 +1,895 @@
+--- annotate-modelica-graphics/Schematic/inject.py.orig-2026-10-22	2026-10-01 03:10:35.688382266 -0400
++++ annotate-modelica-graphics/Schematic/inject.py	2026-10-22 09:01:15.257573010 -0400
+@@ -13,6 +13,7 @@
+ 
+ from . import icon as icon_mod
+ from . import layout as layout_mod
++from . import libpins
+ from . import routing as routing_mod
+ from .classify import classify
+ from .parser import ClassSpan, QUALIFIERS, mask_code, parse
+@@ -68,7 +69,9 @@
+         summary["actions"].append("custom Icon (authored)" if custom else "custom Icon")
+ 
+     if plan.wants_diagram:
+-        layout_res = layout_mod.compute_layout(cls, opts.get("type_ports"))
++        layout_res = layout_mod.compute_layout(cls, opts.get("type_ports"),
++                                               opts.get("local_extends"),
++                                               (opts.get("scopes") or {}).get(cls.name))
+         (x1, y1), (x2, y2) = layout_res["extent"]
+         if opts.get("extent") is not None:   # 0 is invalid, rejected by the CLI validator
+             n = abs(opts["extent"])
+@@ -120,6 +123,11 @@
+         if n_lines:
+             summary["actions"].append("%d Line" % n_lines)
+ 
++    # library pins that could not be read from source (name-heuristic fallback) and other
++    # library-lookup problems: surfaced, never silent
++    warnings = (layout_res or {}).get("warnings", []) + libpins.take_warnings()
++    if warnings:
++        summary["warnings"] = warnings
+     return edits, summary
+ 
+ 
+@@ -326,6 +334,18 @@
+     return tp
+ 
+ 
++def _class_scopes(classes: list, within: str) -> dict:
++    """Class name -> qualified name (``within`` prefix + enclosing classes in the file)."""
++    out = {}
++    for c in classes:
++        path, p = [c.name], c.parent
++        while p != -1:
++            path.insert(0, classes[p].name)
++            p = classes[p].parent
++        out.setdefault(c.name, ".".join(([within] if within else []) + path))
++    return out
++
++
+ def annotate(text: str, opts: dict | None = None) -> tuple:
+     """Annotate the whole file. Returns (new_text, summaries)."""
+     opts = opts or {}
+@@ -342,7 +362,10 @@
+             text = strip_generated(text)
+     mask = mask_code(text)
+     classes = parse(text)
+-    opts = {**opts, "type_ports": _build_type_ports(classes, opts.get("glyphs"))}
++    libpins.configure(text)              # MSL version (uses) + imports for library pin lookup
++    opts = {**opts, "type_ports": _build_type_ports(classes, opts.get("glyphs")),
++            "local_extends": {c.name: list(c.extends) for c in classes if c.extends},
++            "scopes": _class_scopes(classes, libpins.within_prefix(text))}
+     all_edits = []
+     summaries = []
+     for cls in classes:
+--- annotate-modelica-graphics/Schematic/layout.py.orig-2026-10-22	2026-10-01 03:10:35.688550626 -0400
++++ annotate-modelica-graphics/Schematic/layout.py	2026-10-22 09:01:15.257445302 -0400
+@@ -37,15 +37,22 @@
+                                         or "rail" in n or n in ("v", "vs"))) or n in ("supply",)
+ 
+ 
+-def compute_layout(cls: ClassSpan, type_ports: dict | None = None) -> dict:
++def compute_layout(cls: ClassSpan, type_ports: dict | None = None,
++                   local_extends: dict | None = None, scope: str | None = None) -> dict:
+     """Compute the diagram layout.
+ 
++    ``local_extends`` ({in-file class: [extends names]}) lets library pin positions be looked
++    up through an in-file class's library base, and ``scope`` (the class's qualified name)
++    resolves relative library type names (see ``libpins.pin_offset``).
++
+     Returns a dict with:
+       'instances'  : {name: (ox, oy, rot)}             component origins
+       'connectors' : {name: (ox, oy)}                  class connectors on the border
+       'inst_types' : {name: type_name}                 so routing can locate each pin
+       'type_ports' : {leaf_type: {conn: (px,py)}}      connector edges of the model's own
+                                                         leaf/sub-circuit icons (±100 frame)
++      'local_extends': {class: [base, ...]}            in-file classes' extends clauses
++      'scope'      : qualified class name              for relative library type names
+       'extent'     : ((x1,y1),(x2,y2))
+     """
+     instances = cls.instances
+@@ -140,7 +147,7 @@
+     # connections would otherwise leave the same (left/right) side, stand the component
+     # up (pins top/bottom) so the two lines fan out instead of one wrapping around it.
+     skip_rot = set(grounds) | set(supplies) | set(sources)
+-    _orient_two_ports(cls, placements, conn_points, type_ports, skip_rot)
++    _orient_two_ports(cls, placements, conn_points, type_ports, skip_rot, local_extends, scope)
+ 
+     extent = _bounding_extent(placements, conn_points)
+     return {
+@@ -148,6 +155,8 @@
+         "connectors": conn_points,
+         "inst_types": {i.name: i.type_name for i in instances},
+         "type_ports": type_ports or {},
++        "local_extends": local_extends or {},
++        "scope": scope,
+         "extent": extent,
+     }
+ 
+@@ -161,14 +170,15 @@
+     return None
+ 
+ 
+-def _port_edge(type_name, port, type_ports):
++def _port_edge(type_name, port, type_ports, local_extends=None, scope=None):
+     """Icon edge ('L'/'R'/'T'/'B') a connector sits on, at rotation 0."""
+     from . import routing  # local import: routing has no layout dependency
+-    edges = type_ports.get(type_name.split(".")[-1]) if type_ports else None
+-    if edges and port in edges:
+-        px, py = edges[port]
+-    else:
+-        px, py = routing._EDGE_PT[routing._lib_edge(type_name, port)]
++    (px, py), kind, _ = routing._port_offset(type_name, port, type_ports, local_extends, scope)
++    if kind == "lib":
++        # a real library pin need not sit on an edge midpoint: take the dominant axis
++        if abs(px) >= abs(py) and px != 0:
++            return "L" if px < 0 else "R"
++        return "T" if py > 0 else "B"
+     if px < 0:
+         return "L"
+     if px > 0:
+@@ -176,7 +186,8 @@
+     return "T" if py > 0 else "B"
+ 
+ 
+-def _orient_two_ports(cls, placements, conn_points, type_ports, skip):
++def _orient_two_ports(cls, placements, conn_points, type_ports, skip, local_extends=None,
++                      scope=None):
+     """Rotate horizontal (left/right-pin) two-terminal components to reduce wrap-around.
+ 
+     A component is reoriented only if it has exactly two connected ports sitting on opposite
+@@ -198,7 +209,8 @@
+     for name, port_neigh in ports.items():
+         if name in skip or name not in placements or len(port_neigh) != 2:
+             continue
+-        edges = {p: _port_edge(inst_type[name], p, type_ports) for p in port_neigh}
++        edges = {p: _port_edge(inst_type[name], p, type_ports, local_extends, scope)
++                 for p in port_neigh}
+         if set(edges.values()) != {"L", "R"}:
+             continue
+         port_l = next(p for p, e in edges.items() if e == "L")
+--- annotate-modelica-graphics/Schematic/main.py.orig-2026-10-22	2026-10-01 03:10:35.688716350 -0400
++++ annotate-modelica-graphics/Schematic/main.py	2026-10-22 09:13:40.497404699 -0400
+@@ -110,9 +110,16 @@
+     if only and not summaries:
+         print("ERROR: --class %r matched no class in %s" % (only, path), file=sys.stderr)
+         return 2
++    n_warn = 0
+     for s in summaries:
+         acts = ", ".join(s["actions"]) or "skip"
+         print("  %-22s %s" % (s["name"], acts))
++        for w in s.get("warnings", []):
++            print("    WARNING: %s" % w)
++            n_warn += 1
++    if n_warn:
++        print("\n%d WARNING(S) above: library pin positions that were guessed, not read from "
++              "the library source - check those lines in System Modeler." % n_warn)
+     if new_text == text:
+         print("\nNo changes (already annotated, or nothing to do). Use --force to regenerate.")
+         return 0
+--- annotate-modelica-graphics/Schematic/routing.py.orig-2026-10-22	2026-10-01 03:10:35.688989256 -0400
++++ annotate-modelica-graphics/Schematic/routing.py	2026-10-22 09:13:40.497217990 -0400
+@@ -9,8 +9,11 @@
+ Pin offsets come from two sources:
+   * the model's own leaf/sub-circuit icons (transistors, OTAs, …), whose connector edges we
+     generate ourselves and pass in via ``layout['type_ports']``; and
+-  * a small heuristic table for standard-library components (resistors, capacitors, sources,
+-    ground, blocks) whose icons we do not parse.
++  * for library components (MSL and other installed libraries), the connector's actual
++    ``Placement`` read from the library source (``libpins``), following ``extends`` into
++    partial base classes. Only when that source cannot be found or parsed does a small
++    name-based heuristic table (``_lib_edge``) guess an icon-edge midpoint — and every such
++    guess is reported as a warning in the tool's output (``layout['warnings']``).
+ 
+ Where an endpoint genuinely cannot be resolved we fall back to a harmless zero-length stub,
+ exactly as before — never a diagonal.
+@@ -19,6 +22,7 @@
+ from __future__ import annotations
+ 
+ from . import colors
++from . import libpins
+ from .parser import ClassSpan, Connect
+ 
+ GRID = 2
+@@ -32,7 +36,10 @@
+ 
+ 
+ def _lib_edge(type_name: str, port: str) -> str:
+-    """Heuristic icon edge ('L'/'R'/'T'/'B') for a standard-library component's connector."""
++    """Heuristic icon edge ('L'/'R'/'T'/'B') for a standard-library component's connector.
++
++    Fallback only: used when ``libpins`` cannot read the connector's placement from the
++    library source; callers report every use as a warning."""
+     leaf = type_name.split(".")[-1].lower()
+     p = port.lower()
+     if "ground" in leaf:
+@@ -68,23 +75,27 @@
+     return "L"
+ 
+ 
+-def _rot(px: int, py: int, rot: int) -> tuple:
+-    rot = rot % 360
+-    if rot == 90:
+-        return (-py, px)
+-    if rot == 180:
+-        return (-px, -py)
+-    if rot == 270:
+-        return (py, -px)
+-    return (px, py)
+-
++def _port_offset(type_name: str, port: str, type_ports, local_extends=None, scope=None) -> tuple:
++    """Connector offset in the ±100 icon frame for one instance's port.
+ 
+-def _port_offset(type_name: str, port: str, type_ports) -> tuple:
+-    """Connector offset in the ±100 icon frame for one instance's port."""
++    Returns ((px, py), kind, detail): kind is 'own' (the model's own icon), 'lib' (read from
++    the library source; detail names the file:line) or 'guess' (name heuristic; detail is
++    why the source lookup failed).
++    """
+     edges = type_ports.get(type_name.split(".")[-1]) if type_ports else None
+-    if edges and port in edges:
+-        return edges[port]
+-    return _EDGE_PT[_lib_edge(type_name, port)]
++    base = port.split("[")[0]                      # element of a connector array: same pin
++    if edges and base in edges:
++        return edges[base], "own", ""
++    pt, detail = libpins.pin_offset(type_name, port, local_extends, scope)
++    if pt is not None:
++        return pt, "lib", detail
++    return _EDGE_PT[_lib_edge(type_name, port)], "guess", detail
++
++
++def _num(v: float):
++    """Coordinate as written to the Line: an int when whole, else at most 2 decimals."""
++    v = round(v, 2)
++    return int(v) if v == int(v) else v
+ 
+ 
+ def _anchor(inst: str, port: str, layout: dict):
+@@ -102,14 +113,24 @@
+     if inst in instances:
+         ox, oy, rot = instances[inst]
+         ttype = layout.get("inst_types", {}).get(inst, "")
+-        px, py = _port_offset(ttype, port, layout.get("type_ports"))
+-        px, py = _rot(px, py, rot)
+-        # Land the endpoint exactly on the drawn connector pin (no rounding away from it),
+-        # so System Modeler draws no diagonal bridge from the pin to the line.
+-        ax = int(round(ox + px * BOX / 100.0))
+-        ay = int(round(oy + py * BOX / 100.0))
+-        orient = "H" if (px != 0 and abs(px) >= abs(py)) else ("V" if py != 0 else None)
+-        return (ax, ay), orient
++        (px, py), kind, detail = _port_offset(ttype, port, layout.get("type_ports"),
++                                              layout.get("local_extends"), layout.get("scope"))
++        if kind == "guess":
++            side = {"L": "left", "R": "right", "T": "top", "B": "bottom"}[_lib_edge(ttype, port)]
++            msg = ("%s.%s (%s): connector position not read from library source (%s); "
++                   "guessed the %s-edge midpoint (%d,%d) from the port name - check this line"
++                   % (inst, port, ttype, detail, side, px, py))
++            warns = layout.setdefault("warnings", [])
++            if msg not in warns:
++                warns.append(msg)
++        # Map the pin through the instance Placement this tool writes (extent ±BOX, origin,
++        # rotation) and land the endpoint exactly on it (no rounding away from it), so
++        # System Modeler draws no diagonal bridge from the pin to the line.
++        ax, ay = libpins.place((px, py), ((-BOX, -BOX), (BOX, BOX)), (ox, oy), rot)
++        rx, ry = ax - ox, ay - oy
++        orient = ("H" if (abs(rx) > 1e-9 and abs(rx) >= abs(ry))
++                  else ("V" if abs(ry) > 1e-9 else None))
++        return (_num(ax), _num(ay)), orient
+     if inst in connectors:                           # connector referenced with a stray port
+         x, y = connectors[inst]
+         return (_round(x), _round(y)), ("H" if abs(x) >= abs(y) else "V")
+@@ -144,7 +165,7 @@
+ 
+ 
+ def _points_str(pts: list) -> str:
+-    return "{" + ",".join("{%d,%d}" % (x, y) for (x, y) in pts) + "}"
++    return "{" + ",".join("{%s,%s}" % (_num(x), _num(y)) for (x, y) in pts) + "}"
+ 
+ 
+ def line_for(cn: Connect, cls: ClassSpan, layout: dict) -> str:
+--- annotate-modelica-graphics/SKILL.md.orig-2026-10-22	2026-10-01 03:10:35.687479927 -0400
++++ annotate-modelica-graphics/SKILL.md	2026-10-22 09:54:36.498556981 -0400
+@@ -182,10 +182,18 @@
+ - **Layout is heuristic, not pixel-perfect.** Components are laid out left-to-right by signal
+   flow (feedback loops handled), grounds pinned to the bottom and supplies to the top, with
+   orthogonal connection routing between connector *pins* — each line terminates exactly on the
+-  pin anchor (instance origin + the connector's icon-edge offset) and leaves it perpendicular to
+-  that edge, so the rendered line is right-angled end to end with no diagonal bridge from the
+-  pin; interior waypoints snap to a grid. Pin offsets come from the model's own leaf/sub-circuit icons and a heuristic table for
+-  standard-library components (resistors, sources, ground, blocks). Library components render
++  pin anchor (the connector's position in the component icon, mapped through the instance
++  Placement); the routing is right-angled with no diagonal bridge from the pin and interior
++  waypoints snap to a grid, but it does not yet take the pin's facing direction into account, so a
++  line can leave a pin back across its own icon (check the rendered diagram). Because the layout
++  sees the real pin positions, it may also rotate a component (e.g. stand a two-pin part upright). Pin offsets
++  come from the model's own leaf/sub-circuit icons and, for library components, from the
++  connector's `Placement` in the installed library source (MSL and the other libraries shipped
++  with System Modeler; `extends`/partial base classes are followed, `iconTransformation` wins
++  over `transformation`). If that source cannot be found or parsed (e.g. a library that is not
++  installed), the pin is guessed from the port name (an icon-edge midpoint) and the run prints
++  a `WARNING:` line naming that connection end — check those lines in System Modeler.
++  Library components render
+   with their own MSL icons; only domain leaves without an MSL equivalent get a custom icon. The
+   user can fine-tune positions afterward in System Modeler.
+ - **Two-terminal components are rotated to avoid wrap-around.** A component with two pins on
+--- /dev/null	2026-10-15 09:18:29.915054413 -0400
++++ annotate-modelica-graphics/Schematic/libpins.py	2026-10-22 09:11:24.566071965 -0400
+@@ -0,0 +1,577 @@
++"""Connector pin positions of library components, read from the installed library source.
++
++Routing needs to know where each connector of a standard-library component (MSL, or another
++library installed with System Modeler such as ``IntroductoryExamples``) sits on that
++component's icon. Instead of guessing it from the port name, this module opens the class's
++``.mo`` source in the System Modeler install (read-only), finds the connector's declaration —
++following ``extends`` clauses into partial base classes — and reads its
++``Placement(transformation(...), iconTransformation(...))``. ``iconTransformation`` wins when
++present, since it is what the icon (and so the enclosing diagram) shows.
++
++The connector point is the centre of the connector's placement box, mapped through the
++placement's ``origin``/``extent``/``rotation`` into the class's Icon coordinate system, and
++then normalised to the ±100 frame that an instance ``extent={{-10,-10},{10,10}}`` is drawn
++from. ``place()`` maps such a point onto an instance placement (extent incl. flips, origin,
++rotation), following the Modelica graphical-annotation rules.
++
++Library roots are located with ``scripts/wsm_run.py`` (same discovery as validate/simulate:
++``$WSM_HOME`` or the platform default install; MSL version from the model's
++``uses(Modelica(version=...))`` when installed, else the newest 4.x). Parsed files, classes
++and pins are cached per process. When a class, connector or placement cannot be found or
++parsed, ``pin_offset`` returns ``(None, reason)`` and the caller falls back to its name
++heuristic and records a warning — the fallback is never silent.
++"""
++
++from __future__ import annotations
++
++import math
++import os
++import re
++
++from .parser import ParseError, mask_code, find_classes, _split_statements, _strip_leading, \
++    _decl_type_and_names
++from mo_edit import balanced_close
++
++DEFAULT_CS = ((-100.0, -100.0), (100.0, 100.0))   # Modelica default coordinateSystem extent
++_MAX_DEPTH = 25                                    # extends-chain guard
++
++_NUM = r"[-+]?(?:\d+\.?\d*|\.\d+)(?:[eE][-+]?\d+)?"
++_PAIR = r"\{\s*(" + _NUM + r")\s*,\s*(" + _NUM + r")\s*\}"
++_EXTENT_RE = re.compile(r"\bextent\s*=\s*\{\s*" + _PAIR + r"\s*,\s*" + _PAIR + r"\s*\}")
++_EXTENT_OLD_RE = re.compile(r"\bextent\s*=\s*\[\s*(" + _NUM + r")\s*,\s*(" + _NUM + r")\s*;\s*("
++                            + _NUM + r")\s*,\s*(" + _NUM + r")\s*\]")
++_ORIGIN_RE = re.compile(r"\borigin\s*=\s*" + _PAIR)
++_ROTATION_RE = re.compile(r"\brotation\s*=\s*(" + _NUM + r")\s*(?=[,)]|$)")
++_USES_MSL_RE = re.compile(r"\buses\s*\(.*?\bModelica\s*\(\s*version\s*=\s*\"([^\"]+)\"", re.S)
++_NOT_TYPES = {"if", "elseif", "else", "for", "while", "when", "elsewhen", "then", "end", "der",
++              "connect", "assert", "terminate", "reinit", "return", "break", "external"}
++_IMPORT_RE = re.compile(r"\bimport\s+(?:(\w+)\s*=\s*)?([\w.]+?)(\.\*)?\s*;")
++
++# per-process state -----------------------------------------------------------------------
++_state = {"msl_version": None, "imports": {}, "wild": [], "roots": {}, "install": False}
++_FILES = {}      # path -> (text, mask, classes) or None
++_CLASSES = {}    # qualified name -> (path, idx) or None
++_PINS = {}       # (qualified class name, port) -> ((x, y), source) or (None, reason)
++_CS = {}         # qualified class name -> coordinate-system extent
++_IMPORTS = {}    # (path, class index) -> (imports, wildcard imports)
++_WARNINGS = []
++
++
++def configure(text: str) -> None:
++    """Read the user model's MSL version (``uses``) and its ``import`` clauses, so library
++    type names in the model resolve the way System Modeler resolves them."""
++    mask = mask_code(text)
++    m = _USES_MSL_RE.search(text)
++    version = m.group(1) if m else None
++    if version != _state["msl_version"]:
++        _state["roots"].clear()
++        _CLASSES.clear()
++        _PINS.clear()
++        _CS.clear()
++        _IMPORTS.clear()
++    _state["msl_version"] = version
++    imports, wild = {}, []
++    for im in _IMPORT_RE.finditer(mask):
++        alias, path, star = im.groups()
++        if star:
++            wild.append(path)
++        else:
++            imports[alias or path.split(".")[-1]] = path
++    _state["imports"], _state["wild"] = imports, wild
++
++
++def warn(msg: str) -> None:
++    if msg not in _WARNINGS:
++        _WARNINGS.append(msg)
++
++
++def take_warnings() -> list:
++    """Return and clear the library-level warnings collected so far."""
++    out = list(_WARNINGS)
++    del _WARNINGS[:]
++    return out
++
++
++# ---------------------------------------------------------------------------
++# geometry
++# ---------------------------------------------------------------------------
++
++def place(pt, extent, origin=(0.0, 0.0), rotation=0.0, cs=DEFAULT_CS) -> tuple:
++    """Map ``pt`` from a class's coordinate system ``cs`` onto a Placement transformation.
++
++    Modelica semantics: the class's coordinate-system extent is mapped onto ``extent``
++    (a reversed corner order flips that axis), the result is rotated ``rotation`` degrees
++    counter-clockwise about the local origin, then translated by ``origin``.
++    """
++    (cx1, cy1), (cx2, cy2) = cs
++    (ex1, ey1), (ex2, ey2) = extent
++    u = (pt[0] - cx1) / (cx2 - cx1)
++    v = (pt[1] - cy1) / (cy2 - cy1)
++    x = ex1 + u * (ex2 - ex1)
++    y = ey1 + v * (ey2 - ey1)
++    r = rotation % 360
++    if r == 0:
++        rx, ry = x, y
++    elif r == 90:
++        rx, ry = -y, x
++    elif r == 180:
++        rx, ry = -x, -y
++    elif r == 270:
++        rx, ry = y, -x
++    else:
++        a = math.radians(r)
++        rx, ry = x * math.cos(a) - y * math.sin(a), x * math.sin(a) + y * math.cos(a)
++    return (origin[0] + rx, origin[1] + ry)
++
++
++def _normalise(pt, cs) -> tuple:
++    """Point in coordinate system ``cs`` -> the ±100 frame an instance extent is drawn from."""
++    x, y = place(pt, ((-100.0, -100.0), (100.0, 100.0)), cs=cs)
++    return (round(x, 4), round(y, 4))
++
++
++# ---------------------------------------------------------------------------
++# locating library sources
++# ---------------------------------------------------------------------------
++
++def _install_root():
++    if _state["install"] is False:
++        try:
++            import wsm_run                        # scripts/ is on sys.path via .parser
++            _state["install"] = wsm_run.find_install()[0]
++        except Exception as e:                    # no install, no kernel, import failure
++            warn("System Modeler install not found (%s); library pin positions cannot be "
++                 "read from source" % str(e).splitlines()[0])
++            _state["install"] = None
++    return _state["install"]
++
++
++def _library_root(top: str):
++    """Directory (holding package.mo) or single .mo file of top-level library ``top``."""
++    if top in _state["roots"]:
++        return _state["roots"][top]
++    found = None
++    root = _install_root()
++    if root:
++        try:
++            import wsm_run
++            msl_dir = None
++            try:
++                msl = wsm_run.find_msl(root, _state["msl_version"])
++            except RuntimeError as e:
++                warn("%s; using the default MSL version instead" % str(e).splitlines()[0])
++                msl = wsm_run.find_msl(root)
++            if msl:
++                msl_dir = os.path.dirname(os.path.dirname(msl["modelica"]))
++            if top == "Modelica" and msl:
++                found = os.path.dirname(msl["modelica"])
++            elif msl_dir and os.path.isfile(os.path.join(msl_dir, top, "package.mo")):
++                found = os.path.join(msl_dir, top)          # e.g. ModelicaServices
++            elif msl_dir and os.path.isfile(os.path.join(msl_dir, top + ".mo")):
++                found = os.path.join(msl_dir, top + ".mo")  # e.g. Complex
++            else:
++                pkg = wsm_run.resolve_library(root, top)
++                if pkg and pkg.endswith(".mo"):              # .moe is encrypted: unreadable
++                    found = os.path.dirname(pkg)
++        except Exception:
++            found = None
++    _state["roots"][top] = found
++    return found
++
++
++def _load(path: str):
++    if path not in _FILES:
++        try:
++            with open(path, "r", encoding="utf-8", errors="replace") as f:
++                text = f.read().replace("\r\n", "\n").replace("\r", "\n")
++            mask = mask_code(text)
++            classes = find_classes(text, mask)
++            _FILES[path] = (text, mask, classes, _nested_in_parens(mask, classes))
++        except (OSError, ParseError):
++            _FILES[path] = None
++    return _FILES[path]
++
++
++def _nested_in_parens(mask: str, classes: list) -> set:
++    """Indices of 'classes' whose header sits inside parentheses — a modification such as
++    ``ports(redeclare package Medium = Medium)``, not a class definition. The shared parser
++    reports those as short classes; they must not hide the declaration around them."""
++    starts = sorted((c.header_start, i) for i, c in enumerate(classes))
++    out, depth, k = set(), 0, 0
++    for m in re.finditer(r"[()\[\]{}]", mask):
++        while k < len(starts) and starts[k][0] < m.start():
++            if depth > 0:
++                out.add(starts[k][1])
++            k += 1
++        depth += 1 if m.group() in "([{" else -1
++    return out
++
++
++def _children(path: str, idx: int) -> list:
++    _, _, classes, bogus = _load(path)
++    return [ci for ci in classes[idx].children if ci not in bogus]
++
++
++def _top(path: str, name: str):
++    f = _load(path)
++    if not f:
++        return None
++    for i, c in enumerate(f[2]):
++        if c.parent == -1 and c.name == name and i not in f[3]:
++            return (path, i)
++    return None
++
++
++def _child(ref, name: str):
++    if not ref:
++        return None
++    path, idx = ref
++    classes = _load(path)[2]
++    for ci in _children(path, idx):
++        if classes[ci].name == name:
++            return (path, ci)
++    return None
++
++
++def _find_class(qname: str):
++    """(path, class index) of fully qualified class ``qname``, or None."""
++    if qname in _CLASSES:
++        return _CLASSES[qname]
++    segs = qname.split(".")
++    ref = None
++    root = _library_root(segs[0])
++    if root:
++        if os.path.isdir(root):
++            cur_dir = root
++            ref = _top(os.path.join(root, "package.mo"), segs[0])
++        else:
++            cur_dir = None
++            ref = _top(root, segs[0])
++        for s in segs[1:]:
++            if ref is None:
++                break
++            if cur_dir is not None and os.path.isfile(os.path.join(cur_dir, s + ".mo")):
++                ref, cur_dir = _top(os.path.join(cur_dir, s + ".mo"), s), None
++            elif cur_dir is not None and os.path.isfile(os.path.join(cur_dir, s, "package.mo")):
++                cur_dir = os.path.join(cur_dir, s)
++                ref = _top(os.path.join(cur_dir, "package.mo"), s)
++            else:
++                ref, cur_dir = _child(ref, s), None
++    _CLASSES[qname] = ref
++    return ref
++
++
++def _class_statements(ref):
++    """Yield (masked statement, statement start) for the class's own body."""
++    path, idx = ref
++    text, mask, classes, _ = _load(path)
++    cls = classes[idx]
++    # own body minus real nested classes (cf. parser._own_intervals, without the bogus ones)
++    spans = sorted((classes[c].header_start, classes[c].full_end) for c in _children(path, idx))
++    intervals, cur = [], cls.body_start
++    for s, e in spans:
++        if s > cur:
++            intervals.append((cur, s))
++        cur = max(cur, e)
++    if cur < cls.body_end:
++        intervals.append((cur, cls.body_end))
++    for (a, b) in intervals:
++        for (s, e) in _split_statements(mask, a, b):
++            yield mask[s:e + 1], s
++
++
++def _short_base(ref):
++    """Base of a short class definition ``model X = Base(...)``, or None."""
++    path, idx = ref
++    text, mask, classes, _ = _load(path)
++    c = classes[idx]
++    m = re.match(r"\s*(?:input\s+|output\s+)?([\w.]+)",
++                 mask[mask.index("=", c.header_start) + 1:c.full_end]) \
++        if c.full_end == c.body_end + 1 else None
++    return m.group(1) if m else None
++
++
++def _imports_of(ref) -> tuple:
++    if ref in _IMPORTS:
++        return _IMPORTS[ref]
++    imports, wild = {}, []
++    for st, _ in _class_statements(ref):
++        core = st[_strip_leading(st):].lstrip()
++        if core.startswith("import"):
++            m = _IMPORT_RE.match(core)
++            if m:
++                alias, path, star = m.groups()
++                if star:
++                    wild.append(path)
++                else:
++                    imports[alias or path.split(".")[-1]] = path
++    _IMPORTS[ref] = (imports, wild)
++    return imports, wild
++
++
++def _lookup(name: str, scope: str):
++    """Resolve a (possibly relative) class name as seen from class ``scope``.
++    Returns the fully qualified name, or None."""
++    if name.startswith("."):
++        name = name[1:]
++    first, _, rest = name.partition(".")
++    tail = ("." + rest) if rest else ""
++    segs = scope.split(".") if scope else []
++    while segs:
++        s = ".".join(segs)
++        if _find_class(s + "." + first):
++            return s + "." + first + tail if _find_class(s + "." + first + tail) else None
++        ref = _find_class(s)
++        if ref:
++            imports, wild = _imports_of(ref)
++            if first in imports:
++                full = imports[first] + tail
++                return full if _find_class(full) else None
++            for w in wild:
++                if _find_class(w + "." + first):
++                    return w + "." + first + tail if _find_class(w + "." + first + tail) else None
++        segs.pop()
++    return name if _find_class(name) else None
++
++
++def _resolve_user_type(type_name: str, scope: str | None = None):
++    """Fully qualified library class for a type name written in the user's model.
++
++    ``scope`` is the qualified name of the class being laid out (``within`` prefix + class
++    path), so a relative name such as ``Components.Valve`` written inside an installed
++    library's package resolves the way Modelica lookup does (enclosing scopes outward)."""
++    first, _, rest = type_name.partition(".")
++    tail = ("." + rest) if rest else ""
++    if first in _state["imports"]:
++        full = _state["imports"][first] + tail
++        if _find_class(full):
++            return full
++    for w in _state["wild"]:
++        if _find_class(w + "." + type_name):
++            return w + "." + type_name
++    if scope:
++        full = _lookup(type_name, scope)
++        if full:
++            return full
++    return type_name if _find_class(type_name) else None
++
++
++def within_prefix(text: str) -> str:
++    """The ``within`` clause of a file ('' when absent or ``within;``)."""
++    m = re.match(r"\s*within\s+([\w.]+)\s*;", mask_code(text))
++    return m.group(1) if m else ""
++
++
++# ---------------------------------------------------------------------------
++# placements
++# ---------------------------------------------------------------------------
++
++def _call_body(s: str, pattern: str, top: bool = False):
++    """Text inside the first ``kw(...)`` matching ``pattern`` (which ends at the '('), or None.
++    With ``top``, only an element at bracket depth 0 of ``s`` counts (not the value of a
++    named entry) — so ``Icon(`` in a vendor entry such as ``ModelEditor = Icon(list(...))``
++    is not mistaken for the real one."""
++    if s is None:
++        return None
++    depth, pos = 0, 0
++    for m in re.finditer(pattern, s):
++        if top:
++            for ch in s[pos:m.start()]:
++                if ch in "([{":
++                    depth += 1
++                elif ch in ")]}":
++                    depth -= 1
++            pos = m.start()
++            if depth != 0 or s[:m.start()].rstrip().endswith("="):
++                continue
++        close = balanced_close(s, m.end() - 1)
++        return s[m.end():close] if close != -1 else None
++    return None
++
++
++def _annotation(stmt: str):
++    """Body of a statement's own (depth-0) ``annotation(...)``, or None."""
++    return _call_body(stmt, r"\bannotation\s*\(", top=True)
++
++
++def _extent(s: str):
++    m = _EXTENT_RE.search(s) or _EXTENT_OLD_RE.search(s)
++    if not m:
++        return None
++    x1, y1, x2, y2 = (float(v) for v in m.groups())
++    return ((x1, y1), (x2, y2))
++
++
++def _transformation_point(body: str):
++    """Connector-box centre of one ``transformation(...)`` body, in the parent class frame.
++    Returns (point, None) or (None, reason)."""
++    ext = _extent(body)
++    if ext is None:
++        return None, "placement extent is not numeric"
++    om = _ORIGIN_RE.search(body)
++    origin = (float(om.group(1)), float(om.group(2))) if om else (0.0, 0.0)
++    if re.search(r"\borigin\s*=", body) and not om:
++        return None, "placement origin is not numeric"
++    rm = _ROTATION_RE.search(body)
++    if re.search(r"\brotation\s*=", body) and not rm:
++        return None, "placement rotation is not numeric"
++    rotation = float(rm.group(1)) if rm else 0.0
++    # The box centre is the image of the connector's own (symmetric) coordinate-system centre.
++    return place((0.0, 0.0), ext, origin, rotation), None
++
++
++def _placement_point(stmt: str):
++    """Connector point from a declaration's ``Placement`` annotation: (point, src) or
++    (None, reason). ``iconTransformation`` is preferred (what the icon shows)."""
++    body = _call_body(_annotation(stmt), r"\bPlacement\s*\(", top=True)
++    if body is None:
++        return None, "connector declaration has no Placement"
++    it = _call_body(body, r"\biconTransformation\s*\(", top=True)
++    if it is not None:
++        pt, why = _transformation_point(it)
++        return pt, why or "iconTransformation"
++    tr = _call_body(body, r"(?<![\w])transformation\s*\(", top=True)
++    if tr is None:
++        return None, "Placement has no transformation"
++    pt, why = _transformation_point(tr)
++    return pt, why or "transformation"
++
++
++def _class_cs(qname: str, depth: int = 0):
++    """Icon coordinate-system extent of a class (own, else first base that has one)."""
++    if qname in _CS:
++        return _CS[qname]
++    cs = None
++    ref = _find_class(qname)
++    if ref and depth < _MAX_DEPTH:
++        bases = []
++        for st, _ in _class_statements(ref):
++            core = st[_strip_leading(st):].lstrip()
++            if core.startswith("annotation"):
++                icon = _call_body(_annotation(core), r"\bIcon\s*\(", top=True)
++                csb = _call_body(icon, r"\bcoordinateSystem\s*\(", top=True)
++                cs = _extent(csb) if csb else None
++            elif core.startswith("extends"):
++                m = re.match(r"extends\s+([\w.]+)", core)
++                if m:
++                    bases.append(m.group(1))
++        sb = _short_base(ref)
++        if sb:
++            bases.append(sb)
++        if cs is None:
++            for b in bases:
++                full = _lookup(b, qname)
++                if full and full != qname:
++                    cs = _class_cs(full, depth + 1)
++                    if cs != DEFAULT_CS:
++                        break
++    if cs is None or cs[0][0] == cs[1][0] or cs[0][1] == cs[1][1]:
++        cs = DEFAULT_CS
++    _CS[qname] = cs
++    return cs
++
++
++def _find_pin(qname: str, port: str, depth: int = 0):
++    """((x, y) in ``qname``'s icon frame, source) or (None, reason), following extends."""
++    key = (qname, port)
++    if key in _PINS:
++        return _PINS[key]
++    ref = _find_class(qname)
++    if ref is None:
++        return None, "class %s not found in the installed libraries" % qname
++    if depth > _MAX_DEPTH:
++        return None, "extends chain too deep at %s" % qname
++    result = None
++    bases = []
++    path = ref[0]
++    for st, start in _class_statements(ref):
++        core = st[_strip_leading(st):].lstrip()
++        if core.startswith("extends"):
++            m = re.match(r"extends\s+([\w.]+)", core)
++            if m:
++                imap = _call_body(_annotation(core), r"\bIconMap\s*\(", top=True)
++                bases.append((m.group(1), _extent(imap) if imap else None))
++            continue
++        if core.startswith(("import", "annotation", "connect")):
++            continue
++        type_name, names, _ = _decl_type_and_names(core)
++        if type_name in _NOT_TYPES:
++            continue
++        if port in [n.strip("'") for n in names]:
++            pt, src = _placement_point(st)
++            line = _load(path)[0].count("\n", 0, start + len(st) - len(st.lstrip())) + 1
++            where = "%s:%d" % (_short_path(path), line)
++            result = (pt, "%s %s of %s" % (where, src, qname)) if pt else \
++                (None, "%s: %s (%s)" % (where, src, qname))
++            break
++    if result is None:
++        sb = _short_base(ref)
++        if sb:
++            bases.append((sb, None))
++        why = "connector %r not declared in %s or its base classes" % (port, qname)
++        for b, imap_extent in bases:
++            full = _lookup(b, qname)
++            if not full:
++                why = "base class %s of %s not found in the installed libraries" % (b, qname)
++                continue
++            if full == qname:
++                continue
++            pt, src = _find_pin(full, port, depth + 1)
++            if pt is not None:
++                if imap_extent is not None:   # base icon drawn into a sub-extent (IconMap)
++                    pt = place(pt, imap_extent, cs=_class_cs(full))
++                result = (pt, src)
++                break
++            if not src.startswith("connector "):
++                why = src                    # a real parse problem beats "not declared"
++        if result is None:
++            result = (None, why)
++    _PINS[key] = result
++    return result
++
++
++def _short_path(path: str) -> str:
++    parts = os.path.normpath(path).split(os.sep)
++    for i, p in enumerate(parts):
++        if p == "L" and i + 1 < len(parts):
++            return "/".join(parts[i + 1:])
++    return path
++
++
++def pin_offset(type_name: str, port: str, local_extends: dict | None = None,
++               scope: str | None = None, _depth: int = 0) -> tuple:
++    """Connector ``port`` of library type ``type_name`` in the ±100 icon frame.
++
++    Returns ((px, py), source) on success, or (None, reason). ``local_extends`` maps the
++    model's own (in-file) class names to their ``extends`` lists, so an in-file class that
++    inherits its connectors from a library base is resolved through that base. ``scope``
++    is the qualified name of the class being laid out, for relative type names.
++    """
++    port = re.sub(r"\[[^\]]*\]", "", port).split(".")[0].strip("'")
++    why = None
++    if local_extends and type_name in local_extends and _depth < _MAX_DEPTH:
++        reasons = []
++        for base in local_extends[type_name]:
++            pt, src = pin_offset(base, port, local_extends, scope, _depth + 1)
++            if pt is not None:
++                return pt, src
++            if not base.startswith("Modelica.Icons."):
++                reasons.append(src)
++        why = ("in-file class %s: connector %r is not placed by the model's own icon%s"
++               % (type_name, port, (" (bases: %s)" % "; ".join(reasons)) if reasons else ""))
++    qname = _resolve_user_type(type_name, scope)
++    if qname is None:
++        if why:
++            return None, why
++        if _install_root() is None:
++            return None, "System Modeler install not found"
++        return None, "class %s not found in the installed libraries" % type_name
++    ref = _find_class(qname)
++    if _load(ref[0])[2][ref[1]].kind == "connector":
++        # the 'component' is itself a connector (e.g. an expandable bus placed in the
++        # diagram): a connection to it or to one of its members ends at its centre
++        return (0.0, 0.0), "centre of connector instance (%s)" % qname
++    pt, src = _find_pin(qname, port)
++    if pt is None:
++        return None, why or src
++    return _normalise(pt, _class_cs(qname)), src

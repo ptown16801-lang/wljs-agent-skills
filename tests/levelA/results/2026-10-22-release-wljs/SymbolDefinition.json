@@ -1,0 +1,10 @@
+{
+	"suite":"SymbolDefinition",
+	"kernel":"WLJS",
+	"ok":true,
+	"tests":79,
+	"passed":79,
+	"failed":[],
+	"seconds":3.8000000000000003,
+	"messages":[]
+}

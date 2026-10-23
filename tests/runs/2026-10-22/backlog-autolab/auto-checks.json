@@ -1,0 +1,17 @@
+{
+ "skill": "backlog-autolab",
+ "tool_calls": 10,
+ "check1_triggered": {
+  "pass": true,
+  "skills_loaded": [
+   "backlog-autolab"
+  ]
+ },
+ "check3_rules_auto": {
+  "pass": true,
+  "hits": {}
+ },
+ "check4_notebooks_found": [],
+ "engines_seen": [],
+ "run_log": true
+}

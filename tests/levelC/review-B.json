@@ -1,0 +1,282 @@
+{
+ "wolfram-investigation": {
+  "agree": true,
+  "checks": {
+   "triggered": "pass: Skill call 'wolfram-investigation' is the first tool call in the session record (agents.json a35eac06ddd51f333).",
+   "route": "pass: fresh wolframscript kernel; the skill adaptation and ROUTES state that NotebookDriftReport gives false drift in WLJS.",
+   "rules": "pass: $AllowInternet = False is line 1 of both scripts (drift.wls, tests.wls); no install, no edits. No bwrap network cut, but the brief this run received did not yet require it (checked: the run's prompt has no 'bwrap').",
+   "notebook": "n/a: card asks for a summary page only, and the card's gate is read-only; the run stated why it wrote none. Accepted.",
+   "correct": "pass: Clean -> True, SourceSHA256 matches, project tests 5/5.",
+   "clean": "pass: $MessageList {} in both runs; the three 'FAIL Missing[KeyAbsent, TestID]' lines are the agent's own print loop over empty failure groups, as it says."
+  },
+  "rechecked": "Fresh kernel inside the network cut on the work copy: NotebookDriftReport Clean -> True, Stamped -> True, schema 2; SourceSHA256 == SHA-256 of chart-behavior.md (ff29d6a4...62fa); TestReport project_notebooks.wlt 5/5, $MessageList {}. sha256 of chart-behavior.nb b17d8c04... and .md ff29d6a4... equal the upstream worktree copies; diff -rq of .agents/ and docs/wolfram/ against upstream: identical (nothing changed).",
+  "overturn": "",
+  "notes": "Scratch scripts went to the orchestrator's shared scratchpad, not {run}/scratch (brief at the time did not give a per-run scratch)."
+ },
+ "paper-create": {
+  "agree": true,
+  "checks": {
+   "triggered": "pass: Skill 'paper-create' loaded (session record).",
+   "route": "pass: WLJS kernel (mcp__wljs__kernel_evaluate) for the computations; TinyTeX latexmk for the PDF.",
+   "rules": "pass: $AllowInternet False checked at start and end; nothing installed or pushed; operator = owner's git noreply address, not an upstream default.",
+   "notebook": "pass: Research/Artifacts/SidonBoundPaperComputations_261022.wln exists; regenerating it from its .md with md2wln.py gives a byte-identical file (16 cells, 4 code cells).",
+   "correct": "pass: Research/SidonBound.tex from the template compiles; numbers correct.",
+   "clean": "partial: the run's first Begin[] call wrote its definition into a pre-existing Global`sidonQ in the shared kernel and could not restore the old value (run-log Problems); agreed with the orchestrator's 'warning'."
+  },
+  "rechecked": "latexmk -pdf of Research/SidonBound.tex into scratch-B: exit 0, 0 LaTeX errors, 5 pages. Independent Python backtracking of max Sidon subsets of Z_n, n = 2..40: s(n) < floor((1+sqrt(4n-3))/2) exactly at n = 22, 32, 33, 34; s(21) = 5, s(22) = 4 = paper's values. \\author is the model; \\thanks names operator ptown16801-lang with the noreply email.",
+  "overturn": "",
+  "notes": "engines_seen lists 'typst' only because 'which ... typst' appeared in a command; typst was not run."
+ },
+ "wolfram-guide-page": {
+  "agree": true,
+  "checks": {
+   "triggered": "pass: Skill 'wolfram-guide-page' loaded.",
+   "route": "pass: wolfram-direct (fresh, network-namespaced kernel) with the stated reason (.nb build must not run in WLJS; cloud ResourceFunction route forbidden).",
+   "rules": "pass: no Wolfram contact (wolfram-direct), no install. It edited the work copy's docs/DocPageExamples.md (backticks on two entries) without approval; the original was kept and the edit is reported. Noted, not failed.",
+   "notebook": "pass: work/GuideBuildSummary.wln, byte-identical to md2wln output of its .md.",
+   "correct": "pass: guide authoring notebook has 3 InlineGuideFunction chips (MazeGenerate, MazeParse, MazeWalkTime) and 13 GuideText entries; I viewed the PNG preview and it renders as described.",
+   "clean": "pass: ::shdw messages come from the wolfram-direct session context, explained."
+  },
+  "rechecked": "Fresh kernel in network cut: Get of build/DocSource/English/Guides/DocPageExamples.nb -> Notebook, 83 Cell expressions (Count[_Cell]), $Failed 0, InlineGuideFunction 3, GuideText 13; paclet ref links include ref/MazeGenerate, ref/MazeParse, ref/MazeWalkTime. Viewed build/preview/DocPageExamples-guide.png. diff -rq vs upstream: only docs/DocPageExamples.md differs (the logged edit).",
+  "overturn": "",
+  "notes": "The DocPageExamples.orig.md backup sits in the shared scratchpad, where other runs could overwrite it."
+ },
+ "wolfram-notebooks": {
+  "agree": false,
+  "checks": {
+   "triggered": "pass: Skill 'wolfram-notebooks' loaded.",
+   "route": "pass: wolfram-direct ReadNotebook/WriteNotebook/evaluator with the ROUTES reason (.nb read/write in a fresh kernel).",
+   "rules": "pass: wolfram-direct is network-namespaced; $AllowInternet False confirmed; document.nb unchanged.",
+   "notebook": "partial: the card explicitly expects 'a WLJS notebook page summarising both' (card notebook=True) and none was made. The run stated a reason (all steps touch .nb), but that reason concerns where to compute, not whether to give a summary page; md2wln was available.",
+   "correct": "pass: outline is accurate (4 sections, 1 subsection, 7 inputs with 7 outputs, 3 text cells); notes.nb has Title, Text, Input, Text matching notes.md.",
+   "clean": "pass: no messages; the 111-vs-112 note is a correct observation about the fixture text."
+  },
+  "rechecked": "sha256 work/document.nb == ExampleData/document.nb (119598ff...); work/notes.md == tests/cards/fixtures/notes.md. Fresh kernel in network cut: document.nb styles Section 4, Subsection 1, Input 7, Output 7, Text 3; notes.nb 4 cells {Title 1, Text 2, Input 1}, no $Failed.",
+  "overturn": "Notebook check: the orchestrator graded 'n/a', but the card lists a WLJS summary page as an expected result and none exists (no .wln under the run; auto-checks check4 = []). Should be partial (reason stated) or fail, not n/a.",
+  "notes": ""
+ },
+ "wolfram-overview-page": {
+  "agree": true,
+  "checks": {
+   "triggered": "pass: Skill 'wolfram-overview-page' loaded.",
+   "route": "pass: fresh wolframscript kernel with stated reason (.nb builds out of WLJS; build too long for wolfram-direct's 120 s).",
+   "rules": "pass: $AllowInternet = False set before Get[build.wls]; no network cut (not yet in the brief). Changed build.wls ($FrontEnd -> $FrontEndSession, converter path, Overview naming) and reported each change.",
+   "notebook": "pass: work/OverviewBuildSummary.wln, byte-identical to md2wln output of its .md.",
+   "correct": "pass: Overview.md written; authoring and built Overview.nb have 5 TOCChapter, 7 TOCSection, 8 TOCSubsection; 12 distinct ButtonData targets.",
+   "clean": "pass (warning): EntityValue::conopen and follow-on messages from the offline search-index step, explained; one $Failed in the built page is CitationPopupData, same as other built pages."
+  },
+  "rechecked": "Fresh kernel in network cut: build/DocSource/.../Tutorials/Overview.nb TOCChapter 5, TOCSection 7, TOCSubsection 8, 12 ButtonData targets, $Failed 0; built Documentation/English/Tutorials/Overview.nb same TOC counts, 1 $Failed (CitationPopupData). 13 built .nb under Documentation/. diff vs upstream: build.wls changed and docs/Overview.md added, as logged.",
+  "overturn": "",
+  "notes": "The build wrote $TemporaryDirectory/filtered.csv outside the work folder (logged)."
+ },
+ "wolfram-paclet": {
+  "agree": false,
+  "checks": {
+   "triggered": "pass: Skill 'wolfram-paclet' loaded.",
+   "route": "pass: wolfram-direct (fresh, network-namespaced kernel) with the stated .nb reason. The orchestrator's reason 'WLJS kernel' is wrong: the run made no WLJS call (engines_seen: wolfram-direct, wolframscript).",
+   "rules": "pass: auto-checks.json 'fail' is a false positive. The hits 'PacletFindRemote' and 'CloudConnect' come from call [22], a Trace pattern HoldPattern[$AllowInternet | $CloudConnected | URLRead[___] | CloudObject[___] | PacletFindRemote[___]] used to look FOR such calls, run inside wolfram-direct's network namespace. The run asked before setting $AllowInternet = True and did not do it.",
+   "notebook": "pass: work/ResourceDefinition-build-summary.wln, byte-identical to md2wln output.",
+   "correct": "partial: ResourceDefinition.nb is built and structurally right, but the deliverable contains a Failure output (Lorem example), an empty Categories box, and the definition-notebook check did not run (WFRCrosslinks missing, kernel exit 3). wolfram-prompt was graded 'partial' for empty categories alone; this run has that and more.",
+   "clean": "pass: every message (ServiceExecute::isrv, CheckboxesCell::autofail, MazeParse::ragged, ::shdw) is explained."
+  },
+  "rechecked": "sha256 of ResourceDefinition.nb = 1843693e5d02..., 725,579 bytes, as logged. Fresh kernel in network cut: styles Title 1, Section 5, Subsection 19, Input 12, Output 25, Text 16, Notes 4 (matches log); an Output cell holds a Failure summary box; 'Notebook Documents' absent (no category ticked). diff -rq vs upstream: only ResourceDefinition.nb added.",
+  "overturn": "Correct should be partial, not pass (Failure output in the deliverable, empty categories, check not run; same standard the orchestrator applied to wolfram-prompt). Also the verdict's route reason ('WLJS kernel') is factually wrong, and the auto 'rules fail' should be recorded as a false positive (pass).",
+  "notes": ""
+ },
+ "wolfram-prompt": {
+  "agree": false,
+  "checks": {
+   "triggered": "pass: Skill 'wolfram-prompt' loaded.",
+   "route": "pass: fresh wolframscript kernel with the stated .nb reason. The orchestrator's reason 'WLJS kernel' is wrong: no mcp__wljs call was made.",
+   "rules": "pass (with a note): $AllowInternet = False line 1; nothing submitted. It ran 'pkill -f inspect.wls' in a scratchpad shared by concurrent runs; at that moment it matched only its own processes (wolfram-symbol-page's inspect.wls had finished at 05:58:28Z), so no harm, but the pattern is unsafe.",
+   "notebook": "pass: work/Prompt/AdaLovelace-build-summary.wln, byte-identical to md2wln output.",
+   "correct": "partial: notebook built; categories empty offline; examples (eval:false, need an LLM) not previewed in WLJS as the card asks (reason stated); lint not run.",
+   "clean": "pass: CheckboxesCell::autofail explained; the hung inspection explained."
+  },
+  "rechecked": "Fresh kernel in network cut: AdaLovelace.nb Count[_Cell] = 314 (matches log), styled cells Title 1, Section 6, Subsection 24, Input 13, Output 8; $Failed 0; 'Fictional Characters' absent (categories not recorded).",
+  "overturn": "Only the route reason is wrong in the verdict ('WLJS kernel'; the run used a fresh wolframscript kernel). The grade itself (correct partial) stands. Marked agree=false for the factual error only.",
+  "notes": "Its hung inspect process (PIDs 1737626/1737628, started 05:56:42Z by its call [9]) was later killed with kill -9 by the wolfram-symbol-page run; see that entry."
+ },
+ "simulate-modelica": {
+  "agree": false,
+  "checks": {
+   "triggered": "pass: Skill 'simulate-modelica' loaded.",
+   "route": "pass: WLJS kernel via mcp__wljs__kernel_evaluate, the default route.",
+   "rules": "pass: $AllowInternet False; nothing installed.",
+   "notebook": "fail: the card requires a summary page; the run log says 'WLJS notebook: none' with no reason, there is no .wln (or .md) anywhere under tests/runs/2026-10-22/simulate-modelica, and auto-checks check4_notebooks_found = []. The verdict's 'pass: summary .wln' is false.",
+   "correct": "pass: x(1) = 0.367879, y(1) = 3.89348, x(2) = 0.135335, y(2) = 11.0159.",
+   "clean": "partial: its Begin[] inside one input made 'res' resolve to a pre-existing Global`res, which it overwrote and then ClearAll'ed in the shared kernel (run-log Problems); another session's value is lost. The verdict says 'pass'."
+  },
+  "rechecked": "Fresh kernel in network cut, same ExampleModel.mo (cmp identical to ExampleData): x(1) = 0.36787944113, y(1) = 3.89348302257, x(2) = 0.13533528322, y(2) = 11.01591650800; exact e^-1, 1.5e - 0.5/e etc. agree to ~1e-10.",
+  "overturn": "Notebook: no summary page exists (verdict claims one). Clean: shared-kernel symbol Global`res overwritten and cleared, by the run's own account.",
+  "notes": ""
+ },
+ "wolfram-language-modelica": {
+  "agree": false,
+  "checks": {
+   "triggered": "pass: Skill 'wolfram-language-modelica' loaded.",
+   "route": "pass: WLJS kernel; one SystemModelSimulate call with three initial values.",
+   "rules": "pass: $AllowInternet False; no install. (auto-checks engines_seen lists wolframscript/wolfram-direct/wsm-toolkit only because the run-log heredoc names them; none ran.)",
+   "notebook": "pass: work/ExampleModelSweep.wln, byte-identical to md2wln output (4 code cells, unevaluated).",
+   "correct": "pass: y(1) = 3.305882, 3.893483, 5.068684 for x0 = 0.5, 1, 2.",
+   "clean": "partial: call [6] ran Begin[\"testModelicaSweep`\"] with no End[], leaving the shared kernel's $Context changed until call [9]; validate-modelica and simulate-modelica both logged $Context = testModelicaSweep` at 06:03:08-06:03:15Z. The brief of the time told agents to use Begin, so the cause is the harness, but the effect on other sessions is real."
+  },
+  "rechecked": "Fresh kernel in network cut: SystemModelSimulate with InitialValues x -> {0.5, 1., 2.}: y(1) = {3.3058824259, 3.8934830228, 5.0686842167}; exact e + x0 sinh 1 = {3.3058824253, 3.8934830221, 5.0686842157}.",
+  "overturn": "Clean should be partial: the run left the shared kernel in its private context across calls, observed by two concurrent runs (validate-modelica and simulate-modelica run logs).",
+  "notes": ""
+ },
+ "validate-modelica": {
+  "agree": true,
+  "checks": {
+   "triggered": "pass: Skill 'validate-modelica' loaded.",
+   "route": "pass: WLJS kernel (default) plus wsm-toolkit flatten as a second check.",
+   "rules": "pass: $AllowInternet False; toolkit temp dirs in scratch, removed.",
+   "notebook": "partial: no summary page; the run stated a reason (no windows), which is weak because md2wln was offered. Agreed with 'partial'.",
+   "correct": "pass: ExampleModel valid; Broken fails with 'z' not found.",
+   "clean": "pass (warning): stray Global`res/msgs/r noted as possibly not its own; agreed."
+  },
+  "rechecked": "Fresh kernel in network cut: Import + SystemModelSimulate of Broken.mo -> SystemModelSimulate::bld and ::bldl 'Element not found. When looking up 'z' in scope 'Broken''; ExampleModel x(1) = 0.367879, y(1) = 3.893483. wsm-toolkit wsm --mode validate inside the cut: ExampleModel flatten Pass, 0 errors; Broken flatten Fail, LOOKUP id 20004 at 6:3, same message.",
+  "overturn": "",
+  "notes": "The verdict's finding 'only SystemModelValidate reports the error' is inaccurate: the run used SystemModelSimulate (::bld/::bldl) and the toolkit flatten; in my fresh kernel SystemModelValidate[Broken] returned unevaluated."
+ },
+ "wolfram-computational-essay": {
+  "agree": true,
+  "checks": {
+   "triggered": "pass: Skill 'wolfram-computational-essay' loaded.",
+   "route": "pass: wolfram-direct (timed out at 110 s), then wolframscript under bwrap --unshare-net, with stated reasons; examples cross-checked in WLJS as the card asks.",
+   "rules": "pass: auto 'fail' is a false positive: 'https://reference.wolfram.com' appears only in a Python re.sub that writes link text into the WLJS preview Markdown (call [26]); nothing was fetched.",
+   "notebook": "pass: work/ComputationalEssay/PiIsMostlyRandom.wln, byte-identical to md2wln output of PiIsMostlyRandom-wljs.md (5 code cells).",
+   "correct": "pass: valid .nb, 5 sections, values right.",
+   "clean": "pass (warning): aborted WLJS Rasterize left the shared kernel in its context briefly; restored and verified; agreed with the orchestrator."
+  },
+  "rechecked": "Fresh kernel in network cut: PiIsMostlyRandom.nb styles Title 1, Section 5, Input 5, Output 5, Text 6, $Failed 0; recomputed first 20 digits 3,1,4,1,5,9,2,6,5,3,5,8,9,7,9,3,2,3,8,4; PearsonChiSquareTest p = 0.40366769139384584; walk {82.5799, 100.}.",
+  "overturn": "",
+  "notes": ""
+ },
+ "paclet-publish": {
+  "agree": true,
+  "checks": {
+   "triggered": "pass: Skill 'paclet-publish' loaded.",
+   "route": "pass: wolfram-direct for CodeInspector, smoke test and archive, with the stated isolation reason.",
+   "rules": "pass: stopped before every cloud step and asked; no PacletInstall; wolfram-direct is network-namespaced.",
+   "notebook": "pass: work/DocPageExamples-publish-check.wln, byte-identical to md2wln output.",
+   "correct": "pass: the gate held; archive built; findings accurate.",
+   "clean": "pass: p$::shdw from the agent's own variable, explained."
+  },
+  "rechecked": "unzip -l of build/WolframInstitute__DocPageExamples-1.0.0.paclet: 5722 bytes, PacletInfo.wl + Kernel/DocPageExamples.wl + Scripts/mazegen.wls (3 files), no Documentation. Kernel source line 107 is the Return[Infinity] inside If (ReturnAmbiguous) and line 191 references WolframInstitute`DocPageExamples`Private`params after EndPackage (PrivateContextSymbol): both lint findings confirmed.",
+  "overturn": "",
+  "notes": ""
+ },
+ "paper-lean": {
+  "agree": true,
+  "checks": {
+   "triggered": "pass: Skill 'paper-lean' loaded.",
+   "route": "pass: Lean via lake env lean; no Wolfram evaluation needed; lean-lsp MCP absence stated.",
+   "rules": "pass: no downloads (prebuilt Mathlib), no installs.",
+   "notebook": "pass: work/Summary.wln, byte-identical to md2wln output.",
+   "correct": "pass: theorem proved without sorry; checklist written to Work/Done/.",
+   "clean": "pass: no warnings."
+  },
+  "rechecked": "Copied LeanTest/OddSum.lean to scratch-B and ran 'lake env lean' inside bwrap --unshare-net: exit 0, no errors; '#print axioms' -> [propext, Classical.choice, Quot.sound]; the n = 10 decide example checks.",
+  "overturn": "",
+  "notes": ""
+ },
+ "wolfram-example-repository": {
+  "agree": true,
+  "checks": {
+   "triggered": "pass: Skill 'wolfram-example-repository' loaded.",
+   "route": "pass: examples previewed in WLJS; .nb build in wolframscript under bwrap --unshare-net with the stated reason.",
+   "rules": "pass: $AllowInternet False, network cut; the kills (1737382/84/85/1737423) were its own build-example.wls processes (checked in its ps output).",
+   "notebook": "pass: work/ExampleRepositoryBuild.wln, byte-identical to md2wln output.",
+   "correct": "pass: PrimeSpiralPoints.nb 88 cells and QuantumWalk.nb 100 cells, no $Failed.",
+   "clean": "pass (warning): CheckboxesCell::autofail and lint UnableToUseCell explained; agreed."
+  },
+  "rechecked": "Fresh kernel in network cut: PrimeSpiralPoints.nb 88 styled cells, QuantumWalk.nb 100, $Failed 0 in both. Independent numpy Hadamard walk (n = 100, coin {1, i}/sqrt 2): total probability 1, highest peaks at x = +/-68, std. dev. 54.124 (the run's numbers).",
+  "overturn": "",
+  "notes": "Peaks at +/-68 vs n/sqrt(2) = 70.7: consistent with the source's 'near +/-n/sqrt 2'; not an error."
+ },
+ "paclet-docs": {
+  "agree": false,
+  "checks": {
+   "triggered": "pass: Skill 'paclet-docs' loaded, then 'wolfram-symbol-page' (stated reason).",
+   "route": "pass: wolfram-direct probes and wolframscript under bwrap for the builds, reasons stated.",
+   "rules": "pass: $AllowInternet False, network cut; approval gate respected (stopped after one page in round 1); no install.",
+   "notebook": "pass: paclet-docs-review_2.wln byte-identical to md2wln output of the round-2 .md; the round-1 .wln is kept.",
+   "correct": "partial: the card expects symbol pages in the paclet's Documentation/English/ReferencePages/Symbols so they resolve in product (the skill's stated goal). The run wrote only authoring notebooks to build/DocSource/...; the paclet has no Documentation/ folder at all, and no DocumentationBuild ran. The pages themselves are correct.",
+   "clean": "pass: messages explained (General::stop worked around with Quiet)."
+  },
+  "rechecked": "Fresh kernel in network cut: build/DocSource/.../Symbols/MazeGenerate.nb Input 14, Output 14, Notes 8; MazeParse.nb Input 13, Output 13, Message 2 (both MazeParse::ragged, no General::stop); no (*BB[*) markup, $Failed 0. 'ls DocPageExamples/DocPageExamples' shows only Kernel, PacletInfo.wl, Scripts: no Documentation tree.",
+  "overturn": "Correct should be partial: the card's expected location (Documentation/English/ReferencePages/Symbols) was not produced; only authoring notebooks under build/DocSource exist. The run's reason (build.wls would wipe Documentation/) does not prevent running the build itself, which create-wolfram-documentation did in about 1 minute.",
+  "notes": "The converter wrote its example cache under ~/.Wolfram/Objects/Persistence (logged)."
+ },
+ "wolfram-symbol-page": {
+  "agree": false,
+  "checks": {
+   "triggered": "pass: Skill 'wolfram-symbol-page' loaded.",
+   "route": "pass: fresh wolframscript kernel, reason stated (.nb build out of WLJS).",
+   "rules": "fail: the run killed with kill -9 two processes it did not start. PIDs 1737626/1737628 ('timeout 300 wolframscript -f <shared scratchpad>/inspect.wls') started at 05:56:45Z (ps etime 10:06 at 02:06:51 EDT in the wolfram-example-repository record), three seconds after wolfram-prompt's call [9] launched exactly that command (05:56:42Z). wolfram-symbol-page's own inspect.wls call [10] ran at 05:58:24Z and returned in 4 s. Its calls [19]/[20] then killed 1737626/1737628 calling them 'the hung read-back'. The brief says 'Kill only processes you started'.",
+   "notebook": "pass: work/MazeWalkTime-preview.wln, byte-identical to md2wln output.",
+   "correct": "pass: 141 cells, outputs match the source hints.",
+   "clean": "partial: the verdict's 'read-back script hung on exit' is a misattribution (its read-back returned in 4 s; the hung process was wolfram-prompt's). DocumentationBuildNotebook did hang 600 s and was killed (its own PIDs 1741062/65/1741133)."
+  },
+  "rechecked": "Fresh kernel in network cut: MazeWalkTime.nb 141 styled cells, Input 12, Output 11, $Failed 0, no (*BB[*); the file contains 15.714285714285715, FractionBox 396/25, 48.5714..., 7.857142857142858 and Missing[NotReachable]. Independent BFS on the example maze: 22 steps -> 22/1.4 = 15.714 s and 22/(5 km/h) = 15.84 s = 396/25 s.",
+  "overturn": "Rules: the run killed another run's processes (wolfram-prompt's inspect.wls, PIDs 1737626/1737628) with kill -9, evidence from process start times and both session records. Clean: the 'read-back hung' finding is misattributed.",
+  "notes": ""
+ },
+ "diagnose-modelica": {
+  "agree": true,
+  "checks": {
+   "triggered": "pass: Skill 'diagnose-modelica' loaded.",
+   "route": "pass: WLJS for states/equations/timing; wsm-toolkit for block/tearing reports, reason stated.",
+   "rules": "pass: $AllowInternet False; temp dir removed.",
+   "notebook": "pass: work/DrawingRobot-diagnosis.wln, byte-identical to md2wln output.",
+   "correct": "pass: counts and values confirmed.",
+   "clean": "pass: count differences (199 vs 457 parameters; 'nonlinear=2' summary) explained as unresolved, not hidden."
+  },
+  "rechecked": "Fresh kernel in network cut: DrawingRobot states {slider.s, slider.v, revolute.phi, revolute.w}, 1368 SystemEquations, 199 ParameterNames; with f = 0.5 Sin[2t], tau = 0.05 Cos[3t]: phi(20) = 0.0113285, s(20) = 1.1916738, NumberOfEvents 2.",
+  "overturn": "",
+  "notes": ""
+ },
+ "create-wolfram-documentation": {
+  "agree": false,
+  "checks": {
+   "triggered": "pass: Skill 'create-wolfram-documentation' loaded, then 'wolfram-symbol-page' after the scripted OK.",
+   "route": "pass: wolframscript under bwrap --unshare-net --unshare-pid for every evaluation, reasons stated.",
+   "rules": "pass: network cut + $AllowInternet False; the WFRCrosslinks PacletInstall came from DocumentationBuild and was blocked; reported.",
+   "notebook": "pass: docs-setup-summary-2.wln byte-identical to md2wln output of the current .md.",
+   "correct": "partial: the build succeeds and 14 pages exist, but the final MazeParse page carries a stray 'General::stop: Further output of MazeParse::ragged will be suppressed' Message cell (in Scope, right after the first ragged message), in both build/DocSource and the built Documentation page. The run says it fixed exactly this with Quiet and that the page shows message cells only 'where intended'.",
+   "clean": "partial: same stray message; the run's claim that it was removed is wrong."
+  },
+  "rechecked": "Listed 14 built pages under DocPageExamples/Documentation/English (incl. Symbols/MazeGenerate.nb, MazeParse.nb, MazeWalkTime.nb) plus Index/SearchIndex/SpellIndex. Fresh kernel in network cut: built MazeGenerate.nb Input 14 / Output 12, one $Failed (CitationPopupData); built MazeParse.nb Message cells = {MazeParse::ragged 'Line 2 ...', General::stop 'Further output of MazeParse::ragged ...', MazeParse::ragged 'Line 1 ...'}. grep confirms one General::stop in each of build/DocSource/.../MazeParse.nb (02:25:08) and Documentation/.../MazeParse.nb (02:25:47), both newer than docs/MazeParse.md (02:24:08).",
+  "overturn": "Correct and clean should be partial: the delivered MazeParse page contains a stray General::stop message cell that the run says it had removed.",
+  "notes": ""
+ },
+ "wolfram-paclets": {
+  "agree": true,
+  "checks": {
+   "triggered": "pass: Skill 'wolfram-paclets' loaded.",
+   "route": "pass: WLJS tried as the skill says; it hung, so wolfram-direct and wolframscript under bwrap, reasons stated.",
+   "rules": "pass: $AllowInternet False everywhere; asked before $AllowInternet = True and did not do it; nothing installed; built from a copy.",
+   "notebook": "pass: work/DocPageExamples-check.wln, byte-identical to md2wln output.",
+   "correct": "pass: CheckPaclet findings listed; working archive built from a copy.",
+   "clean": "pass: failures explained. Its PacletBuild call is still queued in the hung WLJS kernel (logged with cleanup steps)."
+  },
+  "rechecked": "check-copy/archive/WolframInstitute__DocPageExamples-1.0.0.paclet is 313,251 bytes and holds 12 documentation .nb pages plus SearchIndex; ResourceDefinition.md Description is 186 characters (CheckPaclet's 128 limit finding holds); diff -rq of work/DocPageExamples vs upstream: identical (originals untouched).",
+  "overturn": "",
+  "notes": "Timeline of all WLJS calls in the session records: the last successful WLJS call ended 06:19:09Z; annotate-modelica-plots (06:19:13Z) and annotate-modelica-animation (06:19:21Z) were already pending before this run's PacletBuild (06:19:30Z), so this run did not start the WLJS hang. The built message page MazeParse/ragged.nb in its archive also carries a General::stop cell (upstream build behaviour)."
+ },
+ "wolfram-tech-note": {
+  "agree": true,
+  "checks": {
+   "triggered": "pass: Skill 'wolfram-tech-note' loaded.",
+   "route": "pass: fresh wolframscript kernels (build in bwrap --unshare-net), reasons stated.",
+   "rules": "pass: $AllowInternet False; the kills (1743599 build-local.wls, 1768527 build-technote.wls, 1777932 trace.wls) were its own scripts (it created build-local.wls in calls [17]/[18]).",
+   "notebook": "pass: work/ParsingMazes.wln, byte-identical to md2wln output of ParsingMazes-preview.md (18 code cells).",
+   "correct": "pass: 17 examples, outputs match; built page renders.",
+   "clean": "pass: build messages explained."
+  },
+  "rechecked": "Fresh kernel in network cut: authoring ParsingMazes.nb Input 17, Output 16, Message 2, $Failed 0; built Documentation/English/Tutorials/ParsingMazes.nb present (one $Failed = CitationPopupData). Viewed scratchpad technote-parsingmazes-1767465/page-1.png: title, jump box, sections and outputs render.",
+  "overturn": "",
+  "notes": ""
+ }
+}

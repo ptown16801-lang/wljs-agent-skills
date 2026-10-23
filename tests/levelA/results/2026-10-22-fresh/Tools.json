@@ -1,0 +1,100 @@
+{
+	"suite":"Tools",
+	"kernel":"fresh",
+	"ok":true,
+	"tests":99,
+	"passed":79,
+	"failed":[
+		{
+			"id":"ReadNotebook-BasicRead@@Tests\/Tools.wlt:90,1-95,2",
+			"outcome":"Failure"
+		},
+		{
+			"id":"ReadNotebook-ContainsExpectedContent@@Tests\/Tools.wlt:97,1-103,2",
+			"outcome":"Failure"
+		},
+		{
+			"id":"WriteNotebook-BasicWrite@@Tests\/Tools.wlt:165,1-174,2",
+			"outcome":"Failure"
+		},
+		{
+			"id":"WriteNotebook-FileExists@@Tests\/Tools.wlt:176,1-181,2",
+			"outcome":"Failure"
+		},
+		{
+			"id":"WriteNotebook-NoOverwriteExisting@@Tests\/Tools.wlt:186,1-195,2",
+			"outcome":"Failure"
+		},
+		{
+			"id":"WriteNotebook-OverwriteExisting@@Tests\/Tools.wlt:197,1-206,2",
+			"outcome":"Failure"
+		},
+		{
+			"id":"WriteNotebook-MissingDirectory-CreatesPath-GH#200@@Tests\/Tools.wlt:223,1-232,2",
+			"outcome":"Failure"
+		},
+		{
+			"id":"WriteNotebook-MissingDirectory-FileExists-GH#200@@Tests\/Tools.wlt:234,1-239,2",
+			"outcome":"Failure"
+		},
+		{
+			"id":"WolframLanguageEvaluator-UIPathVersionCheckFailure@@Tests\/Tools.wlt:637,1-652,2",
+			"outcome":"Failure"
+		},
+		{
+			"id":"WolframAlpha-BasicQuery@@Tests\/Tools.wlt:670,1-675,2",
+			"outcome":"Failure"
+		},
+		{
+			"id":"WolframAlpha-ResultString@@Tests\/Tools.wlt:677,1-686,2",
+			"outcome":"Failure"
+		},
+		{
+			"id":"WolframAlpha-NonEmptyResult@@Tests\/Tools.wlt:688,1-693,2",
+			"outcome":"Failure"
+		},
+		{
+			"id":"WolframLanguageContext-BasicQuery@@Tests\/Tools.wlt:724,23-729,2",
+			"outcome":"Failure"
+		},
+		{
+			"id":"WolframLanguageContext-NonEmptyResult@@Tests\/Tools.wlt:731,23-736,2",
+			"outcome":"Failure"
+		},
+		{
+			"id":"WolframLanguageContext-RelevantContent@@Tests\/Tools.wlt:738,23-743,2",
+			"outcome":"Failure"
+		},
+		{
+			"id":"WolframContext-BasicQuery@@Tests\/Tools.wlt:787,23-792,2",
+			"outcome":"Failure"
+		},
+		{
+			"id":"WolframContext-NonEmptyResult@@Tests\/Tools.wlt:794,23-799,2",
+			"outcome":"Failure"
+		},
+		{
+			"id":"TestReport-NonexistentFile-GH#65@@Tests\/Tools.wlt:1261,1-1267,2",
+			"outcome":"Failure"
+		},
+		{
+			"id":"TestReport-NoInternalFailure-GH#65@@Tests\/Tools.wlt:1269,1-1275,2",
+			"outcome":"MessagesFailure"
+		},
+		{
+			"id":"TestReport-MixedValidInvalidPaths-GH#65@@Tests\/Tools.wlt:1277,1-1288,2",
+			"outcome":"MessagesFailure"
+		}
+	],
+	"seconds":4.2300000000000004e1,
+	"messages":[
+		"URLFetch::offline : The Wolfram Language is currently configured not to use the Internet. To allow Internet use set $AllowInternet = True or check the \"Allow th",
+		"ResourceFunction::ffail : Failed to find resource function $Failed.",
+		"ResourceObject::notfname : The ResourceObject ExportMarkdownString could not be found.",
+		"ResourceObject::noas : The argument $Failed should be the name or id of an existing resource or an Association defining a new resource.",
+		"General::stop : Further output of ResourceObject::noas will be suppressed during this calculation.",
+		"$IterationLimit::itlim : Iteration limit of 4096 exceeded.",
+		"ResourceObject::notfname : The ResourceObject MessageFailure could not be found.",
+		"                                                                                                                                                                "
+	]
+}

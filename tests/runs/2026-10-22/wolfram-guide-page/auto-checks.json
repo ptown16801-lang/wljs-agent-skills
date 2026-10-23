@@ -1,0 +1,22 @@
+{
+ "skill": "wolfram-guide-page",
+ "tool_calls": 17,
+ "check1_triggered": {
+  "pass": true,
+  "skills_loaded": [
+   "wolfram-guide-page"
+  ]
+ },
+ "check3_rules_auto": {
+  "pass": true,
+  "hits": {}
+ },
+ "check4_notebooks_found": [
+  "work/GuideBuildSummary.wln"
+ ],
+ "engines_seen": [
+  "wolfram-direct",
+  "wolframscript"
+ ],
+ "run_log": true
+}

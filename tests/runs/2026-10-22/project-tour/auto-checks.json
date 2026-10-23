@@ -1,0 +1,30 @@
+{
+ "skill": "project-tour",
+ "tool_calls": 102,
+ "check1_triggered": {
+  "pass": true,
+  "skills_loaded": [
+   "project-tour",
+   "notebook-create"
+  ]
+ },
+ "check3_rules_auto": {
+  "pass": true,
+  "hits": {}
+ },
+ "check4_notebooks_found": [
+  "work/project/Tour/Tour_01.wln"
+ ],
+ "engines_seen": [
+  "mcp__wljs__add_cells_batch",
+  "mcp__wljs__evaluate_cell",
+  "mcp__wljs__get_cell_lines",
+  "mcp__wljs__kernel_evaluate",
+  "mcp__wljs__list_cells",
+  "mcp__wljs__new_notebook",
+  "mcp__wljs__project_cell",
+  "mcp__wljs__set_cell_lines",
+  "wolframscript"
+ ],
+ "run_log": true
+}

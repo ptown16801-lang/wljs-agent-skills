@@ -1,0 +1,12 @@
+{
+	"suite":"PacletTools",
+	"kernel":"fresh",
+	"ok":true,
+	"tests":60,
+	"passed":60,
+	"failed":[],
+	"seconds":1.3,
+	"messages":[
+		"AgentTools::PacletToolsInvalidPath : The path \"\/nonexistent\/path\/to\/paclet\" does not exist. Provide an absolute path to either the paclet root directory or the "
+	]
+}

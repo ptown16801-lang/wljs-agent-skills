@@ -1,0 +1,21 @@
+{
+ "skill": "project-provenance",
+ "tool_calls": 22,
+ "check1_triggered": {
+  "pass": true,
+  "skills_loaded": [
+   "project-provenance"
+  ]
+ },
+ "check3_rules_auto": {
+  "pass": true,
+  "hits": {}
+ },
+ "check4_notebooks_found": [
+  "work/project/Research/Artifacts/ProvenanceSummary_261022.wln"
+ ],
+ "engines_seen": [
+  "wolfram-direct"
+ ],
+ "run_log": true
+}

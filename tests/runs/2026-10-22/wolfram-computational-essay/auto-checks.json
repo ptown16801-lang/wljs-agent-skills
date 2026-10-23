@@ -1,0 +1,27 @@
+{
+ "skill": "wolfram-computational-essay",
+ "tool_calls": 30,
+ "check1_triggered": {
+  "pass": true,
+  "skills_loaded": [
+   "wolfram-computational-essay"
+  ]
+ },
+ "check3_rules_auto": {
+  "pass": false,
+  "hits": {
+   "wolfram server address": [
+    "https://reference.wolfram.com"
+   ]
+  }
+ },
+ "check4_notebooks_found": [
+  "work/ComputationalEssay/PiIsMostlyRandom.wln"
+ ],
+ "engines_seen": [
+  "mcp__wljs__kernel_evaluate",
+  "wolfram-direct",
+  "wolframscript"
+ ],
+ "run_log": true
+}

@@ -1,0 +1,240 @@
+{
+ "annotate-control-panel": {
+  "agree": true,
+  "checks": {
+   "triggered": "pass: transcript agent-a137acbd3a0e0a785 loads Skill annotate-control-panel first",
+   "route": "pass: wsm-toolkit panel/validate (the skill's annotation and flatten route) + WLJS kernel for import, simulation and the Manipulate",
+   "rules": "pass: model renamed (ElectricCircuit_acp1022) for the shared kernel, qualified names removed at the end, validate run inside bwrap; no installs or network",
+   "notebook": "pass: work/ElectricCircuitExplore.wln; I viewed scratch/cap4/0x1400047_Application.png: three log10 sliders (1.0, -2.0, 2.0), the sineVoltage1.i plot and the label 'R1 = 10 Ohm, C = 0.01 F, R2 = 100 Ohm'",
+   "correct": "pass: one Panel 'Resistor and capacitor values' with Log sliders resistor1.R 1-100, capacitor1.C 0.001-0.1, resistor2.R 10-1000, figures = {\"sineVoltage1.i\"} (the identifier of the figure already stored in the model); the only other change to the original is removal of the original's empty `__Wolfram,` marker",
+   "clean": "pass: the 2 unbound-parameter warnings (sineVoltage1.V, .f) are in the original model too"
+  },
+  "rechecked": "wsm-toolkit wsm --mode validate in the network cut on a copy of work/ElectricCircuit.mo: flatten Pass, 0 errors, 2 warnings (same as the run). Fresh network-cut kernel: Import + SystemModelSimulate with the slider corners: peak |i| = 0.58723 (R1=1, C=0.1, R2=10), 0.09965 (1, 0.001, 10), 0.01115 (100, 0.1, 1000), 0.00592 (100, 0.001, 1000); default i(10) = -0.044985. All equal the run's 0.587 / 0.0996 / 0.0111 / 0.0059 / -0.04498. Diffed the copy against <SystemModeler-install>/15.0/L/IntroductoryExamples/ComponentBased/ElectricCircuit.mo.",
+  "overturn": "",
+  "notes": "Earlier attempt (attempt2-wljs-hung): the WLJS kernel hung, the Manipulate was never evaluated and the notebook came from md2wln. The rerun fixes this: the Manipulate was evaluated live in WLJS and seen in a capture. The System Modeler Explore view itself was not opened (no desktop apps), which is the expected limit."
+ },
+ "annotate-modelica-animation": {
+  "agree": true,
+  "checks": {
+   "triggered": "pass: transcript agent-aa812aec496618951 loads Skill annotate-modelica-animation",
+   "route": "pass: WLJS kernel for build and simulation (renamed copy ChainPendulum_anim1022, identical to work/ChainPendulum.mo apart from the class name: diff checked); wsm-toolkit docs used offline only",
+   "rules": "pass: no network, no installs, names under cpAnim1022` removed",
+   "notebook": "pass (not required by the card): work/ChainPendulumAnimation.wln; I viewed scratch/cap2/0x140002c_Application.png (paths of the last-link centre and the chain end, 0-5 s) and the notebook header capture",
+   "correct": "pass (structure): the existing __Wolfram(Animation(...)) was edited in place (not duplicated): new camera FollowLastLink follow = chainLink4.bodyBox1.frameTranslation.shape, followMode NODE_CENTER, no center (as upstream says for follow cameras); Default window preferred/autoPlay/repeat/timeScale 1, trace on the same shape; original Default camera kept. The cref form `frameTranslation.shape` is the one the upstream skill names for BodyBox. Playback in System Modeler not seen (expected limit).",
+   "clean": "pass: the StringStartsQ::strse messages came from the agent's own filter and are explained"
+  },
+  "rechecked": "wsm-toolkit validate (network cut) on a copy of work/ChainPendulum.mo: Fail without the library (IntroductoryExamples not found), Pass with --load-library IntroductoryExamples (4 MSL warnings). Fresh network-cut kernel: Import -> SystemModel[\"ChainPendulum\", True]; SystemModelSimulate 5 s: 15 result variables under chainLink4.bodyBox1.frameTranslation.shape.* (rvisobj, rxvisobj, ...), so the cref names a real visualizer; chainLink4.frame_b.r_0 x: 4 -> -1.8919, y: 0 -> -2.0686 (run: 4 -> -1.89, 0 -> -2.07).",
+  "overturn": "",
+  "notes": "Earlier attempt (attempt2-wljs-hung): no WLJS build/simulation and no notebook because the kernel hung. Fixed: built and simulated in WLJS. The standalone copy depends on the installed IntroductoryExamples library (stated by the run)."
+ },
+ "annotate-modelica-graphics": {
+  "agree": true,
+  "checks": {
+   "triggered": "pass: transcript agent-aa6e2034362ad94f2 loads Skill annotate-modelica-graphics",
+   "route": "pass: wsm-toolkit schematic (dry run) + validate in the cut; layout written by hand because the toolkit's pin table was wrong (stated reason); WLJS kernel for simulation",
+   "rules": "pass: original kept as scratch/Submarine.orig.mo (cmp-identical to tests/cards/fixtures/Submarine-nographics.mo); renamed copy for the shared kernel; amg1022` names removed",
+   "notebook": "pass (not required by the card): work/SubmarineLayout.wln; I viewed scratch/cap3/0x1400051_Application.png, a box-and-line preview with no overlaps and every line ending on a box edge",
+   "correct": "pass: I recomputed every Line endpoint from the Placements and the MSL connector extents: buoyancyDynamics f (-74,52), deltarho (-74,28), y (-28,40); position s_ref (-2,40), flange (20,40); prismatic frame_a (30,0), frame_b (50,0), axis (48,6); world frame_b (-10,0); subBody/subShape frame_a (70,0)/(70,-40); fluidSurface (10,-40); top-level f (-100,52), deltarho (-100,28), y (100,60): all 9 connect lines start and end exactly on these. Fixture had 0 Placement/Line annotations before.",
+   "clean": "pass: 3 MSL cardinality warnings, also in the original"
+  },
+  "rechecked": "wsm-toolkit validate (network cut): annotated copy Pass (3 warnings), original fixture Pass (3 warnings); flat models with annotation(...) stripped are identical (268,902 chars each). Fresh network-cut kernel: inputs f = 0, deltarho = 0 -> y = 0 for the whole 50 s; deltarho = 50 -> y(10) = -1.20730, y(50) = -0.83121 = subBody.r_0[3](50) (run: -1.21, -0.83).",
+  "overturn": "",
+  "notes": "Earlier attempts: attempt1 had an already-annotated fixture (fixture fixed: now 0 Placement/Line), attempt2 hung in WLJS. Both fixed. The real System Modeler rendering of the icons was not viewed (expected limit)."
+ },
+ "annotate-modelica-plots": {
+  "agree": true,
+  "checks": {
+   "triggered": "pass: transcript agent-a0ce29d6406d42d38 loads Skill annotate-modelica-plots",
+   "route": "pass: wsm-toolkit figures/validate + WLJS kernel import and simulation",
+   "rules": "pass: original unchanged (cmp with ExampleData's ExampleModel.mo); annotModelicaPlots` names. It imported a class named ExampleModel unrenamed into the shared kernel while wolfram-language-modelica did the same (09:00:47 vs 09:00:16 UTC), but the shared-namespace rule was added to ROUTES at 05:06 EDT, after this run, and both copies have identical equations",
+   "notebook": "pass (not required by the card): work/ExampleModel_plots.wln; I viewed scratch/cap2/0x1400040_Application.png: y rising from 1 to about 33000 over 0-10 s",
+   "correct": "pass: Documentation(figures = {Figure(identifier \"states\", preferred, plots x and y)}) in a copy; caption uses %[x](variable:x) links",
+   "clean": "pass"
+  },
+  "rechecked": "wsm-toolkit validate (network cut) on a copy of work/ExampleModel_plots.mo: flatten Pass, 0 errors/warnings. Fresh network-cut kernel: x(10) = 4.539992e-5, y(10) = 33039.70458 (run: 4.539992e-5, 33039.70).",
+  "overturn": "",
+  "notes": "Earlier attempt (attempt1-wljs-hung): verification only through wsm-toolkit and no notebook. Fixed: WLJS import/simulation and a viewed plot."
+ },
+ "backlog-review": {
+  "agree": true,
+  "checks": {
+   "triggered": "pass: transcript agent-a395a628258b53a0d loads Skill backlog-review",
+   "route": "pass: git only, plus a WLJS summary notebook",
+   "rules": "pass: stopped at the verdict, then on the scripted reply ('Send it back. Findings 1 and 2 become new tasks ... Finish the send-back steps the skill describes ... no push') did exactly upstream send-back steps 1-6; no remote exists, nothing pushed. One judgment call: upstream step 2 says to present the tasks' routing and wait for the user's ruling; the reply ruled on the tasks, not the routing, and the run chose sonnet/high itself and said so",
+   "notebook": "pass (card notebook=False): IndexSync-review.wln saved; I viewed scratch/cap/0x140001d_llm-5e7.wln.png (review header). It is now stale ('Awaiting the owner's verdict') and sits untracked in the project root, as the run reports",
+   "correct": "pass: git in work/project: reflog shows 'merge work/IndexSync: Fast-forward' (5a8b733 -> dae2638) then commit 536d4c3 'docs(work): IndexSync sent back from review'; branch list is master only; worktree list has only the checkout; Work/Active/IndexSync.md has T2/T3 unchecked with routing, the reply quoted and dated in Prompt history, '- **Review** 2026-10-22 — sent back: T2, T3 added.' in Progress, Hand-off filled; Work/README.md has the IndexSync Active row with next task T2. That is steps 1-6 of the upstream Send back list.",
+   "clean": "pass"
+  },
+  "rechecked": "Criterion recomputed with git: first unchecked task in dae2638's Active files: BacklogLifecycle T4, DocumentationSite T3, ParallelSessions T6, all equal to the README rows; IndexSync now first unchecked T2 = its README row. Branches, worktrees, remotes and the commit diff checked as above; upstream SKILL.md send-back steps read.",
+  "overturn": "",
+  "notes": "Earlier attempt (reviewer A): branch deletion went beyond a reply limited to steps 1-5. This time the reply asked for the full send-back path, which includes step 6 (branch -d), so the deletion is within the reply. Fixed. The reflog also shows the orchestrator reset master to 5a8b733 to re-arm the fixture (commit b44ad73 from the earlier attempt is gone from master)."
+ },
+ "search-modelica-docs": {
+  "agree": true,
+  "checks": {
+   "triggered": "pass: transcript agent-a610b0d4b4282fe72 loads Skill search-modelica-docs",
+   "route": "pass: wsm-toolkit docs (offline BM25 corpus) + WLJS kernel ParameterNames cross-check",
+   "rules": "pass: the brief for this rerun allows notebook windows; no network",
+   "notebook": "pass (card notebook=False): SpringDamperLookup.wln; I viewed scratch/cap/0x1400015_llm-f84.wln.png: the parameter table renders",
+   "correct": "pass: Modelica.Mechanics.Translational.Components.SpringDamper, own parameters c, d, s_rel0 (card), inherited stateSelect, s_nominal, useHeatPort",
+   "clean": "pass: minor label issue: the answer says 'MSL 4.0' (the docs corpus version) while the installed library is 4.1.0; same component and parameters"
+  },
+  "rechecked": "Read the installed '<SystemModeler-install>/15.0/L/Modelica 4.1.0/Modelica/Mechanics/Translational/Components/SpringDamper.mo': description 'Linear 1D translational spring and damper in parallel', parameter c(final min=0, start=1), d(final min=0, start=1), s_rel0=0, extends PartialCompliantWithRelativeStates and PartialElementaryConditionalHeatPortWithoutT. scratch/docs-query1.txt has the FMU variant with c = 1e4 as the answer says.",
+  "overturn": "",
+  "notes": "Earlier attempt (reviewer A): a window was opened under a brief that forbade it. The rerun's brief allows windows (checked in the transcript), so this is fixed."
+ },
+ "simulate-modelica": {
+  "agree": true,
+  "checks": {
+   "triggered": "pass: transcript agent-a8505c63cfdb332f6 loads Skill simulate-modelica",
+   "route": "pass: WLJS kernel SystemModelSimulate (the local default)",
+   "rules": "pass: $AllowInternet False checked; the cells first added with a Global name (exampleModelSim) were edited to simModelicaRun`sim before any evaluation (08:56:39-41 edits, 08:56:48 first eval) and the context was removed at the end",
+   "notebook": "pass: work/ExampleModelSimulation.wln; I viewed scratch/cap/0x140002d_llm-d7b.wln.png (table: 0.36787944113444454, 3.893483022568041, 0.13533528322298682, 11.01591650799995 with exact columns) and scratch/cap2/0x1400035_Application.png (x decays to ~0.14, y grows to ~11, legend x/y)",
+   "correct": "pass: x(1)=0.367879, y(1)=3.89348, x(2)=0.135335, y(2)=11.0159",
+   "clean": "pass"
+  },
+  "rechecked": "Fresh network-cut kernel, ExampleModel.mo (cmp-identical to ExampleData): SystemModelSimulate[m, 2] -> x(1)=0.36787944113444454, y(1)=3.893483022568041, x(2)=0.13533528322298682, y(2)=11.01591650799995, bit-identical to the run's notebook table; exact e^-1 = 0.3678794412, 1.5e - 0.5/e = 3.8934830221, y(2) = 11.0159165068.",
+  "overturn": "",
+  "notes": "Earlier attempt (reviewer B): no notebook and Global`res overwritten. Both fixed."
+ },
+ "validate-modelica": {
+  "agree": true,
+  "checks": {
+   "triggered": "pass: transcript agent-a3f97df81abfb12eb loads Skill validate-modelica",
+   "route": "pass: WLJS kernel (renamed copies *_vm22) + wsm-toolkit validate in the network cut as cross-check",
+   "rules": "pass: cells added with Global names (vm22ex, vm22sim) were changed to vm22` before any evaluation (09:28:24-26 edits, 09:28:33 first eval); Remove[\"vm22`*\"] at the end",
+   "notebook": "pass: work/ModelicaValidation.wln; I viewed scratch/cap2/0x1400015_llm-b89.wln.png (x(1), y(1) values and the plot start) and scratch/cap2/0x1400025_Application.png (SystemModelSimulate::bld / ::bldl 'z' not found in 'Broken_vm22')",
+   "correct": "pass: ExampleModel valid; Broken.mo fails with 'z' not found at line 6",
+   "clean": "pass: the bldl warning toast in the window is the expected Broken message"
+  },
+  "rechecked": "wsm-toolkit wsm --mode validate in the network cut on copies: ExampleModel flatten Pass, 0 errors; Broken flatten Fail, one error 'Element not found. When looking up `z` in scope `Broken`' at 6:3 (run: LOOKUP 20004 at 6:3). Fresh kernel ExampleModel x(1) = 0.36787944, y(1) = 3.89348302.",
+  "overturn": "",
+  "notes": "Earlier attempt (attempt-before-final): no summary notebook. Fixed."
+ },
+ "wiki-update": {
+  "agree": true,
+  "checks": {
+   "triggered": "pass: transcript agent-a87f734e8a1776bbd loads Skill wiki-update",
+   "route": "pass: WLJS kernel for the function check, loaded under wikiupd` and removed",
+   "rules": "pass: brief allows the window; no commit, no push. Minor: ToExpression of the file text in the shared kernel creates the empty pattern symbols f, x, test in Global` (no values)",
+   "notebook": "pass (card notebook=False): work/project/WikiUpdate_NestTrajectory.wln (summary page per ROUTES); I viewed scratch/cap/0x1400025_llm-bda.wln.png: the .md summary (files table and the kernel checks) renders. The .wln sits untracked in the project root",
+   "correct": "pass: Wiki/Code/Tools.md created; Index.md gains a ## Code section linking it; Status.md gains a dated Recent-changes line linking it; the article's See also link resolves (skills/project-create/assets/tools_starter.wl exists)",
+   "clean": "pass: marker inconsistency ([[ ]] spec vs 22 existing [ ] articles) reported, not caused"
+  },
+  "rechecked": "Fresh network-cut kernel, Code/Tools.wl loaded into a private context: Collatz trajectory from 27 has 112 elements, max 9232, starts {27,82,41,124,62}, ends {4,2,1}, === NestWhileList; start 1 -> {1}; halving from 64 -> {64,32,16,8,4,2,1}; 4-argument call unevaluated. Every claim in Wiki/Code/Tools.md and the Status line holds. git diff of Index.md and Status.md read; counted 22 '*[ LLM Generated ]*' vs 1 '*[[ LLM Generated ]]*'.",
+  "overturn": "",
+  "notes": "Earlier attempt (reviewer A): window opened under a forbidding brief and Global`nb left. The rerun's brief allows windows and the transcript shows no Global assignment except the harmless pattern-name symbols. Fixed."
+ },
+ "wljs-html": {
+  "agree": true,
+  "checks": {
+   "triggered": "pass: transcript agent-a01ac4314a9f14dfa loads Skill wljs-html",
+   "route": "pass: WLJS .html cell with WSP templates",
+   "rules": "pass",
+   "notebook": "pass, with an evidence caveat: work/PrimeCard.wln saved; the run itself captured nothing (xwd BadColor). The rendering is visible in the orchestrator's capture <tmp>/.../scratchpad/capx/0x1400025_llm-e02.wln.png, which I viewed: blue gradient card 'THE 1000TH PRIME' with 7919 under the .html source. That PNG is in a transient scratchpad, not in the run folder",
+   "correct": "pass: saved output cell has 7919 and 'PrimeQ: True' substituted from <?wsp ...?> (the input keeps the template)",
+   "clean": "pass"
+  },
+  "rechecked": "Read the saved .wln: input cell has <?wsp Prime[1000] ?>, output cell (Display: html) has 7919 and True. Viewed the orchestrator's capx capture of window llm-e02.wln. Prime[1000] = 7919 is the reference value prime1000.",
+  "overturn": "",
+  "notes": "Earlier attempt (reviewer D): rendering never seen. The rerun did not see it either (its captures failed); what fixes the gap is the orchestrator's capture after it replaced xwd with xcapture.py. Recommend copying capx/0x1400025_llm-e02.wln.png into tests/runs/2026-10-22/wljs-html/scratch/ before /tmp is cleared, so the 'screenshot saved' item has durable evidence."
+ },
+ "wljs-javascript": {
+  "agree": true,
+  "checks": {
+   "triggered": "pass: transcript agent-a655cd69a444c3aa1 loads Skill wljs-javascript",
+   "route": "pass: WLJS .js cell returning the canvas, this.ondestroy cancels the frame loop (guide rules)",
+   "rules": "pass: ffmpeg x11grab used read-only for captures; nothing installed",
+   "notebook": "pass: work/BouncingDot.wln; I viewed scratch/proj_a.png and proj_b.png (3 s apart: dot moved, counters L2 R3 T3 B3 -> L3 R4 T4 B4) and the orchestrator's capx/0x140004a_Application.png (L10 R10 T12 B12)",
+   "correct": "pass: constant |vx| = 190, |vy| = 140 px/s with reflection at x = r, W - r, y = r, H - r, so y oscillates over the full 12..238 range and every wall is hit; captures show the T counter rising",
+   "clean": "pass"
+  },
+  "rechecked": "Read the .js cell in the saved .wln (W=400, H=250, r=12, start (60,60), velocity (190,140), dt capped at 0.05 s, reflections set |v| sign, hits counted per wall). Viewed three captures with increasing T counts.",
+  "overturn": "",
+  "notes": "Earlier attempt (reviewer D): dot started at rest and never hit the top wall. Fixed: constant-speed velocity, top-wall hits seen in the run's own captures."
+ },
+ "wljs-markdown": {
+  "agree": true,
+  "checks": {
+   "triggered": "pass: transcript agent-ae1243eb45ac19b0b loads Skill wljs-markdown",
+   "route": "pass: WLJS .md cell; table values from the WLJS kernel inside Module",
+   "rules": "pass",
+   "notebook": "pass: work/CollatzMarkdown.wln; I viewed the run's own scratch/cap5/0x1400035_Application.png: cases formula typeset by KaTeX, highlighted 'Collatz conjecture', right-aligned 9-row table, INFO box",
+   "correct": "pass: table n=1..9 (steps, peak): (0,1) (1,2) (7,16) (2,4) (5,16) (8,16) (16,52) (3,8) (19,52)",
+   "clean": "pass: cosmetic wrap of the final full stop (reported)"
+  },
+  "rechecked": "Recomputed the table in Python: [(1,0,1),(2,1,2),(3,7,16),(4,2,4),(5,5,16),(6,8,16),(7,16,52),(8,3,8),(9,19,52)], identical to the rendered table in the capture.",
+  "overturn": "",
+  "notes": "Earlier attempt (reviewer D): no screenshot. Fixed by the run itself (cap5 capture)."
+ },
+ "wljs-mermaid": {
+  "agree": true,
+  "checks": {
+   "triggered": "pass: transcript agent-a98151b00a7b9114a loads Skill wljs-mermaid",
+   "route": "pass: WLJS .mermaid cell",
+   "rules": "pass",
+   "notebook": "pass, with an evidence caveat: work/CollatzFlowchart.wln saved; the run's own capture (scratch/cap/0x140001d_llm-008.wln.png, viewed) shows only the start node and the top of the diamond. The orchestrator's capture /tmp/.../scratchpad/capx/0x140003e_Application.png (viewed) shows Start, 'n = 1?', Yes -> Stop, No -> 'Is n even?', both labelled branches and the two loop-back edges; the two process boxes are cut at the window's bottom edge. Not in the run folder",
+   "correct": "pass: 6 nodes S, D, E, P, H, T and 7 edges S-D, D-E, D-P, P-H, P-T, H-D, T-D: the Collatz decision; trajectory of 6 = {6,3,10,5,16,8,4,2,1} in the notebook",
+   "clean": "pass"
+  },
+  "rechecked": "Parsed the saved .mermaid source: 6 nodes, 7 edges as listed; viewed both captures. Source text is the same diagram reviewer D parsed with WLJS's bundled parser for the earlier attempt.",
+  "overturn": "",
+  "notes": "Earlier attempt (reviewer D): rendering never seen. The rerun saw only the top of the diagram; the orchestrator's capture shows the rest. Recommend copying capx/0x140003e_Application.png into the run folder."
+ },
+ "wolfram-debugging": {
+  "agree": false,
+  "checks": {
+   "triggered": "pass: transcript agent-ab9a9148dbba7d3a6 loads Skill wolfram-debugging",
+   "route": "pass: WLJS kernel and notebook, cross-check in a network-cut fresh kernel (upstream rule 8)",
+   "rules": "partial: the run switched Assert on globally in the shared WLJS kernel (WithCleanup[On[Assert], ..., Off[Assert]] in one kernel_evaluate call and again in notebook cell 012, which stays in the saved notebook and repeats the toggle when re-run). The brief says 'never change global settings' and upstream rule 7 says never change `Off` globally in a shared kernel. The skill gives a scoped way that needs no switch: an \"Assertions\" handler via Internal`HandlerBlock / WolframDebugging`FailedAssertions, which sees failing asserts while Assert stays Off (references/MessagesAndStacks.md lines 478-493). Assert was restored to Off without first checking its prior state. The run reported that other sessions' assertions could have been affected",
+   "notebook": "pass: work/AssertDebugging.wln; I viewed scratch/cap/0x1400024_llm-d0f.wln.png and scratch/cap2/0x1400034_Application.png ({<|Result :> Sin[1], MessagesExpressions -> {Hold[Message[Assert::asrtfl, y>5, 5, file]]}|>, <|Result :> Sin[9], MessagesExpressions -> {}|>})",
+   "correct": "partial: the diagnosis is right (Assert[y > 5] fails for x = 1, y = 1; passes for x = 3, y = 9; file unchanged). The card's second expectation, 'uses the skill's helpers (e.g. CollectMessages / assertion capture) in WLJS', is not met: the transcript has 0 uses of WolframDebugging`, Internal`HandlerBlock, FailedAssertions or CollectMessages; the evidence came from EvaluationData under On[Assert] and a $AssertFunction Throw, which any session could do without the skill",
+   "clean": "pass: the EvaluationData[...][{keys}] Missing mistake was found and fixed"
+  },
+  "rechecked": "Fresh network-cut kernel: file cmp-identical to ExampleData/FunctionWithAssert.wl. Default: both calls return Sin[1], Sin[9] with no messages. With On[Assert]: Compute[1] -> Hold[Message[Assert::asrtfl, y > 5, 5, file]], Compute[3] -> {} (same as the run). With Assert Off: Internal`HandlerBlock[{\"Assertions\", ...}] collects HoldComplete[Assert[y > 5, {5, file}]] for Compute[1] only, and the skill's WolframDebugging`FailedAssertions[Compute[1]] returns <|Result -> Sin[1], Count -> 1, Failed -> {<|Assert -> \"y > 5\", Line -> 5, File -> ..., Callers -> {\"Compute\"}|>}|> and Count -> 0 for Compute[3]: the skill's own helper gives the full answer with no global switch.",
+  "overturn": "correct: pass -> partial (card expectation 2 unmet: none of the skill's helpers used; evidence from the transcript tool calls). rules: pass -> partial (global On[Assert] toggles in the shared kernel, against the brief and upstream rule 7, where the skill provides a scoped helper; the toggle is also saved in the notebook). The answer to the user is correct.",
+  "notes": "Earlier attempt (attempt1-wljs-hung): no WLJS evaluation and no notebook. That is fixed. The new issue is how the evidence was gathered, not the conclusion."
+ },
+ "wolfram-demonstration": {
+  "agree": true,
+  "checks": {
+   "triggered": "pass: transcript agent-a17110b222030f74e loads Skill wolfram-demonstration",
+   "route": "pass: MarkdownToNotebook build, inspection and lint in network-cut fresh kernels (stated reason: WLJS breaks .nb builds); live preview in WLJS with the ROUTES Manipulate fixes",
+   "rules": "pass: nothing submitted; wolframscript runs under bwrap + timeout -s KILL; no orphaned front end reported. Note: the build rewrote 5 entries of the shared cache ~/.Wolfram/Objects/Persistence/MarkdownToNotebook/ExampleOutput/Bloch_Sphere_with_a_Quantum_Gate_Sequence/001..005 (mtime 05:27:57) although the run log lists 'Changed: none' and says it left the shared cache alone",
+   "notebook": "pass: work/BlochSphereGates-preview.wln; I viewed scratch/cap3/0x1400031_Application.png (live Manipulate: theta/phi sliders, gate menus, 3D sphere with red trajectory, JIT on) and 0x1400044_Application.png (three snapshot spheres)",
+   "correct": "pass: built .nb is the Demonstration template (123 cells, 7 outputs, 0 Message cells); the 4 source errors the run reports are real (7 gates not 8; T^2 = S so three T's end at azimuth 3pi/4; Y|+> = -i|-> is the opposite Bloch point; snapshot 1 path is |0> -> +x -> +x -> -x, straight chords through the centre, also visible in the snapshot capture)",
+   "clean": "partial: CheckboxesCell::autofail leaves Categories empty offline (rule 0, external); lint warnings SnapshotSettingsNotFound / UnableToUseCell until snapshots are generated in Mathematica; plus the unreported shared-cache writes above"
+  },
+  "rechecked": "Fresh network-cut kernel Get of work/Demonstration/BlochSphereGates.nb: Notebook, 123 styled cells (Title 1, Section 12, Text 9, Input 2, Output 7), $Failed 0, TemplateSlot 0, General::stop 0, (*BB[ 0, 7 DynamicModuleBox. Source .md cmp-identical to the pinned example. Checked the four source statements by hand from the gate matrices in the source. Listed the persistence-store files and their mtimes.",
+  "overturn": "",
+  "notes": "Earlier attempt (attempt-before-final): rerun requested for the 3D check. Fixed: 3D Bloch spheres render in WLJS (captures viewed). Status stays 'limited' (clean partial for an external gap). The run log should list the shared-cache writes."
+ },
+ "wolfram-language-modelica": {
+  "agree": false,
+  "checks": {
+   "triggered": "pass: transcript agent-acd197e6b1b062d26 loads Skill wolfram-language-modelica",
+   "route": "pass: WLJS kernel SystemModelSimulate with an InitialValues list (one call, 3 runs) and a visible notebook",
+   "rules": "pass: wlmSweep` qualified names, removed at the end; no Begin/End. ExampleModel imported unrenamed while annotate-modelica-plots imported a same-named copy, but the namespace rule was written at 05:06 EDT as a result of this run, and the equations were identical",
+   "notebook": "partial: work/ExampleModelSweep.wln holds the import, the table (seen: scratch/cap5/0x1400055_Application.png, values match) and a plot cell whose output nobody saw (the run says 'I did not see the plot'; cap5/0x1400040_Application.png is annotate-modelica-plots' y-plot to t = 10, not this one). That plot's legend is wrong: the cell passes PlotLegends -> ({\"x(0) = \" <> ToString[#]} & /@ x0s), a list of one-element lists, and the saved output is Legended[..., {Placed[LineLegend[{blue}, {\"x(0) = 0.5\"}], After], Placed[LineLegend[{blue}, {\"x(0) = 1.\"}], Below], Placed[LineLegend[{blue}, {\"x(0) = 2.\"}], Above]}]: three separate legends, all with the same blue swatch RGBColor[0.24, 0.6, 0.8], while the three curves are blue, orange and green. The verdict's 'with table and plot' overstates what was checked",
+   "correct": "pass: y(1) = 3.30588242589, 3.89348302285, 5.06868421666 for x0 = 0.5, 1, 2; exact (1 + x0/2)e - x0/(2e) = 3.30588242528, 3.89348302210, 5.06868421575",
+   "clean": "pass: the display messages from showing a SystemModel in a list were explained and removed from the notebook"
+  },
+  "rechecked": "Fresh network-cut kernel: SystemModelSimulate[m, {0,1}, <|\"InitialValues\" -> {\"x\" -> {0.5, 1., 2.}}|>]: y(1) = 3.3058824258927495, 3.893483022849462, 5.068684216663753, identical to the run; exact 3.305882425281, 3.893483022103, 5.068684215747. Reproduced the notebook's plot cell: line colours in plot order are RGBColor[0.24,0.6,0.8], RGBColor[0.95,0.627,0.1425], RGBColor[0.455,0.7,0.21]; the legend part is three Placed LineLegends (After/Below/Above) each with RGBColor[0.24,0.6,0.8], exactly as stored in the saved .wln. With a flat list PlotLegends -> {\"x(0) = 0.5\", \"x(0) = 1.\", \"x(0) = 2.\"} the same call gives one LineLegend with the three correct colours.",
+  "overturn": "notebook: pass -> partial. The result notebook's plot mislabels two of three curves (legend swatches all blue, legends split over three sides), and the plot was never viewed by the run or the orchestrator. The numerical answer is right. Fix: flat PlotLegends list, then view the projected plot.",
+  "notes": "Earlier attempt (reviewer B): the run left the shared kernel in its private context (Begin). Fixed: no Begin/End, qualified names, Remove at the end."
+ },
+ "wolfram-symbol-page": {
+  "agree": true,
+  "checks": {
+   "triggered": "pass: transcript agent-ad0922e60f9591808 loads Skill wolfram-symbol-page",
+   "route": "pass: pinned MarkdownToNotebook in a network-cut fresh kernel (.nb kept out of WLJS), same steps as the paclet's build.wls (build/DocSource/... output path, EvaluateSeparator -> None); examples re-run live in WLJS",
+   "rules": "pass: no kill/pkill (transcript), timeout -s KILL on its own bwrap runs only; DocumentationBuild deliberately not run (WFRCrosslinks fetch). Note: loading the paclet in the shared WLJS kernel left WolframInstitute`DocPageExamples` symbols and registered the MAZE format, the Lorem service and the RandomSignal device class there; the run says so and why, but the brief asked to Remove names at the end",
+   "notebook": "pass (card notebook=False): work/MazeWalkTime-summary.wln; I viewed scratch/cap/0x140003c_llm-9b6.wln.png (summary), cap2/0x140004e_Application.png (maze: green S at row 1 col 1, red G at row 5 col 7) and cap2/0x1400057_Application.png (Neat Examples line plot, seconds vs size)",
+   "correct": "pass: page built, examples evaluated, outputs match the source hints",
+   "clean": "pass: Keywords cells missing is converter bug I4, reproduced: the page has no Keywords cells while TaggingRules metadata holds {maze, walking time, shortest path, quantity, units}"
+  },
+  "rechecked": "Fresh network-cut kernel Get of work/.../build/DocSource/English/ReferencePages/Symbols/MazeWalkTime.nb: Notebook, 141 styled cells, Input 12, Output 11, $Failed 0, General::stop 0, no (*BB[; outputs contain 15.714285714285715 s, FractionBox 396/25 s, 48.57142857142857 s, 7.857142857142858 s, True, True, Missing[\"NotReachable\"] and the unevaluated MazeWalkTime[{{\"S\",\"G\"}}, 3 kg]. Counted the shortest path on the captured maze by hand: 22 steps, 22/1.4 = 15.714 s.",
+  "overturn": "",
+  "notes": "Earlier attempts: attempt1 (reviewer B) killed another session's processes; attempt-before-final (reviewer E agreed) had no WLJS summary page. This rerun kills nothing and adds the summary page. Fixed."
+ }
+}

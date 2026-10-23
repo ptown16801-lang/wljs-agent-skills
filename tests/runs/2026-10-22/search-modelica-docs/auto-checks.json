@@ -1,0 +1,25 @@
+{
+ "skill": "search-modelica-docs",
+ "tool_calls": 20,
+ "check1_triggered": {
+  "pass": true,
+  "skills_loaded": [
+   "search-modelica-docs"
+  ]
+ },
+ "check3_rules_auto": {
+  "pass": true,
+  "hits": {}
+ },
+ "check4_notebooks_found": [
+  "work/SpringDamperLookup.wln"
+ ],
+ "engines_seen": [
+  "mcp__wljs__add_cells_batch",
+  "mcp__wljs__evaluate_cell",
+  "mcp__wljs__kernel_evaluate",
+  "mcp__wljs__new_notebook",
+  "wsm-toolkit"
+ ],
+ "run_log": true
+}

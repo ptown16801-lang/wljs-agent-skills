@@ -1,0 +1,9 @@
+tests/out/
+tests/runs/*/*/work/
+tests/runs/*/*/scratch/
+tests/levelC/scratch-*/
+
+# bulky scratch builds from the bug-fix runs (notes and diffs are tracked)
+tests/bugs/fixes/scratch-I/
+tests/bugs/fixes/scratch-W4/
+__pycache__/

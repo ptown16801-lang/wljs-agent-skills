@@ -1,0 +1,91 @@
+[Warning] Running tests on source directory instead of built paclet
+[Warning] Paclet MX file was not loaded
+
+TestReport: WolframDebuggingSkill.wlt | 2 SuccessEvaluating tests (2)Elapsed time 5s
+
+TestReport: WolframDebuggingSkill.wlt | 28 SuccessEvaluating tests (28)Elapsed time 5s
+
+TestReport: WolframDebuggingSkill.wlt | 33 SuccessEvaluating tests (33)Elapsed time 5s
+
+TestReport: WolframDebuggingSkill.wlt | 33 SuccessEvaluating tests (33)Elapsed time 6s
+
+TestReport: WolframDebuggingSkill.wlt | 64 SuccessEvaluating tests (64)Elapsed time 6s
+
+TestReport: WolframDebuggingSkill.wlt | 69 SuccessEvaluating tests (69)Elapsed time 7s
+
+TestReport: WolframDebuggingSkill.wlt | 71 SuccessEvaluating tests (71)Elapsed time 7s
+
+TestReport: WolframDebuggingSkill.wlt | 77 SuccessEvaluating tests (77)Elapsed time 7s
+
+TestReport: WolframDebuggingSkill.wlt | 99 SuccessEvaluating tests (99)Elapsed time 8s
+
+TestReport: WolframDebuggingSkill.wlt | 99 SuccessEvaluating tests (99)Elapsed time 8s
+
+TestReport: WolframDebuggingSkill.wlt | 99 SuccessEvaluating tests (99)Elapsed time 9s
+
+TestReport: WolframDebuggingSkill.wlt | 99 SuccessEvaluating tests (99)Elapsed time 9s
+
+TestReport: WolframDebuggingSkill.wlt | 100 SuccessEvaluating tests (100)Elapsed time 9s
+
+TestReport: WolframDebuggingSkill.wlt | 100 SuccessEvaluating tests (100)Elapsed time 10s
+
+TestReport: Parallel`Kernels` | 102 SuccessEvaluating tests (102)Elapsed time 10s
+
+TestReport: WolframDebuggingSkill.wlt | 102 SuccessEvaluating tests (102)Elapsed time 11s
+
+TestReport: WolframDebuggingSkill.wlt | 102 SuccessEvaluating tests (102)Elapsed time 11s
+
+TestReport: WolframDebuggingSkill.wlt | 102 SuccessEvaluating tests (102)Elapsed time 12s
+
+TestReport: WolframDebuggingSkill.wlt | 102 SuccessEvaluating tests (102)Elapsed time 12s
+
+TestReport: WolframDebuggingSkill.wlt | 107 SuccessEvaluating tests (107)Elapsed time 12s
+
+TestReport: WolframDebuggingSkill.wlt | 107 SuccessEvaluating tests (107)Elapsed time 13s
+
+TestReport: WolframDebuggingSkill.wlt | 107 SuccessEvaluating tests (107)Elapsed time 13s
+
+TestReport: WolframDebuggingSkill.wlt | 118 SuccessEvaluating tests (118)Elapsed time 14s
+
+TestReport: WolframDebuggingSkill.wlt | 118 SuccessEvaluating tests (118)Elapsed time 14s
+
+TestReport: WolframDebuggingSkill.wlt | 118 SuccessEvaluating tests (118)Elapsed time 14s
+
+TestReport: WolframDebuggingSkill.wlt | 118 SuccessEvaluating tests (118)Elapsed time 15s
+
+TestReport: WolframDebuggingSkill.wlt | 118 SuccessEvaluating tests (118)Elapsed time 15s
+
+TestReport: WolframDebuggingSkill.wlt | 118 SuccessEvaluating tests (118)Elapsed time 15s
+
+TestReport: WolframDebuggingSkill.wlt | 118 SuccessEvaluating tests (118)Elapsed time 16s
+
+TestReport: WolframDebuggingSkill.wlt | 118 SuccessEvaluating tests (118)Elapsed time 16s
+
+TestReport: WolframDebuggingSkill.wlt | 118 SuccessEvaluating tests (118)Elapsed time 17s
+
+TestReport: WolframDebuggingSkill.wlt | 118 SuccessEvaluating tests (118)Elapsed time 17s
+
+TestReport: WolframDebuggingSkill.wlt | 118 SuccessEvaluating tests (118)Elapsed time 17s
+
+TestReport: WolframDebuggingSkill.wlt | 118 SuccessEvaluating tests (118)Elapsed time 18s
+
+TestReport: WolframDebuggingSkill.wlt | 118 SuccessEvaluating tests (118)Elapsed time 18s
+
+TestReport: WolframDebuggingSkill.wlt | 118 SuccessEvaluating tests (118)Elapsed time 19s
+
+TestReport: WolframDebuggingSkill.wlt | 118 SuccessEvaluating tests (118)Elapsed time 19s
+
+TestReport: WolframDebuggingSkill.wlt | 118 SuccessEvaluating tests (118)Elapsed time 20s
+
+TestReport: WolframDebuggingSkill.wlt | 118 SuccessEvaluating tests (118)Elapsed time 20s
+
+TestReport: WolframDebuggingSkill.wlt | 118 SuccessEvaluating tests (118)Elapsed time 20s
+
+TestReport: WolframDebuggingSkill.wlt | 118 SuccessEvaluating tests (118)Elapsed time 21s
+
+TestReport: WolframDebuggingSkill.wlt | 118 SuccessEvaluating tests (118)Elapsed time 21s
+
+TestReport: WolframDebuggingSkill.wlt | 118 SuccessEvaluating tests (118)Elapsed time 21s
+
+TestReport: WolframDebuggingSkill.wlt | 118 SuccessEvaluating tests (118)Elapsed time 22s
+WolframDebuggingSkill (fresh): 123/123 passed, 22.2 s

@@ -1,0 +1,21 @@
+{
+ "skill": "paclet-publish",
+ "tool_calls": 13,
+ "check1_triggered": {
+  "pass": true,
+  "skills_loaded": [
+   "paclet-publish"
+  ]
+ },
+ "check3_rules_auto": {
+  "pass": true,
+  "hits": {}
+ },
+ "check4_notebooks_found": [
+  "work/DocPageExamples-publish-check.wln"
+ ],
+ "engines_seen": [
+  "wolfram-direct"
+ ],
+ "run_log": true
+}

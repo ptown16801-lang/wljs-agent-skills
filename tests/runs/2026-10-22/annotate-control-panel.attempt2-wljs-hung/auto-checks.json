@@ -1,0 +1,22 @@
+{
+ "skill": "annotate-control-panel",
+ "tool_calls": 31,
+ "check1_triggered": {
+  "pass": true,
+  "skills_loaded": [
+   "annotate-control-panel"
+  ]
+ },
+ "check3_rules_auto": {
+  "pass": true,
+  "hits": {}
+ },
+ "check4_notebooks_found": [
+  "work/ElectricCircuitExplore.wln"
+ ],
+ "engines_seen": [
+  "mcp__wljs__kernel_evaluate",
+  "wsm-toolkit"
+ ],
+ "run_log": true
+}

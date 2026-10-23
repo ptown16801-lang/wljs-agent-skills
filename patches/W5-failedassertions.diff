@@ -1,0 +1,15 @@
+--- a/wolfram-debugging/scripts/WolframDebugging.wl
++++ b/wolfram-debugging/scripts/WolframDebugging.wl
+@@ -2261,6 +2261,12 @@
+         o   = optionsAssociation[ FailedAssertions, { opts } ];
+         bag = Internal`Bag[ ];
+         n   = 0;
++        (* with Assert Off and no "Assertions" handler, Assert[test] evaluates to itself, so the evaluator marks that
++           node as fully evaluated and later skips it without calling Assert (the handler is never reached); in a
++           stored definition the node is shared by every call whose substitution leaves it unchanged (e.g. a Block
++           body), so one plain call hides its failures from later FailedAssertions calls. Update[Assert] invalidates
++           these marks, as On/Off[Assert] does, without changing whether assertions are on. *)
++        Update @ Assert;
+         res = Internal`HandlerBlock[
+             { "Assertions", If[ ++n <= o[ "MaxAssertions" ], Internal`StuffBag[ bag, assertionRecord @ # ] ] & },
+             evaluateContained @ StackBegin @ StackComplete @ expr

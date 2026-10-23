@@ -1,0 +1,24 @@
+name: checks
+on: [push, pull_request]
+permissions:
+  contents: read
+jobs:
+  checks:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Privacy scan (no personal paths, identifiers or secrets)
+        run: python3 tools/privacy-scan.py
+      - name: Relative links resolve
+        run: python3 tools/check-links.py
+      - name: Syntax of scripts
+        run: |
+          node --check build.mjs
+          node --check tools/wljs-cli.mjs
+          python3 -m py_compile tools/*.py tests/cards/cards.py tests/levelB/grade.py
+          for f in setup.sh tools/*.sh; do bash -n "$f"; done
+      - name: Upstreams fetch at their pinned commits
+        run: WLJS_APP=/nonexistent ./setup.sh --apply-patches

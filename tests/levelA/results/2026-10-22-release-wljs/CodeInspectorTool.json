@@ -1,0 +1,19 @@
+{
+	"suite":"CodeInspectorTool",
+	"kernel":"WLJS",
+	"ok":true,
+	"tests":265,
+	"passed":265,
+	"failed":[],
+	"seconds":2.05e1,
+	"messages":[
+		"AgentTools::CodeInspectorInvalidConfidence : Confidence level must be between 0 and 1, got 1.5.",
+		"AgentTools::CodeInspectorNoInput : Either 'code' or 'file' parameter must be provided.",
+		"AgentTools::CodeInspectorAmbiguousInput : Provide either 'code' or 'file', not both.",
+		"AgentTools::CodeInspectorFileNotFound : File or directory not found: \/nonexistent\/path\/file.wl.",
+		"AgentTools::CodeInspectorNoFilesFound : No .wl, .m, or .wls files found in directory: \/tmp\/m00000216803201.",
+		"CodeInspectorToolFunction::CodeInspectorNoInput : Either 'code' or 'file' parameter must be provided.",
+		"CodeInspectorToolFunction::CodeInspectorAmbiguousInput : Provide either 'code' or 'file', not both.",
+		"CodeInspectorToolFunction::CodeInspectorFileNotFound : File or directory not found: \/nonexistent\/path\/to\/file.wl."
+	]
+}

@@ -1,0 +1,69 @@
+1a2
+>   extends Modelica.Icons.Example;
+12,13c13,14
+<     Modelica.Blocks.Interfaces.RealInput deltarho "Deviation from submarine's average density";
+<     Modelica.Blocks.Interfaces.RealInput f "Vertical external force applied at the center of mass";
+---
+>     Modelica.Blocks.Interfaces.RealInput deltarho "Deviation from submarine's average density" annotation(Placement(transformation(extent={{-110,-30},{-90,-10}}), iconTransformation(extent={{-110,-30},{-90,-10}})));
+>     Modelica.Blocks.Interfaces.RealInput f "Vertical external force applied at the center of mass" annotation(Placement(transformation(extent={{-110,10},{-90,30}}), iconTransformation(extent={{-110,10},{-90,30}})));
+16c17
+<     Modelica.Blocks.Interfaces.RealOutput y "Position of center of mass with respect to a frame placed at the surface of the fluid";
+---
+>     Modelica.Blocks.Interfaces.RealOutput y "Position of center of mass with respect to a frame placed at the surface of the fluid" annotation(Placement(transformation(extent={{90,-10},{110,10}}), iconTransformation(extent={{90,-10},{110,10}})));
+22c23,27
+<     <p>This library contains models used in the documentation of system modeling functionality in Wolfram Language. These examples and this library can be explored in the Wolfram Language documentation.</p></html>", revisions = ""));
+---
+>     <p>This library contains models used in the documentation of system modeling functionality in Wolfram Language. These examples and this library can be explored in the Wolfram Language documentation.</p></html>", revisions = ""),
+>     Icon(coordinateSystem(preserveAspectRatio=true, extent={{-100,-100},{100,100}}), graphics={
+>         Text(extent={{-100,105},{100,145}}, textString="%name", textColor={0,0,255}),
+>         Rectangle(extent={{-70,-70},{70,70}}, lineColor={0,0,0}, fillColor={245,245,245}, fillPattern=FillPattern.Solid, radius=10),
+>         Text(extent={{-60,-25},{60,25}}, textString="%class", textColor={0,0,0})}));
+25,26c30,31
+<   inner Modelica.Mechanics.MultiBody.World world(gravityType = Modelica.Mechanics.MultiBody.Types.GravityTypes.NoGravity);
+<   Modelica.Mechanics.MultiBody.Visualizers.Rectangle fluidSurface(length_u = 20 * R, length_v = 20 * R, transparency = 0.5, color = {0, 170, 255});
+---
+>   inner Modelica.Mechanics.MultiBody.World world(gravityType = Modelica.Mechanics.MultiBody.Types.GravityTypes.NoGravity) annotation(Placement(transformation(extent={{-10,-10},{10,10}}, origin={24,20}, rotation=0)));
+>   Modelica.Mechanics.MultiBody.Visualizers.Rectangle fluidSurface(length_u = 20 * R, length_v = 20 * R, transparency = 0.5, color = {0, 170, 255}) annotation(Placement(transformation(extent={{-10,-10},{10,10}}, origin={76,20}, rotation=0)));
+36,43c41,48
+<   BuoyancyDynamics buoyancyDynamics(g = Modelica.Constants.g_n, R = R, rho0 = rho0, rho = rho, L = L, semiMajorAxisFront = semiMajorAxisFront, semiMajorAxisBack = semiMajorAxisBack, b = b);
+<   Modelica.Mechanics.Translational.Sources.Position position(exact = true);
+<   Modelica.Mechanics.MultiBody.Joints.Prismatic prismatic(useAxisFlange = true, n = {0, 0, 1});
+<   Modelica.Mechanics.MultiBody.Parts.Body subBody(m = rho0 * VSub, I_11 = 4.38395916805966e13 * rho0 * uniformSizeScale ^ 5, I_22 = 4.382457043738015e13 * rho0 * uniformSizeScale ^ 5, I_33 = 1.232306146979083e8 * rho0 * uniformSizeScale ^ 5, r_CM = {0, 0, 0}, animation = false, I_21 = 1.188823097508642e-6 * rho0 * uniformSizeScale ^ 5, I_31 = 905.7131993348054 * rho0 * uniformSizeScale ^ 5, I_32 = 163869.26534827304 * rho0 * uniformSizeScale ^ 5, r_0.start = {0 * uniformSizeScale, 1.6131600886734123 * uniformSizeScale, (-0.04294612140081024) * uniformSizeScale});
+<   Modelica.Blocks.Interfaces.RealInput f "Vertical external force applied at the center of mass of the submarine";
+<   Modelica.Blocks.Interfaces.RealInput deltarho "Deviation from submarines's average density";
+<   Modelica.Blocks.Interfaces.RealOutput y "Position of center of mass with respect to a frame placed at the surface of the fluid";
+<   Modelica.Mechanics.MultiBody.Visualizers.FixedShape subShape(animation = true, length = uniformSizeScale, width = uniformSizeScale, height = uniformSizeScale, shapeType = "modelica://DocumentationExamples/Resources/Submarine.stl", extra = 1, r_shape = {0 * uniformSizeScale, (-1.6131600886734123) * uniformSizeScale, 0.04294612140081024 * uniformSizeScale});
+---
+>   BuoyancyDynamics buoyancyDynamics(g = Modelica.Constants.g_n, R = R, rho0 = rho0, rho = rho, L = L, semiMajorAxisFront = semiMajorAxisFront, semiMajorAxisBack = semiMajorAxisBack, b = b) annotation(Placement(transformation(extent={{-10,-10},{10,10}}, origin={-24,20}, rotation=0)));
+>   Modelica.Mechanics.Translational.Sources.Position position(exact = true) annotation(Placement(transformation(extent={{-10,-10},{10,10}}, origin={-76,0}, rotation=0)));
+>   Modelica.Mechanics.MultiBody.Joints.Prismatic prismatic(useAxisFlange = true, n = {0, 0, 1}) annotation(Placement(transformation(extent={{-10,-10},{10,10}}, origin={-24,-20}, rotation=0)));
+>   Modelica.Mechanics.MultiBody.Parts.Body subBody(m = rho0 * VSub, I_11 = 4.38395916805966e13 * rho0 * uniformSizeScale ^ 5, I_22 = 4.382457043738015e13 * rho0 * uniformSizeScale ^ 5, I_33 = 1.232306146979083e8 * rho0 * uniformSizeScale ^ 5, r_CM = {0, 0, 0}, animation = false, I_21 = 1.188823097508642e-6 * rho0 * uniformSizeScale ^ 5, I_31 = 905.7131993348054 * rho0 * uniformSizeScale ^ 5, I_32 = 163869.26534827304 * rho0 * uniformSizeScale ^ 5, r_0.start = {0 * uniformSizeScale, 1.6131600886734123 * uniformSizeScale, (-0.04294612140081024) * uniformSizeScale}) annotation(Placement(transformation(extent={{-10,-10},{10,10}}, origin={24,-20}, rotation=0)));
+>   Modelica.Blocks.Interfaces.RealInput f "Vertical external force applied at the center of mass of the submarine" annotation(Placement(transformation(extent={{-136,-26},{-116,-6}}), iconTransformation(extent={{-110,-30},{-90,-10}})));
+>   Modelica.Blocks.Interfaces.RealInput deltarho "Deviation from submarines's average density" annotation(Placement(transformation(extent={{-136,6},{-116,26}}), iconTransformation(extent={{-110,10},{-90,30}})));
+>   Modelica.Blocks.Interfaces.RealOutput y "Position of center of mass with respect to a frame placed at the surface of the fluid" annotation(Placement(transformation(extent={{116,-10},{136,10}}), iconTransformation(extent={{90,-10},{110,10}})));
+>   Modelica.Mechanics.MultiBody.Visualizers.FixedShape subShape(animation = true, length = uniformSizeScale, width = uniformSizeScale, height = uniformSizeScale, shapeType = "modelica://DocumentationExamples/Resources/Submarine.stl", extra = 1, r_shape = {0 * uniformSizeScale, (-1.6131600886734123) * uniformSizeScale, 0.04294612140081024 * uniformSizeScale}) annotation(Placement(transformation(extent={{-10,-10},{10,10}}, origin={76,-20}, rotation=0)));
+45,53c50,58
+<   connect(buoyancyDynamics.y, position.s_ref);
+<   connect(position.flange, prismatic.axis);
+<   connect(prismatic.frame_b, subBody.frame_a);
+<   connect(world.frame_b, prismatic.frame_a);
+<   connect(f, buoyancyDynamics.f);
+<   connect(deltarho, buoyancyDynamics.deltarho);
+<   connect(buoyancyDynamics.y, y);
+<   connect(subShape.frame_a, subBody.frame_a);
+<   connect(fluidSurface.frame_a, world.frame_b);
+---
+>   connect(buoyancyDynamics.y, position.s_ref) annotation(Line(points={{-14,20},{-50,20},{-50,0},{-86,0}}, color={0,0,127}, thickness=0.5));
+>   connect(position.flange, prismatic.axis) annotation(Line(points={{-86,0},{-60,0},{-60,-20},{-34,-20}}, color={0,127,0}, thickness=0.5));
+>   connect(prismatic.frame_b, subBody.frame_a) annotation(Line(points={{-34,-20},{14,-20}}, color={0,0,0}, thickness=0.5));
+>   connect(world.frame_b, prismatic.frame_a) annotation(Line(points={{14,20},{-10,20},{-10,-20},{-34,-20}}, color={0,0,0}, thickness=0.5));
+>   connect(f, buoyancyDynamics.f) annotation(Line(points={{-126,-16},{-80,-16},{-80,22},{-34,22}}, color={0,0,127}, thickness=0.5));
+>   connect(deltarho, buoyancyDynamics.deltarho) annotation(Line(points={{-126,16},{-80,16},{-80,18},{-34,18}}, color={0,0,127}, thickness=0.5));
+>   connect(buoyancyDynamics.y, y) annotation(Line(points={{-14,20},{56,20},{56,0},{126,0}}, color={0,0,127}, thickness=0.5));
+>   connect(subShape.frame_a, subBody.frame_a) annotation(Line(points={{66,-20},{14,-20}}, color={0,0,0}, thickness=0.5));
+>   connect(fluidSurface.frame_a, world.frame_b) annotation(Line(points={{66,20},{14,20}}, color={0,0,0}, thickness=0.5));
+55c60,61
+<     <p>This library contains models used in the documentation of system modeling functionality in Wolfram Language. These examples and this library can be explored in the Wolfram Language documentation.</p></html>", revisions = "", figures = {Figure(title = "Position of center of mass", identifier = "e6e29", preferred = true, plots = {Plot(title = "Position of center of mass", curves = {Curve(y = subBody.r_0[3], legend = "subBody.r_0[3]")})})}));
+---
+>     <p>This library contains models used in the documentation of system modeling functionality in Wolfram Language. These examples and this library can be explored in the Wolfram Language documentation.</p></html>", revisions = "", figures = {Figure(title = "Position of center of mass", identifier = "e6e29", preferred = true, plots = {Plot(title = "Position of center of mass", curves = {Curve(y = subBody.r_0[3], legend = "subBody.r_0[3]")})})}),
+>     Diagram(coordinateSystem(preserveAspectRatio=false, extent={{-156,-100},{156,100}})));

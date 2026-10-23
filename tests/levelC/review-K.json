@@ -1,0 +1,52 @@
+{
+ "_meta": {
+  "reviewer": "K",
+  "date": "2026-10-22",
+  "scope": "local fixes W4, W5, I1-I5",
+  "scratch": "tests/levelC/scratch-K/",
+  "diff_check": "All 7 patches applied to the restored backups reproduce the live files byte for byte (W4 6/6, W5 1/1, I 9/9). The manifests flag only the patched files; the backups equal the manifest hashes."
+ },
+ "W4": {
+  "verdict": "agree with notes",
+  "agree": true,
+  "rechecked": "REPORT.md commands on scratch toolkits. Original check_pins = 8 OK / 6 WRONG (identical to the report file); fixed = 14 OK / 0 WRONG / 4 n/a. --analyze identical. Fallback (WSM_HOME=/nonexistent): lines identical to the original plus 10 warnings. check_vs_sm re-run: 5529/5642 (98.0%) vs old 1991/5642 (35.3%), 532 unresolved, identical to the fixer's numbers. Regression: ElectricCircuit byte-identical with 0 warnings; BlockCircuit 12/12 lines changed, all 24 ends hand-checked against MSL 4.1.0; DCMotor and MultiBody Pendulum ends correct. Bulk 193 files x 2 toolkits: 386/386 rc 0, byte-identical to the fixer's bulk, 408 warnings in 13 files, all from libraries that are not installed.",
+  "notes": "Undisclosed side effect: with real pins, upstream _orient_two_ports now rotates more components. 223/2352 instance rotations change in 77/193 files (e.g. DCMotor inertiaWithDamper stood up, flange lines run into its centre). Net effect on lines entering icon interiors is positive (708 -> 592 of 1042 in the 135 single-class files; 56 better, 26 worse). SKILL.md still says lines leave perpendicular to the edge. Minor: pin_offset has no catch-all except. The 98% is of 5642 resolvable ends out of 6174."
+ },
+ "W5": {
+  "verdict": "agree with notes",
+  "agree": true,
+  "rechecked": "Repro on helper copies: original 1/0/1, Block 1/0; patched 1/1/1, Block 1/1, Module 1/1 both. Extra: no-Block g3 0->1, nested inner Assert 0->1, passing case 0, Result unchanged, Assert stays Off. Wolfram suite (scratch .wlt pointing at the copies): original 123/123, patched 123/123.",
+  "notes": "Minimal one-line Update@Assert, no lasting state change. BUGS.md says 'mechanism found' while W5.md says it is inferred (the internal flag cannot be inspected). WLJS kernel not re-run (disclosed)."
+ },
+ "I1": {
+  "verdict": "agree",
+  "agree": true,
+  "rechecked": "Full build.wls (with DocumentationBuild) in before/after repo copies: General::stop cells 1 -> 0 in build/DocSource and DocPageExamples/Documentation. build.wls-only variant: the stop moves to Lorem.nb (confirms the converter part is needed). Page compare: other pages identical except the intended I2/I4 changes; Lorem differs only by the run-specific ServiceObject UUID. tests.wls 174/174 before and after.",
+  "notes": "Converter change ($MessageList={} per cell) affects all conversions; it matches notebook semantics. exportDeterministicNB is an internal dependency (disclosed)."
+ },
+ "I2": {
+  "verdict": "agree",
+  "agree": true,
+  "rechecked": "Ragged message: 'Line 1 is shorter' -> 'Line 2 is longer (7 instead of 5)'; short line 3 and long line 4 reported correctly. MazeGenerate[{1,1}]: G-only grid -> ::small and unevaluated; {1,2}, {2,1}, {4,5} unchanged; walk time 2 s. Import t.maze: Table -> MAZE; Export u.maze: $Failed -> written; txt/csv/wl detection unchanged; 1 MAZE entry after reload.",
+  "notes": "The old message always named the shortest line, a wider bug than BUGS.md states. Relies on undocumented FileFormatDump (disclosed)."
+ },
+ "I3": {
+  "verdict": "agree",
+  "agree": true,
+  "rechecked": "bloch.wls: T.T==S True, T^3==S False, Y|+> = -I|-> True, Bloch(Y|+>) = (-1,0,0), Bloch(T^3|+>) = (-1/Sqrt2, 1/Sqrt2, 0). Edited md init block: 7 gates; trajectories match the new text; 4 blochDemo calls -> Manipulate. Code fences byte-identical in .md and -out.md.",
+  "notes": ""
+ },
+ "I4": {
+  "verdict": "agree",
+  "agree": true,
+  "rechecked": "Builds with the before and deployed converters from identical sources: MazeWalkTime Keywords {} -> 5 entries, equal to before once the new Keywords group is dropped; symbol page without Keywords, guide and TechNote identical. Built page metadata keywords {} -> 5 words.",
+  "notes": ""
+ },
+ "I5": {
+  "verdict": "agree with notes",
+  "agree": true,
+  "rechecked": "SKILL.md list = 35 unique names; the template DataResourceDefinition.nb (15.0) has 45 CheckboxBox entries, the first 35 equal the list set-for-set, the last 10 are the content types.",
+  "notes": "The patched sentence still says the 35 are 'from resourceSortingProperties[]', which was not checked (offline); the new count is attributed to an unverified source."
+ },
+ "reviewer_deviations": "The W5 repro/suite runs (09:26-09:28) were not wrapped with ~/.Wolfram binds: they wrote 5 empty ~/.Wolfram/Logs/AgentTools/Output logs, updated ApplicationData/Wolfram/AgentTools/Servers/Wolfram/Log.wl, Paclets/Configuration, Paclets/Temporary and ProcessLink/Streams (left in place). A bind probe wrote ~/.Wolfram/Objects/kprobe.m, deleted at once. Autoload/PacletManager/Configuration/FrontEnd/init_15.0.0.0.m and SystemFiles/FrontEnd/StyleSheets/Wolfram changed at 09:37 during a docs build (attribution uncertain, other kernels were running). No vendored file was written; no network, git or WLJS."
+}

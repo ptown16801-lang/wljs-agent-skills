@@ -1,0 +1,19 @@
+{
+ "skill": "wolfram-notebooks",
+ "tool_calls": 9,
+ "check1_triggered": {
+  "pass": true,
+  "skills_loaded": [
+   "wolfram-notebooks"
+  ]
+ },
+ "check3_rules_auto": {
+  "pass": true,
+  "hits": {}
+ },
+ "check4_notebooks_found": [],
+ "engines_seen": [
+  "wolfram-direct"
+ ],
+ "run_log": true
+}
