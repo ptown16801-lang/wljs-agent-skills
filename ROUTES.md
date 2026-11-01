@@ -122,6 +122,23 @@ on the second monitor ("Application") for a closer look.
 Plotly), `Graphics3D` with three.js/WebGL, and updates `Manipulate` output in place. These are live graphs,
 not pictures (only `MMAView` deliberately falls back to an image). Check them with a screenshot of the notebook.
 
+**Also show each visual result as a PNG in chat (owner's rule, Oct 24, 2026).** The owner often follows sessions
+from the Claude Android app, where `show_widget` widgets and SendUserFile do not display, but an image opened with
+the **Read** tool does (tested Oct 24: inline preview, full image on tap). Claude cannot tell which device the owner
+is on, so do this every time a result is meant to be seen, alongside the live notebook:
+`Export["/abs/result.png", Rasterize[expr]]` in the WLJS desktop kernel, then Read the PNG. Make it near-square with
+the legend below (`AspectRatio -> 0.85`, `PlotLegends -> Placed[..., Below]`, `ImageSize -> 500`, about 508×424);
+the phone preview is a centre square crop. Keep images well under 2000 px. WLJS's `Rasterize` rejects
+`ImageResolution`. Live sliders stay desktop-only. Examples: `showcase/examples/phone-display/`.
+
+**For an interactive view on the phone, publish an artifact (tested Oct 24, 2026).** When a result has a slider or
+other control, compute its values in WLJS in advance (e.g. `Table` over the slider steps, exported as JSON), build them
+into an HTML page that redraws from that data, and publish it with the Artifact tool. The link opens in the Claude
+Android app's own artifact viewer and the slider and script work there. The page cannot run new calculations: it only
+steps through the pre-computed values. Example: `showcase/examples/phone-display/damped-wave-slider.html` (17 frames). Not used:
+reaching the WLJS or Live Panels server from the phone (Tailscale route), which the owner ruled out because that
+server can run code on the computer.
+
 **Image files only when a file is needed** (a report, an attachment, or a plot to inspect outside a notebook).
 **With the desktop app:** `Export[file, Rasterize[expr]]` works (tested: 376×229 PNG); plain `Export` of graphics to
 an image format still asks for `Rasterize` first. **Headless** (no window) there is no rasterizer (tested Oct 21, 2026):

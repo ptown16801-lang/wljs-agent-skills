@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.1.1 (2026-11-01)
+
+- Results on a phone: `ROUTES.md` now shows each visual WLJS result as a near-square PNG (readable in the Claude
+  Android app), and publishes interactive views as artifacts that step through values pre-computed in WLJS.
+- Showcase: phone-display examples (`showcase/examples/phone-display/`) with the test notebook, the two PNGs and a
+  slider page, plus a "WLJS results on a phone" section on the showcase page.
+
 ## 0.1.0 (2026-10-23)
 
 First public release.
